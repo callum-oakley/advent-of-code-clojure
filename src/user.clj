@@ -33,3 +33,6 @@
              res (f)
              duration (double (/ (- (System/currentTimeMillis) start) 1000))]
          (println (format "%s %7.3fs   %s" sym duration res)))))))
+
+(defn log []
+  (spit "results.log" (with-out-str (run))))
