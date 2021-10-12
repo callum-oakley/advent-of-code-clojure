@@ -7,6 +7,8 @@
 
 (run! require (find/find-namespaces-in-dir (io/file "src")))
 
+(def default-year 2015)
+
 (defn run-tests* [re]
   (test/run-all-tests re))
 
@@ -14,7 +16,9 @@
   ([]
    (run-tests* #"aoc\..*"))
   ([year]
-   (run-tests* (re-pattern (format "aoc\\.%d\\..*" year))))
+   (if (<= year 25)
+     (run-tests default-year year)
+     (run-tests* (re-pattern (format "aoc\\.%d\\..*" year)))))
   ([year day]
    (run-tests* (re-pattern (format "aoc\\.%d\\.%02d" year day)))))
 
@@ -22,7 +26,9 @@
   ([]
    (run! run (range 2015 2021)))
   ([year]
-   (run! #(run year %) (range 1 26)))
+   (if (<= year 25)
+     (run default-year year)
+     (run! #(run year %) (range 1 26))))
   ([year day]
    (run year day 1)
    (run year day 2))

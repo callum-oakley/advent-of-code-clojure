@@ -1,5 +1,6 @@
 (ns aoc.2015.15
   (:require
+   [aoc.map-updates :refer [update-vals]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
@@ -16,9 +17,6 @@
               (map (fn [[_ a b]] [(keyword a) (read-string b)]))
               (into {})))
        (str/split-lines s)))
-
-(defn update-vals [m f]
-  (into {} (map (fn [[k v]] [k (f v)]) m)))
 
 (defn mix [ingredients recipe]
   (update-vals (->> (map (fn [ingredient spoons]
