@@ -1,6 +1,5 @@
 (ns aoc.2015.20
   (:require
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn deliver-presents [limit endurance multiplier]
