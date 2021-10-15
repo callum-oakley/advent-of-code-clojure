@@ -30,8 +30,11 @@
      (run default-year year)
      (run! #(run year %) (range 1 26))))
   ([year day]
-   (run year day 1)
-   (run year day 2))
+   (if (<= year 25)
+     (run default-year year day)
+     (do
+       (run year day 1)
+       (run year day 2))))
   ([year day part]
    (let [sym (symbol (format "aoc.%d.%02d/part-%d" year day part))]
      (when-let [f (resolve sym)]

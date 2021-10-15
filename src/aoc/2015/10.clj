@@ -3,9 +3,9 @@
    [clojure.test :refer [deftest is]]))
 
 (defn look-and-say [s]
-  (->> (partition-by identity s)
-       (map #(str (count %) (first %)))
-       (apply str)))
+  (apply str (eduction (partition-by identity)
+                       (map #(str (count %) (first %)))
+                       s)))
 
 (defn part-* [n]
   (count (nth (iterate look-and-say (slurp "input/2015/10")) n)))
