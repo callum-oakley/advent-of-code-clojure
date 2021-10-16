@@ -63,13 +63,13 @@
 (defn part-* [difficulty]
   (let [[hp d] (map #(read-string (re-find #"\d+" %))
                     (str/split-lines (slurp "input/2015/22")))]
-    (:spent-mana (search/dijkstra {:player {:hit-points 50 :mana 500 :armor 0}
+    (:spent-mana (search/dijkstra :spent-mana
+                                  {:player {:hit-points 50 :mana 500 :armor 0}
                                    :boss {:hit-points hp :damage d}
                                    :effects {}
                                    :phase :player-effect
                                    :spent-mana 0}
                                   #(adjacent difficulty %)
-                                  :spent-mana
                                   #(-> % :boss :hit-points pos? not)))))
 
 (defn part-1 []

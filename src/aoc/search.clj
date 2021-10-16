@@ -1,13 +1,29 @@
 (ns aoc.search
   (:require
-   [clojure.data.priority-map :refer [priority-map]]))
+   [clojure.data.priority-map :refer [priority-map]])
+  (:import
+   [clojure.lang IPersistentCollection IPersistentStack PersistentQueue]))
 
-(defn dijkstra [start adjacent priority goal?]
-  (loop [queue (priority-map start (priority start))
+(deftype PriorityQueue [priority-map priority]
+  IPersistentCollection
+  (cons [_ v] (PriorityQueue. (assoc priority-map v (priority v)) priority))
+  IPersistentStack
+  (peek [_] (first (peek priority-map)))
+  (pop [_] (PriorityQueue. (pop priority-map) priority)))
+
+(defn- generic [queue start adjacent goal?]
+  (loop [queue (conj queue start)
          seen #{start}]
-    (let [state (first (peek queue))]
-      (if (goal? state)
-        state
-        (let [as (remove seen (adjacent state))]
-          (recur (reduce (fn [q a] (assoc q a (priority a))) (pop queue) as)
-                 (into seen as)))))))
+    (if (goal? (peek queue))
+      (peek queue)
+      (let [as (remove seen (adjacent (peek queue)))]
+        (recur (into (pop queue) as) (into seen as))))))
+
+(defn bfs [start adjacent goal?]
+  (generic PersistentQueue/EMPTY start adjacent goal?))
+
+(defn dfs [start adjacent goal?]
+  (generic [] start adjacent goal?))
+
+(defn dijkstra [priority start adjacent goal?]
+  (generic (->PriorityQueue (priority-map) priority) start adjacent goal?))
