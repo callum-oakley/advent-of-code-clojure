@@ -1,6 +1,5 @@
 (ns aoc.2015.21
   (:require
-   [aoc.map-updates :refer [update-vals]]
    [clojure.math.combinatorics :as comb]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
