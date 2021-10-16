@@ -1,5 +1,6 @@
 (ns aoc.2015.18
   (:require
+   [aoc.vectors :refer [+v]]
    [clojure.set :as set]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
@@ -16,7 +17,7 @@
   (->> [[-1 -1] [ 0 -1] [+1 -1]
         [-1  0]         [+1  0]
         [-1 +1] [ 0 +1] [+1 +1]]
-       (map #(mapv + pos %))
+       (map #(+v pos %))
        (filter lit)
        count))
 

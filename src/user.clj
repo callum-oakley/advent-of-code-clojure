@@ -7,7 +7,7 @@
 
 (run! require (find/find-namespaces-in-dir (io/file "src")))
 
-(def default-year 2015)
+(def default-year 2016)
 
 (defn run-tests* [re]
   (test/run-all-tests re))
