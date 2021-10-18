@@ -1,22 +1,19 @@
 (ns aoc.2015.04
   (:require
+   [aoc.hash :as hash]
    [clojure.string :as str]
-   [clojure.test :refer [deftest is]])
-  (:import java.security.MessageDigest))
-
-(defn md5 [bs]
-  (.digest (MessageDigest/getInstance "MD5") bs))
+   [clojure.test :refer [deftest is]]))
 
 (defn part-1* [key]
   (->> (iterate inc 1)
        ;; No need to construct the hex string, just check the first few bytes
-       (filter #(let [[a b c] (md5 (.getBytes (str key %)))]
+       (filter #(let [[a b c] (hash/md5 (.getBytes (str key %)))]
                   (= 0 a b (bit-and 0xf0 c))))
        first))
 
 (defn part-2* [key]
   (->> (iterate inc 1)
-       (filter #(= [0 0 0] (take 3 (md5 (.getBytes (str key %))))))
+       (filter #(= [0 0 0] (take 3 (hash/md5 (.getBytes (str key %))))))
        first))
 
 (defn part-1 []

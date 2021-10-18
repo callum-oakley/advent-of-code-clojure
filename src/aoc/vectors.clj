@@ -5,3 +5,6 @@
 
 (defn *v [a v]
   (mapv #(* a %) v))
+
+(defn transpose [vs]
+  (apply mapv vector vs))
