@@ -3,5 +3,8 @@
 
 (ns aoc.map-updates)
 
+(defn update-keys [m f]
+  (into {} (map (fn [[k v]] [(f k) v]) m)))
+
 (defn update-vals [m f]
   (into {} (map (fn [[k v]] [k (f v)]) m)))
