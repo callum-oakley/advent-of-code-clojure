@@ -22,14 +22,11 @@
   (set (map (fn [[x y]] (if (= x col) [x (mod (+ n y) 6)] [x y])) pixels)))
 
 (defn pixels->str [pixels]
-  (apply str
-         (interpose "\n"
-                    (map (fn [y]
-                           (apply str
-                                  (map (fn [x]
-                                         (if (pixels [x y]) \# \.))
-                                       (range 50))))
-                         (range 6)))))
+  (->> (range 6)
+       (map (fn [y]
+              (apply str (map (fn [x] (if (pixels [x y]) \# \.)) (range 50)))))
+       (interpose "\n")
+       (apply str)))
 
 (defn part-* []
   (->> "input/2016/08" slurp str/split-lines (map parse)

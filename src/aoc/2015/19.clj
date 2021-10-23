@@ -1,5 +1,6 @@
 (ns aoc.2015.19
   (:require
+   [aoc.search :as search]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
@@ -24,14 +25,18 @@
 
 (defn part-2* [replacements molecule]
   (let [replacements (map reverse replacements)]
-    (loop [molecule molecule
-           steps 0]
-      (if (= "e" molecule)
-        steps
-        ;; Choosing the most promising branch (the shortest molecule) at each
-        ;; step gets us the optimal solution in this case. Good enough.
-        (recur (apply min-key count (step replacements molecule))
-               (inc steps))))))
+    (:steps
+     (search/a* :steps
+                ;; This heuristic is NOT admissible, but in this case the
+                ;; relaxation returns the correct result in a reasonable time.
+                #(-> % :molecule count)
+                {:molecule molecule
+                 :steps 0}
+                #(map (fn [m]
+                        {:molecule m
+                         :steps (inc (:steps %))})
+                      (step replacements (:molecule %)))
+                #(= "e" (:molecule %))))))
 
 (defn part-1 []
   (apply part-1* (parse (slurp "input/2015/19"))))

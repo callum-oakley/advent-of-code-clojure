@@ -25,5 +25,8 @@
 (defn dfs [start adjacent goal?]
   (generic [] start adjacent goal?))
 
-(defn dijkstra [priority start adjacent goal?]
-  (generic (->PriorityQueue (priority-map) priority) start adjacent goal?))
+(defn dijkstra [cost start adjacent goal?]
+  (generic (->PriorityQueue (priority-map) cost) start adjacent goal?))
+
+(defn a* [cost heuristic start adjacent goal?]
+  (dijkstra #(+ (cost %) (heuristic %)) start adjacent goal?))
