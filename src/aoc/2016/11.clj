@@ -64,6 +64,9 @@
    The third floor contains a lithium generator.
    The fourth floor contains nothing relevant.")
 
+;; Somewhat upsettingly, the heuristic actually gives the correct answer for
+;; both part-1 and part-2 ... though not for the sample input.
+
 (deftest test-sample
   (is (= 11 (part-* (parse sample)))))
 
