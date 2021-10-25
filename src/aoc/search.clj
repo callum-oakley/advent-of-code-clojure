@@ -11,22 +11,25 @@
   (peek [_] (first (peek priority-map)))
   (pop [_] (PriorityQueue. (pop priority-map) priority)))
 
-(defn- generic [queue start adjacent goal?]
-  (loop [queue (conj queue start)
-         seen #{start}]
-    (if (goal? (peek queue))
-      (peek queue)
-      (let [as (remove seen (adjacent (peek queue)))]
-        (recur (into (pop queue) as) (into seen as))))))
+(defn- generic
+  ([queue start adjacent goal?]
+   (generic queue start adjacent goal? identity))
+  ([queue start adjacent goal? normalise]
+   (loop [queue (conj queue start)
+          seen #{(normalise start)}]
+     (if (goal? (peek queue))
+       (peek queue)
+       (let [as (remove #(seen (normalise %)) (adjacent (peek queue)))]
+         (recur (into (pop queue) as) (into seen (map normalise as))))))))
 
-(defn bfs [start adjacent goal?]
-  (generic PersistentQueue/EMPTY start adjacent goal?))
+(defn bfs [& opts]
+  (apply generic PersistentQueue/EMPTY opts))
 
-(defn dfs [start adjacent goal?]
-  (generic [] start adjacent goal?))
+(defn dfs [& opts]
+  (apply generic [] opts))
 
-(defn dijkstra [cost start adjacent goal?]
-  (generic (->PriorityQueue (priority-map) cost) start adjacent goal?))
+(defn dijkstra [cost & opts]
+  (apply generic (->PriorityQueue (priority-map) cost) opts))
 
-(defn a* [cost heuristic start adjacent goal?]
-  (dijkstra #(+ (cost %) (heuristic %)) start adjacent goal?))
+(defn a* [cost heuristic & opts]
+  (apply dijkstra #(+ (cost %) (heuristic %)) opts))
