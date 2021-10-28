@@ -11,25 +11,36 @@
   (peek [_] (first (peek priority-map)))
   (pop [_] (PriorityQueue. (pop priority-map) priority)))
 
-(defn- generic
-  ([queue start adjacent goal?]
-   (generic queue start adjacent goal? identity))
-  ([queue start adjacent goal? normalise]
-   (loop [queue (conj queue start)
-          seen #{(normalise start)}]
-     (if (goal? (peek queue))
-       (peek queue)
-       (let [as (remove #(seen (normalise %)) (adjacent (peek queue)))]
-         (recur (into (pop queue) as) (into seen (map normalise as))))))))
+(defn- traversal
+  ([queue start adjacent]
+   (traversal queue start adjacent identity))
+  ([queue start adjacent normalise]
+   ((fn go [queue seen]
+      (when (peek queue)
+        (cons (peek queue)
+              (lazy-seq
+               (let [as (remove #(seen (normalise %)) (adjacent (peek queue)))]
+                 (go (into (pop queue) as) (into seen (map normalise) as)))))))
+    (conj queue start)
+    #{(normalise start)})))
+
+(defn bft [& opts]
+  (apply traversal PersistentQueue/EMPTY opts))
+
+(defn dft [& opts]
+  (apply traversal [] opts))
+
+(defn- search [queue start adjacent goal? & more]
+   (first (filter goal? (apply traversal queue start adjacent more))))
 
 (defn bfs [& opts]
-  (apply generic PersistentQueue/EMPTY opts))
+  (apply search PersistentQueue/EMPTY opts))
 
 (defn dfs [& opts]
-  (apply generic [] opts))
+  (apply search [] opts))
 
 (defn dijkstra [cost & opts]
-  (apply generic (->PriorityQueue (priority-map) cost) opts))
+  (apply search (->PriorityQueue (priority-map) cost) opts))
 
 (defn a* [cost heuristic & opts]
   (apply dijkstra #(+ (cost %) (heuristic %)) opts))
