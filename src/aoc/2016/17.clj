@@ -6,16 +6,12 @@
 
 (defn adjacent [seed {[x y] :pos path :path}]
   (when (not= [3 3] [x y])
-    (let [[a b] (hash/md5 (.getBytes (str seed path)))]
+    (let [[a b c d] (hash/nibbles (hash/md5 (.getBytes (str seed path))))]
       (cond-> nil
-        (and (pos? y) (< 10 (bit-and 0x0f (bit-shift-right a 4))))
-        (conj {:pos [x (dec y)] :path (str path \U)})
-        (and (< y 3) (< 10 (bit-and 0x0f a)))
-        (conj {:pos [x (inc y)] :path (str path \D)})
-        (and (pos? x) (< 10 (bit-and 0x0f (bit-shift-right b 4))))
-        (conj {:pos [(dec x) y] :path (str path \L)})
-        (and (< x 3) (< 10 (bit-and 0x0f b)))
-        (conj {:pos [(inc x) y] :path (str path \R)})))))
+        (and (pos? y) (< 10 a)) (conj {:pos [x (dec y)] :path (str path \U)})
+        (and (< y 3) (< 10 b)) (conj {:pos [x (inc y)] :path (str path \D)})
+        (and (pos? x) (< 10 c)) (conj {:pos [(dec x) y] :path (str path \L)})
+        (and (< x 3) (< 10 d)) (conj {:pos [(inc x) y] :path (str path \R)})))))
 
 (defn part-1* [seed]
   (:path (search/bfs {:pos [0 0] :path ""}

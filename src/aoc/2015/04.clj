@@ -4,27 +4,21 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(defn part-1* [key]
+(defn part-* [n key]
   (->> (iterate inc 1)
-       ;; No need to construct the hex string, just check the first few bytes
-       (filter #(let [[a b c] (hash/md5 (.getBytes (str key %)))]
-                  (= 0 a b (bit-and 0xf0 c))))
-       first))
-
-(defn part-2* [key]
-  (->> (iterate inc 1)
-       (filter #(= [0 0 0] (take 3 (hash/md5 (.getBytes (str key %))))))
+       (filter #(->> (str key %) .getBytes hash/md5 hash/nibbles (take n)
+                     (every? zero?)))
        first))
 
 (defn part-1 []
-  (part-1* (slurp "input/2015/04")))
+  (part-* 5 (slurp "input/2015/04")))
 
 (defn part-2 []
-  (part-2* (slurp "input/2015/04")))
+  (part-* 6 (slurp "input/2015/04")))
 
-(deftest test-part-1*
-  (is (= 609043 (part-1* "abcdef")))
-  (is (= 1048970 (part-1* "pqrstuv"))))
+(deftest test-part-*
+  (is (= 609043 (part-* 5 "abcdef")))
+  (is (= 1048970 (part-* 5 "pqrstuv"))))
 
 (deftest test-answers
   (is (= 117946 (part-1)))

@@ -4,7 +4,10 @@
 (defn md5 [bs]
   (.digest (MessageDigest/getInstance "MD5") bs))
 
-(defn- hex-ch [b]
+(defn nibbles [bs]
+  (mapcat (fn [b] [(bit-and 0x0f (bit-shift-right b 4)) (bit-and 0x0f b)]) bs))
+
+(defn hex-ch [b]
   (if (< b 10) (+ (int \0) b) (+ (int \a) (- b 10))))
 
 (defn hex-bytes [bs]
