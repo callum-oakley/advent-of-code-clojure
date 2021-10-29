@@ -5,23 +5,20 @@
 
 (defn part-1* [n]
   (loop [size n
-         top 1
-         left (transient
-               (into {} (map (fn [i] [(if (zero? i) n i) (inc i)])) (range n)))]
+         top 0
+         left (transient (mapv #(mod (inc %) n) (range n)))]
     (if (= 1 size)
-      top
-      (recur (dec size)
-             (left (left top))
-             (assoc! left top (left (left top)))))))
+      (inc top)
+      (let [left (assoc! left top (left (left top)))]
+        (recur (dec size) (left top) left)))))
 
 (defn part-2* [n]
   (loop [size n
-         top 1
-         bottom (quot n 2)
-         left (transient
-               (into {} (map (fn [i] [(if (zero? i) n i) (inc i)])) (range n)))]
+         top 0
+         bottom (dec (quot n 2))
+         left (transient (mapv #(mod (inc %) n) (range n)))]
     (if (= 1 size)
-      top
+      (inc top)
       (let [left (assoc! left bottom (left (left bottom)))]
         (recur (dec size) (left top) (cond-> bottom (odd? size) left) left)))))
 
