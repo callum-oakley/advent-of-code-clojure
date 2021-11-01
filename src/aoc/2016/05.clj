@@ -4,7 +4,7 @@
    [clojure.test :refer [deftest is]]))
 
 (defn part-1* [seed]
-  (->> (iterate inc 0)
+  (->> (range)
        (keep #(let [[a b c d e f]
                     (hash/nibbles (hash/md5 (.getBytes (str seed %))))]
                 (when (= 0 a b c d e)
@@ -13,7 +13,7 @@
        (apply str)))
 
 (defn part-2* [seed]
-  (->> (iterate inc 0)
+  (->> (range)
        (keep #(let [[a b c d e f g]
                     (hash/nibbles (hash/md5 (.getBytes (str seed %))))]
                 (when (and (= 0 a b c d e) (<= f 7))

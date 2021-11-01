@@ -10,7 +10,7 @@
   (some #(when (>= (count %) 3) (first %)) (partition-by identity s)))
 
 (defn part-* [hash seed]
-  (nth (->> (iterate inc 0)
+  (nth (->> (range)
             (map (fn [i] [i (->> (str seed i) .getBytes hash hash/hex)]))
             (partition 1001 1)
             (keep (fn [[[i h] & next-1000]]

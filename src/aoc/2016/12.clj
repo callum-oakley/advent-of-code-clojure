@@ -25,4 +25,3 @@
 (deftest test-answers
   (is (= 318009 (part-1)))
   (is (= 9227663 (part-2))))
-
