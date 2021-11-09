@@ -1,6 +1,6 @@
 (ns aoc.2016.01
   (:require
-   [aoc.vectors :refer [+v *v]]
+   [aoc.vectors :refer [+v *v manhattan-distance]]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
@@ -20,9 +20,6 @@
   (:path (reduce (fn [state [t steps]] (-> state (turn t) (walk steps)))
                   {:dir [0 1] :path [[0 0]]}
                   instructions)))
-
-(defn manhattan-distance [pos]
-  (apply + (map #(Math/abs %) pos)))
 
 (defn part-1* [instructions]
   (manhattan-distance (peek (path instructions))))

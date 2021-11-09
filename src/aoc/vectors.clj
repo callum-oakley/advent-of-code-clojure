@@ -8,3 +8,7 @@
 
 (defn transpose [vs]
   (apply mapv vector vs))
+
+(defn manhattan-distance [pos]
+  (apply + (map #(Math/abs %) pos)))
+
