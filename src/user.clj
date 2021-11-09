@@ -7,7 +7,7 @@
 
 (run! require (find/find-namespaces-in-dir (io/file "src")))
 
-(def default-year 2020)
+(def default-year 2017)
 
 (defn run-tests* [re]
   (test/run-all-tests re))
@@ -42,6 +42,11 @@
              res (f)
              duration (double (/ (- (System/currentTimeMillis) start) 1000))]
          (println (format "%s %7.3fs   %s" sym duration res)))))))
+
+(defn rrr [& args]
+  (repl/refresh)
+  (apply run-tests args)
+  (apply run args))
 
 (defn log []
   (spit "results.log" (with-out-str (run))))
