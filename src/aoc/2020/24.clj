@@ -1,5 +1,6 @@
 (ns aoc.2020.24
   (:require
+   [aoc.vectors :refer [+v]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
@@ -14,7 +15,7 @@
 (defn read-instruction [instruction]
   (->> (re-seq #"e|se|sw|w|nw|ne" instruction)
        (map dirs)
-       (reduce #(mapv + %1 %2) [0 0])))
+       (reduce +v [0 0])))
 
 (defn flip [black tile]
   (if (black tile) (disj black tile) (conj black tile)))
@@ -23,7 +24,7 @@
   (reduce flip #{} (map read-instruction instructions)))
 
 (defn adjacent [tile]
-  (map #(mapv + tile %) (vals dirs)))
+  (map #(+v tile %) (vals dirs)))
 
 (defn step [black]
   (set
