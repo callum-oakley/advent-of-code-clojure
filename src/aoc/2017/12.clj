@@ -13,7 +13,10 @@
   (count (search/dft 0 graph)))
 
 (defn part-2* [graph]
-  (count (group-by #(set (search/dft % graph)) (keys graph))))
+  (loop [components 0 unexplored (set (keys graph))]
+    (if-let [a (first unexplored)]
+      (recur (inc components) (apply disj unexplored (search/dft a graph)))
+      components)))
 
 (defn part-1 []
   (->> "input/2017/12" slurp parse part-1*))
