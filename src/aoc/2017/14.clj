@@ -7,35 +7,31 @@
    [clojure.test :refer [deftest is]]))
 
 (defn disk [seed]
-  (mapv #(vec (hash/bits (knot-hash (str seed "-" %)))) (range 128)))
-
-(defn part-1* [seed]
-  (->> seed disk flatten (filter identity) count))
+  (->> (range 128)
+       (mapcat (fn [y]
+                 (->> (str seed "-" y) knot-hash hash/bits
+                      (keep-indexed (fn [x b] (when b [x y]))))))
+       set))
 
 (defn part-2* [seed]
   (let [disk (disk seed)
         adjacent (fn [a]
                    (->> [[0 1] [0 -1] [1 0] [-1 0]]
                         (map #(+v a %))
-                        (filter #(get-in disk %))))]
-    (loop [regions 0
-           unexplored (set (for [x (range 128) y (range 128)] [x y]))]
+                        (filter disk)))]
+    (loop [regions 0 unexplored disk]
       (if-let [a (first unexplored)]
-        (if (get-in disk a)
-          (recur (inc regions)
-                 (apply disj unexplored (search/dft a adjacent)))
-          (recur regions
-                 (disj unexplored a)))
+        (recur (inc regions) (apply disj unexplored (search/dft a adjacent)))
         regions))))
 
 (defn part-1 []
-  (->> "input/2017/14" slurp part-1*))
+  (->> "input/2017/14" slurp disk count))
 
 (defn part-2 []
   (->> "input/2017/14" slurp part-2*))
 
 (deftest test-example
-  (is (= 8108 (part-1* "flqrgnkx")))
+  (is (= 8108 (count (disk "flqrgnkx"))))
   (is (= 1242 (part-2* "flqrgnkx"))))
 
 (deftest test-answers
