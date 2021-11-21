@@ -1,5 +1,6 @@
 (ns aoc.2016.21
   (:require
+   [aoc.string :as aocstr]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
@@ -14,42 +15,30 @@
       "reverse positions" ['reverse-positions (read-string a) (read-string b)]
       "move position" ['move-position (read-string a) (read-string c)])))
 
-(defn remove-at [p i]
-  (str (subs p 0 i) (subs p (inc i))))
-
-(defn insert-at [p i c]
-  (str (subs p 0 i) c (subs p i)))
-
-(defn swap-position [p i j]
-  (-> p
-      (remove-at i) (insert-at i (get p j))
-      (remove-at j) (insert-at j (get p i))))
-
-(defn rotate-left [p n]
-  (str (subs p (mod n (count p))) (subs p 0 (mod n (count p)))))
-
 (defn rotate-based [p c]
   (let [i (str/index-of p c)]
-    (rotate-left p (- (+ i (if (>= i 4) 2 1))))))
+    (aocstr/rotate-left p (- (+ i (if (>= i 4) 2 1))))))
 
 (defn rotations [p]
-  (->> p count range (map #(rotate-left p %))))
+  (->> p count range (map #(aocstr/rotate-left p %))))
 
 (defn part-* [password instructions]
   (reduce
    (fn [p [op x y]]
      (case op
-       swap-position (swap-position p x y)
-       swap-letter (swap-position p (str/index-of p x) (str/index-of p y))
-       rotate-left (rotate-left p x)
-       rotate-right (rotate-left p (- x))
+       swap-position (aocstr/swap p x y)
+       swap-letter (aocstr/swap p (str/index-of p x) (str/index-of p y))
+       rotate-left (aocstr/rotate-left p x)
+       rotate-right (aocstr/rotate-right p x)
        rotate-based (rotate-based p x)
        invert-rotate-based (->> p rotations
                                 (filter #(= p (rotate-based % x))) first)
        reverse-positions (str (subs p 0 x)
                               (str/reverse (subs p x (inc y)))
                               (subs p (inc y)))
-       move-position (-> p (remove-at x) (insert-at y (get p x)))))
+       move-position (-> p
+                         (aocstr/remove-at x)
+                         (aocstr/insert-at y (get p x)))))
    password
    instructions))
 

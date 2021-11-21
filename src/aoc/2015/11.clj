@@ -1,12 +1,10 @@
 (ns aoc.2015.11
   (:require
+   [aoc.string :as aocstr]
    [clojure.test :refer [deftest is]]))
 
 (defn incc [c]
   (-> c int inc char))
-
-(defn strassoc [s i c]
-  (str (subs s 0 i) c (subs s (inc i))))
 
 (defn valid? [password]
   (and (some (fn [[a b c]] (and (= b (incc a)) (= c (incc b))))
@@ -23,10 +21,10 @@
          i (dec (count password))]
     (let [c (get password i)]
       (if (= \z c)
-        (recur (strassoc password i \a) (dec i))
-        (strassoc password i (if (#{\h \n \k} c)
-                               (incc (incc c))
-                               (incc c)))))))
+        (recur (aocstr/assoc-at password i \a) (dec i))
+        (aocstr/assoc-at password i (if (#{\h \n \k} c)
+                                      (incc (incc c))
+                                      (incc c)))))))
 
 (defn next-valid [password]
   (->> password (iterate increment) rest (filter valid?) first))
