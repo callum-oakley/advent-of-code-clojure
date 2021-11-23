@@ -11,4 +11,3 @@
 
 (defn manhattan-distance [pos]
   (apply + (map #(Math/abs %) pos)))
-
