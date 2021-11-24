@@ -1,6 +1,7 @@
 (ns aoc.2016.14
   (:require
    [aoc.hash :as hash]
+   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (def stretched-md5
@@ -20,10 +21,10 @@
        63))
 
 (defn part-1 []
-  (part-* hash/md5 (slurp "input/2016/14")))
+  (part-* hash/md5 (str/trim (slurp "input/2016/14"))))
 
 (defn part-2 []
-  (part-* stretched-md5 (slurp "input/2016/14")))
+  (part-* stretched-md5 (str/trim (slurp "input/2016/14"))))
 
 (deftest test-stretched-md5
   (is (= "a107ff634856bb300138cac6568c0f24"

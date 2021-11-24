@@ -1,5 +1,6 @@
 (ns aoc.2015.10
   (:require
+   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn look-and-say [s]
@@ -8,7 +9,7 @@
                        s)))
 
 (defn part-* [n]
-  (count (nth (iterate look-and-say (slurp "input/2015/10")) n)))
+  (count (nth (iterate look-and-say (str/trim (slurp "input/2015/10"))) n)))
 
 (defn part-1 []
   (part-* 40))

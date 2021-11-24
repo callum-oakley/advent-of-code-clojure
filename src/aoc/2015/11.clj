@@ -1,6 +1,7 @@
 (ns aoc.2015.11
   (:require
    [aoc.string :as aocstr]
+   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn incc [c]
@@ -30,10 +31,10 @@
   (->> password (iterate increment) rest (filter valid?) first))
 
 (defn part-1 []
-  (-> "input/2015/11" slurp next-valid))
+  (-> "input/2015/11" slurp str/trim next-valid))
 
 (defn part-2 []
-  (-> "input/2015/11" slurp next-valid next-valid))
+  (-> "input/2015/11" slurp str/trim next-valid next-valid))
 
 (deftest test-valid?
   (is (not (valid? "hijklmmn")))

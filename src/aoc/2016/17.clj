@@ -2,6 +2,7 @@
   (:require
    [aoc.hash :as hash]
    [aoc.search :as search]
+   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn adjacent [seed {[x y] :pos path :path}]
@@ -25,10 +26,10 @@
        (apply max)))
 
 (defn part-1 []
-  (part-1* (slurp "input/2016/17")))
+  (part-1* (str/trim (slurp "input/2016/17"))))
 
 (defn part-2 []
-  (part-2* (slurp "input/2016/17")))
+  (part-2* (str/trim (slurp "input/2016/17"))))
 
 (deftest test-part-1*
   (is (= "DDRRRD" (part-1* "ihgpwlah")))

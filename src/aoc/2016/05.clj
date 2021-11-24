@@ -1,6 +1,7 @@
 (ns aoc.2016.05
   (:require
    [aoc.hash :as hash]
+   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn part-1* [seed]
@@ -29,10 +30,10 @@
        (apply str)))
 
 (defn part-1 []
-  (part-1* (slurp "input/2016/05")))
+  (part-1* (str/trim (slurp "input/2016/05"))))
 
 (defn part-2 []
-  (part-2* (slurp "input/2016/05")))
+  (part-2* (str/trim (slurp "input/2016/05"))))
 
 (deftest test-part-1*
   (is (= "18f47a30" (part-1* "abc"))))

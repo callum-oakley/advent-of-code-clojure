@@ -11,10 +11,10 @@
        first))
 
 (defn part-1 []
-  (part-* 5 (slurp "input/2015/04")))
+  (part-* 5 (str/trim (slurp "input/2015/04"))))
 
 (defn part-2 []
-  (part-* 6 (slurp "input/2015/04")))
+  (part-* 6 (str/trim (slurp "input/2015/04"))))
 
 (deftest test-part-*
   (is (= 609043 (part-* 5 "abcdef")))

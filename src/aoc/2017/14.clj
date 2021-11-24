@@ -4,6 +4,7 @@
    [aoc.hash :as hash]
    [aoc.search :as search]
    [aoc.vectors :refer [+v]]
+   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn disk [seed]
@@ -25,10 +26,10 @@
         regions))))
 
 (defn part-1 []
-  (->> "input/2017/14" slurp disk count))
+  (->> "input/2017/14" slurp str/trim disk count))
 
 (defn part-2 []
-  (->> "input/2017/14" slurp part-2*))
+  (->> "input/2017/14" slurp str/trim part-2*))
 
 (deftest test-example
   (is (= 8108 (count (disk "flqrgnkx"))))
