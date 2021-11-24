@@ -32,7 +32,7 @@
 
 (defn run
   ([]
-   (run! run (range 2015 2021)))
+   (run! run (range 2015 (inc (.getValue (java.time.Year/now))))))
   ([year]
    (if (<= year 25)
      (run default-year year)
