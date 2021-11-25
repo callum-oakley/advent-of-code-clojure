@@ -44,7 +44,3 @@
   (is (= {:id :player :hit-points 2 :damage 5 :armor 5}
          (fight {:id :player :hit-points 8 :damage 5 :armor 5}
                 {:id :boss :hit-points 12 :damage 7 :armor 2}))))
-
-(deftest test-answers
-  (is (= 121 (part-1)))
-  (is (= 201 (part-2))))

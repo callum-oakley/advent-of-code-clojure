@@ -50,7 +50,3 @@
 (deftest test-part-*
   (is (= 62842880 (part-* 1 (parse sample))))
   (is (= 57600000 (part-* 2 (parse sample)))))
-
-(deftest test-answers
-  (is (= 222870 (part-1)))
-  (is (= 117936 (part-2))))

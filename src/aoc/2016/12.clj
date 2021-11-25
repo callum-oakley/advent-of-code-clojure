@@ -21,7 +21,3 @@
 
 (defn part-2 []
   (run (parse (slurp "input/2016/12")) 0 '{a 0 b 0 c 1 d 0}))
-
-(deftest test-answers
-  (is (= 318009 (part-1)))
-  (is (= 9227663 (part-2))))

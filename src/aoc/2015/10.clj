@@ -20,7 +20,3 @@
 (deftest test-look-and-say
   (is (= ["1" "11" "21" "1211" "111221" "312211"]
          (take 6 (iterate look-and-say "1")))))
-
-(deftest test-answers
-  (is (= 492982 (part-1)))
-  (is (= 6989950 (part-2))))

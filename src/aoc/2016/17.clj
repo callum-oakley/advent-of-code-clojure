@@ -40,7 +40,3 @@
   (is (= 370 (part-2* "ihgpwlah")))
   (is (= 492 (part-2* "kglvqrro")))
   (is (= 830 (part-2* "ulqzkmiv"))))
-
-(deftest test-answers
-  (is (= "RRRLDRDUDD" (part-1)))
-  (is (= 706 (part-2))))

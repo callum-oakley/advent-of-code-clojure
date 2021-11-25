@@ -22,7 +22,3 @@
 (deftest test-part-*
   (is (= 99 (part-* 3 1 [1 2 3 4 5 7 8 9 10 11])))
   (is (= 44 (part-* 4 1 [1 2 3 4 5 7 8 9 10 11]))))
-
-(deftest test-answers
-  (is (= 11846773891 (part-1)))
-  (is (= 80393059 (part-2))))

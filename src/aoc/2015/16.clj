@@ -35,7 +35,3 @@
                       #{:pomeranians :goldfish} #(> v %)
                       #(= v %))])
                target-vals)))
-
-(deftest test-answers
-  (is (= 103 (part-1)))
-  (is (= 405 (part-2))))

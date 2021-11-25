@@ -26,7 +26,3 @@
   (is (valid-2? "a ab abc abd abf abj"))
   (is (valid-2? "iiii oiii ooii oooi oooo"))
   (is (not (valid-2? "oiii ioii iioi iiio"))))
-
-(deftest test-answers
-  (is (= 383 (part-1)))
-  (is (= 265 (part-2))))

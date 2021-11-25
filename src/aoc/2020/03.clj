@@ -39,10 +39,6 @@
    "#...##....#"
    ".#..#...#.#"])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 sample) 7))
-  (is (= (part-1) 200)))
-
-(deftest test-part-2
-  (is (= (part-2 sample) 336))
-  (is (= (part-2) 3737923200)))
+  (is (= (part-2 sample) 336)))

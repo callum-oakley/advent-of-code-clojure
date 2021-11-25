@@ -32,7 +32,3 @@
                           Dublin to Belfast = 141")]
     (is (= 605 (part-* min distances)))
     (is (= 982 (part-* max distances)))))
-
-(deftest test-answers
-  (is (= 207 (part-1)))
-  (is (= 804 (part-2))))

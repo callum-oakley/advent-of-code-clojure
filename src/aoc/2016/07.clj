@@ -37,7 +37,3 @@
   (is (not (ssl? (parse "xyx[xyx]xyx"))))
   (is (ssl? (parse "aaa[kek]eke")))
   (is (ssl? (parse "zazbz[bzb]cdb"))))
-
-(deftest test-answers
-  (is (= 115 (part-1)))
-  (is (= 231 (part-2))))

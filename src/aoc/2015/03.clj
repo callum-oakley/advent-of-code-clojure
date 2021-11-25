@@ -30,7 +30,3 @@
   (is (= 3 (count (part-2* "^v"))))
   (is (= 3 (count (part-2* "^>v<"))))
   (is (= 11 (count (part-2* "^v^v^v^v^v")))))
-
-(deftest test-answers
-  (is (= 2592 (part-1)))
-  (is (= 2360 (part-2))))

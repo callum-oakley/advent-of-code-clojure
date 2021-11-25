@@ -42,7 +42,3 @@
 (deftest test-part-*
   (is (= "1985" (part-* keypad-1 ["ULL" "RRDDD" "LURDL" "UUUUD"])))
   (is (= "5DB3" (part-* keypad-2 ["ULL" "RRDDD" "LURDL" "UUUUD"]))))
-
-(deftest test-answers
-  (is (= "78985" (part-1)))
-  (is (= "57DD8" (part-2))))

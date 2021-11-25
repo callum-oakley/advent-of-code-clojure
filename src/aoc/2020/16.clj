@@ -75,10 +75,6 @@
    ["your ticket:" "11,12,13"]
    ["nearby tickets:" "3,9,18" "15,1,5" "5,14,9"]])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample-1)) 71))
-  (is (= (part-1) 26053)))
-
-(deftest test-part-2
-  (is (= (part-2* (parse sample-2)) {"row" 0 "class" 1 "seat" 2}))
-  (is (= (part-2) 1515506256421)))
+  (is (= (part-2* (parse sample-2)) {"row" 0 "class" 1 "seat" 2})))

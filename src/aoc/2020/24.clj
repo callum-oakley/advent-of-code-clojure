@@ -66,10 +66,6 @@
    "neswnwewnwnwseenwseesewsenwsweewe"
    "wseweeenwnesenwwwswnew"])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 sample) 10))
-  (is (= (part-1) 549)))
-
-(deftest test-part-2
-  (is (= (part-2 sample) 2208))
-  (is (= (part-2) 4147)))
+  (is (= (part-2 sample) 2208)))

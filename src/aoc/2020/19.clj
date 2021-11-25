@@ -67,11 +67,7 @@
     "aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"]]
   )
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample-1)) 2))
-  (is (= (part-1) 118)))
-
-(deftest test-part-2
   (is (= (part-1 (parse sample-2)) 3))
-  (is (= (part-2 (parse sample-2)) 12))
-  (is (= (part-2) 246)))
+  (is (= (part-2 (parse sample-2)) 12)))

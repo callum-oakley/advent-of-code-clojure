@@ -32,7 +32,3 @@
   (is (= [[0 2 7 0] [2 4 1 2] [3 1 2 3] [0 2 3 4] [1 3 4 1] [2 4 1 2]]
          (take 6 (iterate redistribute [0 2 7 0]))))
   (is (= [5 4] (part-* 0 {} [0 2 7 0]))))
-
-(deftest test-answers
-  (is (= 11137 (part-1)))
-  (is (= 1037 (part-2))))

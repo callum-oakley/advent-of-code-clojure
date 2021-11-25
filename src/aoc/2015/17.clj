@@ -26,7 +26,3 @@
 
 (deftest test-fills
   (is (= 4 (count (fills 25 [20 15 10 5 5])))))
-
-(deftest test-answers
-  (is (= 654 (part-1)))
-  (is (= 57 (part-2))))

@@ -43,7 +43,3 @@
            David would lose 7 happiness units by sitting next to Bob.
            David would gain 41 happiness units by sitting next to Carol."]
     (is (= 330 (part-* (parse s))))))
-
-(deftest test-ansers
-  (is (= 709 (part-1)))
-  (is (= 668 (part-2))))

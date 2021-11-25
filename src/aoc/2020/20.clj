@@ -147,10 +147,6 @@
     "#.#.#####." ".#..######" "..#......." "######...." "####.#..#."
     ".#...#.##." "#.#####.##" "..#.###..." "..#......." "..#.###..."]])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample)) 20899048083289))
-  (is (= (part-1) 23497974998093)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse sample)) 273))
-  (is (= (part-2) 2256)))
+  (is (= (part-2 (parse sample)) 273)))

@@ -61,10 +61,6 @@
   ["L.LL.LL.LL" "LLLLLLL.LL" "L.L.L..L.." "LLLL.LL.LL" "L.LL.LL.LL"
    "L.LLLLL.LL" "..L.L....." "LLLLLLLLLL" "L.LLLLLL.L" "L.LLLLL.LL"])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample)) 37))
-  (is (= (part-1) 2483)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse sample)) 26))
-  (is (= (part-2) 2285)))
+  (is (= (part-2 (parse sample)) 26)))

@@ -39,7 +39,3 @@
               "turn on" inc
               "turn off" #(max 0 (dec %))
               "toggle" #(+ 2 %)))))
-
-(deftest test-answers
-  (is (= 543903 (part-1)))
-  (is (= 14687245 (part-2))))

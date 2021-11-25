@@ -33,7 +33,3 @@
 (deftest test-deliver-presents
   (is (= {1 10 2 30 3 40 4 70 5 60 6 120 7 80 8 150 9 130}
          (deliver-presents 10 10 10))))
-
-(deftest test-answers
-  (is (= 786240 (part-1)))
-  (is (= 831600 (part-2))))

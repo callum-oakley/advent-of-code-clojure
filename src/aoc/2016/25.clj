@@ -23,6 +23,3 @@
                     (take (count signal) (run m 0 {'a % 'b 0 'c 0 'd 0})))
              %)
           (range))))
-
-(deftest test-answers
-  (is (= 198 (part-1))))

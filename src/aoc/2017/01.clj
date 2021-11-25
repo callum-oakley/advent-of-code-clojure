@@ -26,7 +26,3 @@
   (is (= 4 (part-* 3 [1 2 3 4 2 5])))
   (is (= 12 (part-* 3 [1 2 3 1 2 3])))
   (is (= 4 (part-* 4 [1 2 1 3 1 4 1 5]))))
-
-(deftest test-answers
-  (is (= 1144 (part-1)))
-  (is (= 1194 (part-2))))

@@ -29,7 +29,3 @@
                       4 <-> 2, 3, 6\n5 <-> 6\n6 <-> 4, 5")]
     (is (= 6 (part-1* graph)))
     (is (= 2 (part-2* graph)))))
-
-(deftest test-answers
-  (is (= 145 (part-1)))
-  (is (= 207 (part-2))))

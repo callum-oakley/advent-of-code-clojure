@@ -32,7 +32,3 @@
 
 (deftest test-part-*
   (is (= 22728 (part-* hash/md5 "abc"))))
-
-(deftest test-answers
-  (is (= 15168 (part-1)))
-  (is (= 20864 (part-2))))

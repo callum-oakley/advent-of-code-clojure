@@ -40,7 +40,3 @@
                  "                "]]
     (is (= "ABCDEF" (apply str (remove #{\| \- \+} (follow-route example)))))
     (is (= 38 (count (follow-route example))))))
-
-(deftest test-answers
-  (is (= "HATBMQJYZ" (part-1)))
-  (is (= 16332 (part-2))))

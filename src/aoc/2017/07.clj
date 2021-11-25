@@ -48,7 +48,3 @@
                                   cntj (57)")]
     (is (= "tknk" (root children)))
     (is (= 60 (part-2* weight children)))))
-
-(deftest test-answers
-  (is (= "bpvhwhh" (part-1)))
-  (is (= 256 (part-2))))

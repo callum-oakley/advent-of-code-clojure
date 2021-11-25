@@ -31,9 +31,3 @@
   (is (valid-2? [1 3 \a "abcde"]))
   (is (not (valid-2? [1 3 \b "cdefg"])))
   (is (not (valid-2? [2 9 \c "ccccccccc"]))))
-
-(deftest test-part-1
-  (is (= (part-1) 393)))
-
-(deftest test-part-2
-  (is (= (part-2) 690)))

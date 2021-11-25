@@ -44,10 +44,6 @@
    "acc +3" "jmp -3" "acc -99"
    "acc +1" "jmp -4" "acc +6"])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample)) 5))
-  (is (= (part-1) 1797)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse sample)) 8))
-  (is (= (part-2) 1036)))
+  (is (= (part-2 (parse sample)) 8)))

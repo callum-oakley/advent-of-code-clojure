@@ -24,7 +24,3 @@
 (deftest test-ribbon
   (is (= 34 (ribbon "2x3x4")))
   (is (= 14 (ribbon "1x1x10"))))
-
-(deftest test-answers
-  (is (= 1588178 (part-1)))
-  (is (= 3783758 (part-2))))

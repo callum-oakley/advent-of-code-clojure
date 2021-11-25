@@ -51,11 +51,7 @@
    "dark blue bags contain 2 dark violet bags."
    "dark violet bags contain no other bags."])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample)) 4))
-  (is (= (part-1) 272)))
-
-(deftest test-part-2
   (is (= (part-2 (parse sample)) 32))
-  (is (= (part-2 (parse sample-2)) 126))
-  (is (= (part-2) 172246)))
+  (is (= (part-2 (parse sample-2)) 126)))

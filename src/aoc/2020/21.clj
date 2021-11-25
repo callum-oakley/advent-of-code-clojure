@@ -56,10 +56,6 @@
    "sqjhc fvjkl (contains soy)"
    "sqjhc mxmxvkd sbzzf (contains fish)"])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample)) 5))
-  (is (= (part-1) 2542)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse sample)) "mxmxvkd,sqjhc,fvjkl"))
-  (is (= (part-2) "hkflr,ctmcqjf,bfrq,srxphcm,snmxl,zvx,bd,mqvk")))
+  (is (= (part-2 (parse sample)) "mxmxvkd,sqjhc,fvjkl")))

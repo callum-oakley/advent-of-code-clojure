@@ -28,7 +28,3 @@
 (deftest test-examples
   (is (= 18 (part-1* [[5 1 9 5] [7 5 3] [2 4 6 8]])))
   (is (= 9 (part-2* [[5 9 2 8] [9 4 7 3] [3 8 6 5]]))))
-
-(deftest test-answers
-  (is (= 44887 (part-1)))
-  (is (= 242 (part-2))))

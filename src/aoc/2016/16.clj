@@ -36,7 +36,3 @@
 
 (deftest test-part-*
   (is (= "01100" (part-* 20 "10000"))))
-
-(deftest test-answers
-  (is (= "10010110010011110" (part-1)))
-  (is (= "01101011101100011" (part-2))))

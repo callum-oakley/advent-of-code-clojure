@@ -30,7 +30,3 @@
 
 (deftest test-sample
   (is (= 11 (part-1* 10 [7 4]))))
-
-(deftest test-answers
-  (is (= 90 (part-1)))
-  (is (= 135 (part-2))))

@@ -33,7 +33,3 @@
   (is (= "33efeb34ea91902bb2f59c9920caa6cd" (hash/hex (knot-hash "AoC 2017"))))
   (is (= "3efbe78a8d82f29979031a4aa0b16a9d" (hash/hex (knot-hash "1,2,3"))))
   (is (= "63960835bcdc130f0b66d7ff4f6a5a8e" (hash/hex (knot-hash "1,2,4")))))
-
-(deftest test-answers
-  (is (= 38628 (part-1)))
-  (is (= "e1462100a34221a7f0906da15c1c979a" (part-2))))

@@ -22,7 +22,3 @@
 (deftest test-examples
   (is (= 5 (part-* 1 [0 3 0 1 -3])))
   (is (= 10 (part-* 2 [0 3 0 1 -3]))))
-
-(deftest test-answers
-  (is (= 342669 (part-1)))
-  (is (= 25136209 (part-2))))

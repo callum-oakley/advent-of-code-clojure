@@ -26,7 +26,3 @@
                              c dec -10 if a >= 1
                              c inc -20 if c == 10")]
     (is (= [{} {} '{a 1} '{a 1 c 10} '{a 1 c -10}] (run instructions)))))
-
-(deftest test-answers
-  (is (= 5946 (part-1)))
-  (is (= 6026 (part-2))))

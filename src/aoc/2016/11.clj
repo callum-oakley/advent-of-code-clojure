@@ -69,7 +69,3 @@
 
 (deftest test-sample
   (is (= 11 (part-* (parse sample)))))
-
-(deftest test-answers
-  (is (= 37 (part-1)))
-  (is (= 61 (part-2))))

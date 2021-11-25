@@ -35,7 +35,3 @@
   (is (nice-2? "xxyxx"))
   (is (not (nice-2? "uurcxstgmygtbstg")))
   (is (not (nice-2? "ieodomkazucvgmuy"))))
-
-(deftest test-answers
-  (is (= 236 (part-1)))
-  (is (= 51 (part-2))))

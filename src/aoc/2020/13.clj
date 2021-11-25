@@ -29,10 +29,6 @@
 (def sample
   ["939" "7,13,x,x,59,x,31,19"])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample)) 295))
-  (is (= (part-1) 5257)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse sample)) 1068781))
-  (is (= (part-2) 538703333547789)))
+  (is (= (part-2 (parse sample)) 1068781)))

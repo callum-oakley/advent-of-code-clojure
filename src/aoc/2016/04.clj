@@ -41,7 +41,3 @@
 
 (deftest test-decrypt
   (is (= "very encrypted name" (decrypt "qzmt-zixmtkozy-ivhz" 343))))
-
-(deftest test-answers
-  (is (= 173787 (part-1)))
-  (is (= 548 (part-2))))

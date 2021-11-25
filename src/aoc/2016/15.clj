@@ -25,7 +25,3 @@
 
 (deftest test-part-*
   (is (= 5 (part-* [[1 5 4] [2 2 1]]))))
-
-(deftest test-answers
-  (is (= 317371 (part-1)))
-  (is (= 2080951 (part-2))))

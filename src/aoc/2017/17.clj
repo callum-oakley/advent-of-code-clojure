@@ -29,7 +29,3 @@
 
 (deftest test-example
   (is (= 638 (part-1* 3))))
-
-(deftest test-answers
-  (is (= 1487 (part-1)))
-  (is (= 25674054 (part-2))))

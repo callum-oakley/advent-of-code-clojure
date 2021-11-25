@@ -50,7 +50,3 @@
                            value 2 goes to bot 2"))]
     (is (= [5 2 3] (check-outputs state [0 1 2])))
     (is (= 2 (check-logs state #{2 5})))))
-
-(deftest test-answers
-  (is (= 56 (part-1)))
-  (is (= 7847 (part-2))))

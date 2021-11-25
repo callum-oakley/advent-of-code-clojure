@@ -19,7 +19,3 @@
 
 (deftest test-part-*
   (is (= 38 (part-* 10 ".^^.^.^^^^"))))
-
-(deftest test-answers
-  (is (= 1987 (part-1)))
-  (is (= 19984714 (part-2))))

@@ -27,8 +27,4 @@
 
 (deftest test-part-1
   (is (= (part-1 sample) 11))
-  (is (= (part-1) 6457)))
-
-(deftest test-part-2
-  (is (= (part-2 sample) 6))
-  (is (= (part-2) 3260)))
+  (is (= (part-2 sample) 6)))

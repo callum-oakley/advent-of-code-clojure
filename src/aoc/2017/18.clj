@@ -57,7 +57,3 @@
         example-2 "snd 1\nsnd 2\nsnd p\nrcv a\nrcv b\nrcv c\nrcv d"]
     (is (= 4 (part-1* (parse example-1))))
     (is (= 3 (part-2* (parse example-2))))))
-
-(deftest test-answers
-  (is (= 3423 (part-1)))
-  (is (= 7493 (part-2))))

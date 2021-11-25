@@ -45,7 +45,3 @@
   (let [data (parse ".#.#.#\n...##.\n#....#\n..#...\n#.#..#\n####..")]
     (is (= 4 (part-* #{} 4 data)))
     (is (= 17 (part-* #{[0 0] [0 5] [5 0] [5 5]} 5 data)))))
-
-(deftest test-answers
-  (is (= 814 (part-1)))
-  (is (= 924 (part-2))))

@@ -45,7 +45,7 @@
    (client/post
     (format "https://adventofcode.com/%d/day/%d/answer" year day)
     {:headers {:cookie (str "session=" (slurp ".session"))}
-     :form-params {:level part :answer answer}})))
+     :form-params {:level part :answer (str answer)}})))
 
 (defn check-answer [year day part answer]
   (if-let [target (get-answer year day part)]

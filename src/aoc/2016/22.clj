@@ -45,7 +45,3 @@
             adjacent
             #(= [0 0] (:goal %))
             (juxt :hole :goal)))))
-
-(deftest test-answers
-  (is (= 937 (part-1)))
-  (is (= 188 (part-2))))

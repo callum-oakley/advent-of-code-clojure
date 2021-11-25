@@ -26,7 +26,3 @@
 (deftest test-example
   (is (= 588 (part-1* [65 8921])))
   (is (= 309 (part-2* [65 8921]))))
-
-(deftest test-answers
-  (is (= 597 (part-1)))
-  (is (= 303 (part-2))))

@@ -39,10 +39,6 @@
          a (next-cup 1) b (next-cup a)]
      (* a b))))
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 [3 8 9 1 2 5 4 6 7]) "67384529"))
-  (is (= (part-1) "38925764")))
-
-(deftest test-part-2
-  (is (= (part-2 [3 8 9 1 2 5 4 6 7]) 149245887792))
-  (is (= (part-2) 131152940564)))
+  (is (= (part-2 [3 8 9 1 2 5 4 6 7]) 149245887792)))

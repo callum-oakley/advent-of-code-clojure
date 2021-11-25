@@ -77,7 +77,3 @@
 
 (defn part-2 []
   (part-* :hard))
-
-(deftest test-answers
-  (is (= 900 (part-1)))
-  (is (= 1216 (part-2))))

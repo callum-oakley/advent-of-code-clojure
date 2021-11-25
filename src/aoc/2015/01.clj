@@ -29,7 +29,3 @@
 (deftest test-part-2*
   (is (= 1 (part-2* ")")))
   (is (= 5 (part-2* "()())"))))
-
-(deftest test-answers
-  (is (= 138 (part-1)))
-  (is (= 1771 (part-2))))

@@ -42,7 +42,3 @@
   (is (= 0 (:garbage (part-* "<!!>"))))
   (is (= 0 (:garbage (part-* "<!!!>>"))))
   (is (= 10 (:garbage (part-* "<{o\"i!a,<{i<a>")))))
-
-(deftest test-answers
-  (is (= 21037 (part-1)))
-  (is (= 9495 (part-2))))

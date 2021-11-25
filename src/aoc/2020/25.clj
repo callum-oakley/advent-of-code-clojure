@@ -16,6 +16,5 @@
   ([] (part-1 data))
   ([[card door]] (first (drop (loops door) (steps card)))))
 
-(deftest test-part-1
-  (is (= (part-1 [5764801 17807724]) 14897079))
-  (is (= (part-1) 7032853)))
+(deftest test-example
+  (is (= (part-1 [5764801 17807724]) 14897079)))

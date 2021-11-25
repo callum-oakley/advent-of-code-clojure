@@ -40,7 +40,3 @@
 
 (deftest test-part-2*
   (is (= "05ace8e3" (part-2* "abc"))))
-
-(deftest test-answers
-  (is (= "f77a0e6e" (part-1)))
-  (is (= "999828ec" (part-2))))

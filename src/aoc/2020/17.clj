@@ -38,10 +38,6 @@
   ([grid]
    (count (first (drop 6 (iterate #(step neighbors-4 %) grid))))))
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse [".#." "..#" "###"])) 112))
-  (is (= (part-1) 213)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse [".#." "..#" "###"])) 848))
-  (is (= (part-2) 1624)))
+  (is (= (part-2 (parse [".#." "..#" "###"])) 848)))

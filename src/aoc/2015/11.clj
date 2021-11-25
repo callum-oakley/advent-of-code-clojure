@@ -46,7 +46,3 @@
 (deftest test-next-valid
   (is (= "abcdffaa" (next-valid "abcdefgh")))
   (is (= "ghjaabcc" (next-valid "ghijklmn"))))
-
-(deftest test-answers
-  (is (= "vzbxxyzz" (part-1)))
-  (is (= "vzcaabcc" (part-2))))

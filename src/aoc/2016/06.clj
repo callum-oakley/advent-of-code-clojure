@@ -20,7 +20,3 @@
                                    "atevrs" "tsrnev" "sdttsa" "rasrtv"
                                    "nssdts" "ntnada" "svetve" "tesnvt"
                                    "vntsnd" "vrdear" "dvrsen" "enarar"]))))
-
-(deftest test-answers
-  (is (= "zcreqgiv" (part-1)))
-  (is (= "pljvorrk" (part-2))))

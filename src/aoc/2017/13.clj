@@ -25,7 +25,3 @@
 (deftest test-example
   (is (= [[0 3] [6 4]] (caught 0 [[0 3] [1 2] [4 4] [6 4]])))
   (is (= 10 (part-2* [[0 3] [1 2] [4 4] [6 4]]))))
-
-(deftest test-answers
-  (is (= 3184 (part-1)))
-  (is (= 3878062 (part-2))))

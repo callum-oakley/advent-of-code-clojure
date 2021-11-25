@@ -41,7 +41,3 @@
   (is (= 4 (part-2* "\"abc\"")))
   (is (= 6 (part-2* "\"aaa\\\"aaa\"")))
   (is (= 5 (part-2* "\"\\x27\""))))
-
-(deftest test-answers
-  (is (= 1371 (part-1)))
-  (is (= 2117 (part-2))))

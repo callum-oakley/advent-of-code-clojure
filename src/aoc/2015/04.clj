@@ -19,7 +19,3 @@
 (deftest test-part-*
   (is (= 609043 (part-* 5 "abcdef")))
   (is (= 1048970 (part-* 5 "pqrstuv"))))
-
-(deftest test-answers
-  (is (= 117946 (part-1)))
-  (is (= 3938038 (part-2))))

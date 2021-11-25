@@ -17,7 +17,3 @@
 
 (defn part-2 []
   (part-* #(->> % (partition 3) (mapcat transpose))))
-
-(deftest test-answers
-  (is (= 869 (part-1)))
-  (is (= 1544 (part-2))))

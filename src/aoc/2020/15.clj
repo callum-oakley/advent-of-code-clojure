@@ -33,10 +33,6 @@
        (map read-string)
        (game 30000000)))
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (game 2020 [0 3 6]) 436))
-  (is (= (part-1) 257)))
-
-(deftest test-part-2
-  (is (= (game 30000000 [0 3 6]) 175594))
-  (is (= (part-2) 8546398)))
+  (is (= (game 30000000 [0 3 6]) 175594)))

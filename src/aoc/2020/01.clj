@@ -21,10 +21,6 @@
   ([] (part-2 expense-report))
   ([report] (process-report 3 report)))
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 [1721 979 366 299 675 1456]) 514579))
-  (is (= (part-1) 100419)))
-
-(deftest test-part-2
-  (is (= (part-2 [1721 979 366 299 675 1456]) 241861950))
-  (is (= (part-2) 265253940)))
+  (is (= (part-2 [1721 979 366 299 675 1456]) 241861950)))

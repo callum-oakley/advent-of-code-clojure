@@ -31,7 +31,3 @@
 (deftest test-examples
   (is (= 3 (part-1* 5)))
   (is (= 2 (part-2* 5))))
-
-(deftest test-answers
-  (is (= 1841611 (part-1)))
-  (is (= 1423634 (part-2))))

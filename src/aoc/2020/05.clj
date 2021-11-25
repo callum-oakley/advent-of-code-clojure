@@ -27,9 +27,3 @@
     "BFFFBBFRRR" 567
     "FFFBBBFRRR" 119
     "BBFFBBFRLL" 820))
-
-(deftest test-part-1
-  (is (= (part-1) 901)))
-
-(deftest test-part-2
-  (is (= (part-2) 661)))

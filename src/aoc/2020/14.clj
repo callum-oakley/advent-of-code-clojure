@@ -71,10 +71,6 @@
    "mask = 00000000000000000000000000000000X0XX"
    "mem[26] = 1"])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample-1)) 165))
-  (is (= (part-1) 7817357407588)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse sample-2)) 208))
-  (is (= (part-2) 4335927555692)))
+  (is (= (part-2 (parse sample-2)) 208)))

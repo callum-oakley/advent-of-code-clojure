@@ -14,6 +14,3 @@
 (defn part-1 []
   (let [[row col] (->> "input/2015/25" slurp (re-seq #"\d+") (map read-string))]
     (code (+ col (triangle (- (+ row col) 2))))))
-
-(deftest test-answers
-  (is (= 2650453 (part-1))))

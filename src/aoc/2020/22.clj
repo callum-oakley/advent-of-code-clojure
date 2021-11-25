@@ -51,10 +51,6 @@
 (def sample
   [["Player 1:" "9" "2" "6" "3" "1"] ["Player 2:" "5" "8" "4" "7" "10"]])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample)) 306))
-  (is (= (part-1) 31455)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse sample)) 291))
-  (is (= (part-2) 32528)))
+  (is (= (part-2 (parse sample)) 291)))

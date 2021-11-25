@@ -68,7 +68,3 @@
                                "move position 3 to position 0"
                                "rotate based on position of letter b"
                                "rotate based on position of letter d"])))))
-
-(deftest test-answers
-  (is (= "baecdfgh" (part-1)))
-  (is (= "cegdahbf" (part-2))))

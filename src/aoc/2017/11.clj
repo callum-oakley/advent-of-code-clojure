@@ -24,7 +24,3 @@
   (is (= 0 (->> "ne,ne,sw,sw" parse (reduce +v) dist)))
   (is (= 2 (->> "ne,ne,s,s" parse (reduce +v) dist)))
   (is (= 3 (->> "se,sw,se,sw,sw" parse (reduce +v) dist))))
-
-(deftest test-answers
-  (is (= 682 (part-1)))
-  (is (= 1406 (part-2))))

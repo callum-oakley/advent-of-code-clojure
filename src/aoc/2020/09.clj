@@ -33,10 +33,6 @@
 (def sample
   [35 20 15 25 47 40 62 55 65 95 102 117 150 182 127 219 299 277 309 576])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 5 sample) 127))
-  (is (= (part-1) 3199139634)))
-
-(deftest test-part-2
-  (is (= (part-2 5 sample) 62))
-  (is (= (part-2) 438559930)))
+  (is (= (part-2 5 sample) 62)))

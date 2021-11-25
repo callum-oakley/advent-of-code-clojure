@@ -48,7 +48,3 @@
     (are [wire signal] (= signal (emulate circuit wire))
       'd 72     'e 507    'f 492    'g 114
       'h 65412  'i 65079  'x 123    'y 456)))
-
-(deftest test-answers
-  (is (= 956 (part-1)))
-  (is (= 40149 (part-2))))

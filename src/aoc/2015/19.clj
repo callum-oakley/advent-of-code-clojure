@@ -53,7 +53,3 @@
   (let [replacements [["e" "H"] ["e" "O"] ["H" "HO"] ["H" "OH"] ["O" "HH"]]]
     (is (= 3 (part-2* replacements "HOH")))
     (is (= 6 (part-2* replacements "HOHOHO")))))
-
-(deftest test-answers
-  (is (= 535 (part-1)))
-  (is (= 212 (part-2))))

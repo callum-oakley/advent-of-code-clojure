@@ -60,11 +60,8 @@
           hcl:#cfa07d eyr:2025 pid:166559648
           iyr:2011 ecl:brn hgt:59in"))
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 sample) 2))
-  (is (= (part-1) 216)))
-
-(deftest test-part-2
   (is (not (valid-2?
             (parse-passport
              "eyr:1972 cid:100
@@ -100,5 +97,4 @@
   (is (valid-2?
        (parse-passport
         "pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
-         hcl:#623a2f")))
-  (is (= (part-2) 150)))
+         hcl:#623a2f"))))

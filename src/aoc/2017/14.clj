@@ -34,7 +34,3 @@
 (deftest test-example
   (is (= 8108 (count (disk "flqrgnkx"))))
   (is (= 1242 (part-2* "flqrgnkx"))))
-
-(deftest test-answers
-  (is (= 8106 (part-1)))
-  (is (= 1164 (part-2))))

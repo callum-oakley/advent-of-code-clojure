@@ -52,7 +52,3 @@
 (deftest test-part-*
   (is (= 1120 (part-* :distance 1000 (parse "14 10 127\n16 11 162"))))
   (is (= 689 (part-* :points 1000 (parse "14 10 127\n16 11 162")))))
-
-(deftest test-answers
-  (is (= 2660 (part-1)))
-  (is (= 1256 (part-2))))

@@ -38,7 +38,3 @@
 
 (deftest test-example
   (is (= "baedc" (part-1* "abcde" (parse "s1,x3/4,pe/b")))))
-
-(deftest test-ansers
-  (is (= "nlciboghjmfdapek" (part-1)))
-  (is (= "nlciboghmkedpfja" (part-2))))

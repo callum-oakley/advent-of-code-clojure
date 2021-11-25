@@ -46,10 +46,6 @@
 (def sample
   ["F10" "N3" "F7" "R90" "F11"])
 
-(deftest test-part-1
+(deftest test-examples
   (is (= (part-1 (parse sample)) 25))
-  (is (= (part-1) 381)))
-
-(deftest test-part-2
-  (is (= (part-2 (parse sample)) 286))
-  (is (= (part-2) 28591)))
+  (is (= (part-2 (parse sample)) 286)))

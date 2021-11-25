@@ -45,7 +45,3 @@
 
 (deftest test-part-2*
   (is (= 4 (part-2* (parse "R8, R4, R4, R8")))))
-
-(deftest test-answers
-  (is (= 252 (part-1)))
-  (is (= 143 (part-2))))

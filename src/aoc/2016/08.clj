@@ -44,7 +44,3 @@
 
 (defn part-2 []
   (ocr/parse (pixels->str (part-*))))
-
-(deftest test-answers
-  (is (= 106 (part-1)))
-  (is (= "CFLELOYFCS" (part-2))))
