@@ -1,10 +1,11 @@
 (ns user
   (:require
-   [clojure.test :as test]
+   [clj-http.client :as client]
    [clojure.java.io :as io]
-   [clojure.tools.namespace.repl :as repl]
+   [clojure.pprint :as pp]
+   [clojure.test :as test]
    [clojure.tools.namespace.find :as find]
-   [clj-http.client :as client]))
+   [clojure.tools.namespace.repl :as repl]))
 
 (def default-year 2017)
 
@@ -70,7 +71,7 @@
 (defn run-scrap [year day]
   (when-let [f (resolve (symbol (format "aoc.%d.%02d/scrap" year day)))]
     (download-input year day)
-    (println (f))))
+    (pp/pprint (f))))
 
 (defn run
   ([]
