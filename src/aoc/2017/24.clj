@@ -1,6 +1,5 @@
 (ns aoc.2017.24
   (:require
-   [aoc.search :as search]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
@@ -13,27 +12,25 @@
           {}
           (str/split-lines s)))
 
-(defn bridges [components]
-  (map :bridge
-       (search/dft {:components components
-                    :bridge [0]}
-                   (fn [{:keys [components bridge] :as state}]
-                     (let [from (peek bridge)]
-                       (map (fn [to]
-                              {:components (-> components
-                                               (update from disj to)
-                                               (update to disj from))
-                               :bridge (conj bridge from to)})
-                            (components from)))))))
+(defn bridges [bridge components]
+  (let [from (peek bridge)]
+    (if-let [tos (seq (components from))]
+      (mapcat (fn [to]
+                (bridges (conj bridge from to)
+                         (-> components
+                             (update from disj to)
+                             (update to disj from))))
+              tos)
+      [bridge])))
 
 (defn part-1* [components]
-  (->> components bridges (map #(apply + %)) (apply max)))
+  (->> components (bridges [0]) (map #(apply + %)) (apply max)))
 
 (defn part-1 []
   (-> "input/2017/24" slurp parse part-1*))
 
 (defn part-2* [components]
-  (let [bs (bridges components)
+  (let [bs (bridges [0] components)
         longest (->> bs (map count) (apply max))]
     (->> bs (filter #(= longest (count %))) (map #(apply + %)) (apply max))))
 
