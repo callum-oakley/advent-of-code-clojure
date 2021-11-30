@@ -7,7 +7,7 @@
    [clojure.tools.namespace.find :as find]
    [clojure.tools.namespace.repl :as repl]))
 
-(def default-year 2017)
+(def default-year 2021)
 
 (run! require (find/find-namespaces-in-dir (io/file "src")))
 
@@ -75,11 +75,17 @@
 
 (defn run
   ([]
-   (run! run (range 2015 (inc (.getValue (java.time.Year/now))))))
+   (let [start (System/currentTimeMillis)
+         _ (run! run (range 2015 2022))
+         duration (double (/ (- (System/currentTimeMillis) start) 1000))]
+     (println (format "aoc      (total) %9.3fs" duration))))
   ([year]
    (if (<= year 25)
      (run default-year year)
-     (run! #(run year %) (range 1 26))))
+     (let [start (System/currentTimeMillis)
+           _ (run! #(run year %) (range 1 26))
+           duration (double (/ (- (System/currentTimeMillis) start) 1000))]
+       (println (format "aoc.%d (total) %9.3fs" year duration)))))
   ([year day]
    (if (<= year 25)
      (run default-year year day)

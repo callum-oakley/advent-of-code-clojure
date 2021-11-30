@@ -1,187 +1,204 @@
-aoc.2015.01/part-1   0.001s   138
-aoc.2015.01/part-2   0.001s   1771
-aoc.2015.02/part-1   0.003s   1588178
-aoc.2015.02/part-2   0.003s   3783758
-aoc.2015.03/part-1   0.003s   2592
-aoc.2015.03/part-2   0.014s   2360
-aoc.2015.04/part-1   0.168s   117946
-aoc.2015.04/part-2   5.675s   3938038
-aoc.2015.05/part-1   0.008s   236
-aoc.2015.05/part-2   0.003s   51
-aoc.2015.06/part-1   1.604s   543903
-aoc.2015.06/part-2   1.399s   14687245
-aoc.2015.07/part-1   0.001s   956
-aoc.2015.07/part-2   0.002s   40149
-aoc.2015.08/part-1   0.000s   1371
-aoc.2015.08/part-2   0.002s   2117
-aoc.2015.09/part-1   0.284s   207
-aoc.2015.09/part-2   0.287s   804
-aoc.2015.10/part-1   0.390s   492982
-aoc.2015.10/part-2   5.515s   6989950
-aoc.2015.11/part-1   0.824s   vzbxxyzz
-aoc.2015.11/part-2   4.183s   vzcaabcc
-aoc.2015.12/part-1   0.005s   119433
-aoc.2015.12/part-2   0.005s   68466
-aoc.2015.13/part-1   0.062s   709
-aoc.2015.13/part-2   0.522s   668
-aoc.2015.14/part-1   0.009s   2660
-aoc.2015.14/part-2   0.009s   1256
-aoc.2015.15/part-1   2.237s   222870
-aoc.2015.15/part-2   2.115s   117936
-aoc.2015.16/part-1   0.001s   103
-aoc.2015.16/part-2   0.003s   405
-aoc.2015.17/part-1   0.006s   654
-aoc.2015.17/part-2   0.007s   57
-aoc.2015.18/part-1   8.331s   814
-aoc.2015.18/part-2   8.263s   924
-aoc.2015.19/part-1   0.001s   535
-aoc.2015.19/part-2   0.046s   212
-aoc.2015.20/part-1   7.036s   786240
-aoc.2015.20/part-2   2.620s   831600
-aoc.2015.21/part-1   0.006s   121
-aoc.2015.21/part-2   0.007s   201
-aoc.2015.22/part-1   0.083s   900
-aoc.2015.22/part-2   0.097s   1216
-aoc.2015.23/part-1   0.002s   255
-aoc.2015.23/part-2   0.001s   334
-aoc.2015.24/part-1   0.772s   11846773891
-aoc.2015.24/part-2   0.024s   80393059
-aoc.2015.25/part-1   0.000s   2650453
-aoc.2016.01/part-1   0.002s   252
-aoc.2016.01/part-2   0.002s   143
-aoc.2016.02/part-1   0.004s   78985
-aoc.2016.02/part-2   0.003s   57DD8
-aoc.2016.03/part-1   0.005s   869
-aoc.2016.03/part-2   0.007s   1544
-aoc.2016.04/part-1   0.020s   173787
-aoc.2016.04/part-2   0.008s   548
-aoc.2016.05/part-1  19.162s   f77a0e6e
-aoc.2016.05/part-2  68.644s   999828ec
-aoc.2016.06/part-1   0.001s   zcreqgiv
-aoc.2016.06/part-2   0.002s   pljvorrk
-aoc.2016.07/part-1   0.109s   115
-aoc.2016.07/part-2   0.095s   231
-aoc.2016.08/part-1   0.005s   106
-aoc.2016.08/part-2   0.004s   CFLELOYFCS
-aoc.2016.09/part-1   0.001s   120765
-aoc.2016.09/part-2   0.003s   11658395076
-aoc.2016.10/part-1   0.004s   56
-aoc.2016.10/part-2   0.003s   7847
-aoc.2016.11/part-1   0.433s   37
-aoc.2016.11/part-2   2.180s   61
-aoc.2016.12/part-1   0.364s   318009
-aoc.2016.12/part-2  10.688s   9227663
-aoc.2016.13/part-1   0.004s   90
-aoc.2016.13/part-2   0.002s   135
-aoc.2016.14/part-1   2.868s   15168
-aoc.2016.14/part-2  89.301s   20864
-aoc.2016.15/part-1   0.000s   317371
-aoc.2016.15/part-2   0.000s   2080951
-aoc.2016.16/part-1   0.000s   10010110010011110
-aoc.2016.16/part-2  27.024s   01101011101100011
-aoc.2016.17/part-1   0.000s   RRRLDRDUDD
-aoc.2016.17/part-2   0.189s   706
-aoc.2016.18/part-1   0.005s   1987
-aoc.2016.18/part-2  46.475s   19984714
-aoc.2016.19/part-1   0.494s   1841611
-aoc.2016.19/part-2   0.590s   1423634
-aoc.2016.20/part-1   0.004s   32259706
-aoc.2016.20/part-2   0.003s   113
-aoc.2016.21/part-1   0.001s   baecdfgh
-aoc.2016.21/part-2   0.000s   cegdahbf
-aoc.2016.22/part-1   0.178s   937
-aoc.2016.22/part-2   4.708s   188
-aoc.2016.23/part-1   0.010s   13468
-aoc.2016.23/part-2   0.008s   479010028
-aoc.2016.24/part-1   0.509s   500
-aoc.2016.24/part-2   0.516s   748
-aoc.2016.25/part-1   1.008s   198
-aoc.2017.01/part-1   0.001s   1144
-aoc.2017.01/part-2   0.000s   1194
-aoc.2017.02/part-1   0.001s   44887
-aoc.2017.02/part-2   0.001s   242
-aoc.2017.03/part-1   0.354s   326
-aoc.2017.03/part-2   0.005s   363010
-aoc.2017.04/part-1   0.001s   383
-aoc.2017.04/part-2   0.004s   265
-aoc.2017.05/part-1   0.039s   342669
-aoc.2017.05/part-2   3.075s   25136209
-aoc.2017.06/part-1   0.036s   11137
-aoc.2017.06/part-2   0.041s   1037
-aoc.2017.07/part-1   0.004s   bpvhwhh
-aoc.2017.07/part-2   0.005s   256
-aoc.2017.08/part-1   0.006s   5946
-aoc.2017.08/part-2   0.011s   6026
-aoc.2017.09/part-1   0.003s   21037
-aoc.2017.09/part-2   0.003s   9495
-aoc.2017.10/part-1   0.000s   38628
-aoc.2017.10/part-2   0.020s   e1462100a34221a7f0906da15c1c979a
-aoc.2017.11/part-1   0.010s   682
-aoc.2017.11/part-2   0.101s   1406
-aoc.2017.12/part-1   0.004s   145
-aoc.2017.12/part-2   0.010s   207
-aoc.2017.13/part-1   0.000s   3184
-aoc.2017.13/part-2   3.053s   3878062
-aoc.2017.14/part-1   1.097s   8106
-aoc.2017.14/part-2   1.153s   1164
-aoc.2017.15/part-1  12.237s   597
-aoc.2017.15/part-2   9.794s   303
-aoc.2017.16/part-1   0.015s   nlciboghjmfdapek
-aoc.2017.16/part-2   0.411s   nlciboghmkedpfja
-aoc.2017.17/part-1   0.264s   1487
-aoc.2017.17/part-2   1.339s   25674054
-aoc.2017.18/part-1   0.001s   3423
-aoc.2017.18/part-2   0.077s   7493
-aoc.2017.19/part-1   0.035s   HATBMQJYZ
-aoc.2017.19/part-2   0.034s   16332
-aoc.2017.20/part-1   0.916s   243
-aoc.2017.20/part-2   0.278s   648
-aoc.2020.01/part-1   0.006s   100419
-aoc.2020.01/part-2   0.172s   265253940
-aoc.2020.02/part-1   0.002s   393
-aoc.2020.02/part-2   0.001s   690
-aoc.2020.03/part-1   0.000s   200
-aoc.2020.03/part-2   0.001s   3737923200
-aoc.2020.04/part-1   0.001s   216
-aoc.2020.04/part-2   0.002s   150
-aoc.2020.05/part-1   0.002s   901
-aoc.2020.05/part-2   0.003s   661
-aoc.2020.06/part-1   0.005s   6457
-aoc.2020.06/part-2   0.004s   3260
-aoc.2020.07/part-1   0.040s   272
-aoc.2020.07/part-2   0.002s   172246
-aoc.2020.08/part-1   0.001s   1797
-aoc.2020.08/part-2   0.012s   1036
-aoc.2020.09/part-1   0.151s   3199139634
-aoc.2020.09/part-2   0.164s   438559930
-aoc.2020.10/part-1   0.000s   2574
-aoc.2020.10/part-2   0.000s   2644613988352
-aoc.2020.11/part-1   2.652s   2483
-aoc.2020.11/part-2   3.352s   2285
-aoc.2020.12/part-1   0.002s   381
-aoc.2020.12/part-2   0.001s   28591
-aoc.2020.13/part-1   0.000s   5257
-aoc.2020.13/part-2   0.000s   538703333547789
-aoc.2020.14/part-1   0.004s   7817357407588
-aoc.2020.14/part-2   0.072s   4335927555692
-aoc.2020.15/part-1   0.001s   257
-aoc.2020.15/part-2  13.414s   8546398
-aoc.2020.16/part-1   0.008s   26053
-aoc.2020.16/part-2   0.008s   1515506256421
-aoc.2020.17/part-1   0.203s   213
-aoc.2020.17/part-2   2.769s   1624
-aoc.2020.18/part-1   0.004s   11297104473091
-aoc.2020.18/part-2   0.003s   185348874183674
-aoc.2020.19/part-1   0.007s   118
-aoc.2020.19/part-2   0.281s   246
-aoc.2020.20/part-1   2.480s   23497974998093
-aoc.2020.20/part-2   2.531s   2256
-aoc.2020.21/part-1   0.002s   2542
-aoc.2020.21/part-2   0.001s   hkflr,ctmcqjf,bfrq,srxphcm,snmxl,zvx,bd,mqvk
-aoc.2020.22/part-1   0.001s   31455
-aoc.2020.22/part-2   2.364s   32528
-aoc.2020.23/part-1   0.000s   38925764
-aoc.2020.23/part-2  10.597s   131152940564
-aoc.2020.24/part-1   0.013s   549
-aoc.2020.24/part-2   5.572s   4147
-aoc.2020.25/part-1   0.223s   7032853
+aoc.2015.01/part-1   0.002s   138                                          OK
+aoc.2015.01/part-2   0.003s   1771                                         OK
+aoc.2015.02/part-1   0.011s   1588178                                      OK
+aoc.2015.02/part-2   0.006s   3783758                                      OK
+aoc.2015.03/part-1   0.005s   2592                                         OK
+aoc.2015.03/part-2   0.017s   2360                                         OK
+aoc.2015.04/part-1   0.290s   117946                                       OK
+aoc.2015.04/part-2   5.312s   3938038                                      OK
+aoc.2015.05/part-1   0.011s   236                                          OK
+aoc.2015.05/part-2   0.006s   51                                           OK
+aoc.2015.06/part-1   1.489s   543903                                       OK
+aoc.2015.06/part-2   1.336s   14687245                                     OK
+aoc.2015.07/part-1   0.004s   956                                          OK
+aoc.2015.07/part-2   0.024s   40149                                        OK
+aoc.2015.08/part-1   0.002s   1371                                         OK
+aoc.2015.08/part-2   0.001s   2117                                         OK
+aoc.2015.09/part-1   0.308s   207                                          OK
+aoc.2015.09/part-2   0.291s   804                                          OK
+aoc.2015.10/part-1   0.479s   492982                                       OK
+aoc.2015.10/part-2   5.571s   6989950                                      OK
+aoc.2015.11/part-1   0.828s   vzbxxyzz                                     OK
+aoc.2015.11/part-2   4.221s   vzcaabcc                                     OK
+aoc.2015.12/part-1   0.015s   119433                                       OK
+aoc.2015.12/part-2   0.009s   68466                                        OK
+aoc.2015.13/part-1   0.067s   709                                          OK
+aoc.2015.13/part-2   0.500s   668                                          OK
+aoc.2015.14/part-1   0.014s   2660                                         OK
+aoc.2015.14/part-2   0.009s   1256                                         OK
+aoc.2015.15/part-1   1.897s   222870                                       OK
+aoc.2015.15/part-2   1.744s   117936                                       OK
+aoc.2015.16/part-1   0.002s   103                                          OK
+aoc.2015.16/part-2   0.003s   405                                          OK
+aoc.2015.17/part-1   0.013s   654                                          OK
+aoc.2015.17/part-2   0.013s   57                                           OK
+aoc.2015.18/part-1   6.479s   814                                          OK
+aoc.2015.18/part-2   6.435s   924                                          OK
+aoc.2015.19/part-1   0.002s   535                                          OK
+aoc.2015.19/part-2   0.081s   212                                          OK
+aoc.2015.20/part-1   6.361s   786240                                       OK
+aoc.2015.20/part-2   2.095s   831600                                       OK
+aoc.2015.21/part-1   0.015s   121                                          OK
+aoc.2015.21/part-2   0.009s   201                                          OK
+aoc.2015.22/part-1   0.117s   900                                          OK
+aoc.2015.22/part-2   0.144s   1216                                         OK
+aoc.2015.23/part-1   0.002s   255                                          OK
+aoc.2015.23/part-2   0.003s   334                                          OK
+aoc.2015.24/part-1   0.696s   11846773891                                  OK
+aoc.2015.24/part-2   0.021s   80393059                                     OK
+aoc.2015.25/part-1   0.001s   2650453                                      OK
+aoc.2015 (total)    46.988s
+aoc.2016.01/part-1   0.010s   252                                          OK
+aoc.2016.01/part-2   0.002s   143                                          OK
+aoc.2016.02/part-1   0.004s   78985                                        OK
+aoc.2016.02/part-2   0.002s   57DD8                                        OK
+aoc.2016.03/part-1   0.007s   869                                          OK
+aoc.2016.03/part-2   0.007s   1544                                         OK
+aoc.2016.04/part-1   0.025s   173787                                       OK
+aoc.2016.04/part-2   0.009s   548                                          OK
+aoc.2016.05/part-1  18.416s   f77a0e6e                                     OK
+aoc.2016.05/part-2  66.696s   999828ec                                     OK
+aoc.2016.06/part-1   0.002s   zcreqgiv                                     OK
+aoc.2016.06/part-2   0.002s   pljvorrk                                     OK
+aoc.2016.07/part-1   0.116s   115                                          OK
+aoc.2016.07/part-2   0.106s   231                                          OK
+aoc.2016.08/part-1   0.007s   106                                          OK
+aoc.2016.08/part-2   0.006s   CFLELOYFCS                                   OK
+aoc.2016.09/part-1   0.002s   120765                                       OK
+aoc.2016.09/part-2   0.007s   11658395076                                  OK
+aoc.2016.10/part-1   0.006s   56                                           OK
+aoc.2016.10/part-2   0.004s   7847                                         OK
+aoc.2016.11/part-1   0.525s   37                                           OK
+aoc.2016.11/part-2   2.061s   61                                           OK
+aoc.2016.12/part-1   0.417s   318009                                       OK
+aoc.2016.12/part-2  10.305s   9227663                                      OK
+aoc.2016.13/part-1   0.004s   90                                           OK
+aoc.2016.13/part-2   0.001s   135                                          OK
+aoc.2016.14/part-1   2.923s   15168                                        OK
+aoc.2016.14/part-2  89.501s   20864                                        OK
+aoc.2016.15/part-1   0.001s   317371                                       OK
+aoc.2016.15/part-2   0.000s   2080951                                      OK
+aoc.2016.16/part-1   0.002s   10010110010011110                            OK
+aoc.2016.16/part-2  26.776s   01101011101100011                            OK
+aoc.2016.17/part-1   0.000s   RRRLDRDUDD                                   OK
+aoc.2016.17/part-2   0.218s   706                                          OK
+aoc.2016.18/part-1   0.006s   1987                                         OK
+aoc.2016.18/part-2  46.290s   19984714                                     OK
+aoc.2016.19/part-1   0.438s   1841611                                      OK
+aoc.2016.19/part-2   0.512s   1423634                                      OK
+aoc.2016.20/part-1   0.007s   32259706                                     OK
+aoc.2016.20/part-2   0.005s   113                                          OK
+aoc.2016.21/part-1   0.001s   baecdfgh                                     OK
+aoc.2016.21/part-2   0.002s   cegdahbf                                     OK
+aoc.2016.22/part-1   0.210s   937                                          OK
+aoc.2016.22/part-2   4.065s   188                                          OK
+aoc.2016.23/part-1   0.013s   13468                                        OK
+aoc.2016.23/part-2   0.012s   479010028                                    OK
+aoc.2016.24/part-1   0.481s   500                                          OK
+aoc.2016.24/part-2   0.440s   748                                          OK
+aoc.2016.25/part-1   1.089s   198                                          OK
+aoc.2016 (total)   271.762s
+aoc.2017.01/part-1   0.001s   1144                                         OK
+aoc.2017.01/part-2   0.000s   1194                                         OK
+aoc.2017.02/part-1   0.000s   44887                                        OK
+aoc.2017.02/part-2   0.003s   242                                          OK
+aoc.2017.03/part-1   0.292s   326                                          OK
+aoc.2017.03/part-2   0.005s   363010                                       OK
+aoc.2017.04/part-1   0.002s   383                                          OK
+aoc.2017.04/part-2   0.005s   265                                          OK
+aoc.2017.05/part-1   0.075s   342669                                       OK
+aoc.2017.05/part-2   2.044s   25136209                                     OK
+aoc.2017.06/part-1   0.054s   11137                                        OK
+aoc.2017.06/part-2   0.042s   1037                                         OK
+aoc.2017.07/part-1   0.006s   bpvhwhh                                      OK
+aoc.2017.07/part-2   0.005s   256                                          OK
+aoc.2017.08/part-1   0.009s   5946                                         OK
+aoc.2017.08/part-2   0.011s   6026                                         OK
+aoc.2017.09/part-1   0.006s   21037                                        OK
+aoc.2017.09/part-2   0.004s   9495                                         OK
+aoc.2017.10/part-1   0.002s   38628                                        OK
+aoc.2017.10/part-2   0.041s   e1462100a34221a7f0906da15c1c979a             OK
+aoc.2017.11/part-1   0.010s   682                                          OK
+aoc.2017.11/part-2   0.152s   1406                                         OK
+aoc.2017.12/part-1   0.005s   145                                          OK
+aoc.2017.12/part-2   0.011s   207                                          OK
+aoc.2017.13/part-1   0.000s   3184                                         OK
+aoc.2017.13/part-2   3.153s   3878062                                      OK
+aoc.2017.14/part-1   1.016s   8106                                         OK
+aoc.2017.14/part-2   1.077s   1164                                         OK
+aoc.2017.15/part-1  11.692s   597                                          OK
+aoc.2017.15/part-2   9.403s   303                                          OK
+aoc.2017.16/part-1   0.022s   nlciboghjmfdapek                             OK
+aoc.2017.16/part-2   0.528s   nlciboghmkedpfja                             OK
+aoc.2017.17/part-1   0.300s   1487                                         OK
+aoc.2017.17/part-2   1.313s   25674054                                     OK
+aoc.2017.18/part-1   0.002s   3423                                         OK
+aoc.2017.18/part-2   0.123s   7493                                         OK
+aoc.2017.19/part-1   0.038s   HATBMQJYZ                                    OK
+aoc.2017.19/part-2   0.033s   16332                                        OK
+aoc.2017.20/part-1   0.871s   243                                          OK
+aoc.2017.20/part-2   0.324s   648                                          OK
+aoc.2017.21/part-1   0.008s   117                                          OK
+aoc.2017.21/part-2   6.765s   2026963                                      OK
+aoc.2017.22/part-1   0.022s   5339                                         OK
+aoc.2017.22/part-2  16.768s   2512380                                      OK
+aoc.2017.23/part-1   0.021s   3025                                         OK
+aoc.2017.23/part-2   0.010s   915                                          OK
+aoc.2017.24/part-1   1.595s   1656                                         OK
+aoc.2017.24/part-2   1.439s   1642                                         OK
+aoc.2017.25/part-1   5.505s   3732                                         OK
+aoc.2017 (total)    64.828s
+aoc.2018 (total)     0.000s
+aoc.2019 (total)     0.001s
+aoc.2020.01/part-1   0.005s   100419                                       OK
+aoc.2020.01/part-2   0.155s   265253940                                    OK
+aoc.2020.02/part-1   0.006s   393                                          OK
+aoc.2020.02/part-2   0.004s   690                                          OK
+aoc.2020.03/part-1   0.001s   200                                          OK
+aoc.2020.03/part-2   0.002s   3737923200                                   OK
+aoc.2020.04/part-1   0.003s   216                                          OK
+aoc.2020.04/part-2   0.002s   150                                          OK
+aoc.2020.05/part-1   0.003s   901                                          OK
+aoc.2020.05/part-2   0.004s   661                                          OK
+aoc.2020.06/part-1   0.007s   6457                                         OK
+aoc.2020.06/part-2   0.006s   3260                                         OK
+aoc.2020.07/part-1   0.063s   272                                          OK
+aoc.2020.07/part-2   0.003s   172246                                       OK
+aoc.2020.08/part-1   0.001s   1797                                         OK
+aoc.2020.08/part-2   0.014s   1036                                         OK
+aoc.2020.09/part-1   0.154s   3199139634                                   OK
+aoc.2020.09/part-2   0.163s   438559930                                    OK
+aoc.2020.10/part-1   0.000s   2574                                         OK
+aoc.2020.10/part-2   0.001s   2644613988352                                OK
+aoc.2020.11/part-1   2.728s   2483                                         OK
+aoc.2020.11/part-2   3.387s   2285                                         OK
+aoc.2020.12/part-1   0.003s   381                                          OK
+aoc.2020.12/part-2   0.002s   28591                                        OK
+aoc.2020.13/part-1   0.001s   5257                                         OK
+aoc.2020.13/part-2   0.000s   538703333547789                              OK
+aoc.2020.14/part-1   0.007s   7817357407588                                OK
+aoc.2020.14/part-2   0.078s   4335927555692                                OK
+aoc.2020.15/part-1   0.002s   257                                          OK
+aoc.2020.15/part-2  13.391s   8546398                                      OK
+aoc.2020.16/part-1   0.012s   26053                                        OK
+aoc.2020.16/part-2   0.014s   1515506256421                                OK
+aoc.2020.17/part-1   0.267s   213                                          OK
+aoc.2020.17/part-2   2.712s   1624                                         OK
+aoc.2020.18/part-1   0.010s   11297104473091                               OK
+aoc.2020.18/part-2   0.005s   185348874183674                              OK
+aoc.2020.19/part-1   0.010s   118                                          OK
+aoc.2020.19/part-2   0.167s   246                                          OK
+aoc.2020.20/part-1   2.432s   23497974998093                               OK
+aoc.2020.20/part-2   2.527s   2256                                         OK
+aoc.2020.21/part-1   0.002s   2542                                         OK
+aoc.2020.21/part-2   0.001s   hkflr,ctmcqjf,bfrq,srxphcm,snmxl,zvx,bd,mqvk OK
+aoc.2020.22/part-1   0.002s   31455                                        OK
+aoc.2020.22/part-2   2.452s   32528                                        OK
+aoc.2020.23/part-1   0.001s   38925764                                     OK
+aoc.2020.23/part-2  10.506s   131152940564                                 OK
+aoc.2020.24/part-1   0.012s   549                                          OK
+aoc.2020.24/part-2   4.766s   4147                                         OK
+aoc.2020.25/part-1   0.206s   7032853                                      OK
+aoc.2020 (total)    46.306s
+aoc.2021 (total)     0.000s
+aoc      (total)   429.885s
