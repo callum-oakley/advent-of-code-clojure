@@ -105,8 +105,9 @@
 
 (defn rrr [& args]
   (repl/refresh)
-  (apply run-tests args)
-  (apply run args))
+  (let [{:keys [fail error]} (apply run-tests args)]
+    (when (and (zero? fail) (zero? error))
+      (apply run args))))
 
 (defn log []
   (spit "results.log" (with-out-str (run))))

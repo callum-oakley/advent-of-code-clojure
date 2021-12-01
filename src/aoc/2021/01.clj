@@ -4,7 +4,7 @@
    [clojure.test :refer [deftest is]]))
 
 (defn part-1* [xs]
-  (->> xs (partition 2 1) (filter (fn [[a b]] (< a b))) count))
+  (->> xs (partition 2 1) (filter #(apply < %)) count))
 
 (defn part-2* [xs]
   (->> xs (partition 3 1) (map #(apply + %)) part-1*))
