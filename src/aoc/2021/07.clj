@@ -5,23 +5,29 @@
 (defn parse [s]
   (->> s (re-seq #"\d+") (map read-string)))
 
-(defn part-* [cost xs]
-  (loop [low (apply min xs) high (apply max xs)]
-    (if (= (inc low) high)
-      (min (cost low xs) (cost high xs))
-      (let [mid (quot (+ low high) 2)]
-        (if (< (cost mid xs) (cost (inc mid) xs))
-          (recur low mid)
-          (recur mid high))))))
+(defn find-min
+  "Uses binary search to find the minimum of an integer function f between low
+   and high. Works for sufficiently well behaved f."
+  [f low high]
+  (if (= 1 (- high low))
+    (min (f low) (f high))
+    (let [mid (quot (+ low high) 2)]
+      ;; Is f increasing at mid?
+      (if (< (f mid) (f (inc mid)))
+        (recur f low mid)
+        (recur f mid high)))))
 
-(defn cost-1 [align xs]
-  (apply + (map #(Math/abs (- % align)) xs)))
+(defn part-* [cost crabs]
+  (find-min #(cost crabs %) (apply min crabs) (apply max crabs)))
+
+(defn cost-1 [crabs x]
+  (apply + (map #(Math/abs (- % x)) crabs)))
 
 (defn triangle [n]
   (/ (* n (inc n)) 2))
 
-(defn cost-2 [align xs]
-  (apply + (map #(triangle (Math/abs (- % align))) xs)))
+(defn cost-2 [crabs x]
+  (apply + (map #(triangle (Math/abs (- % x))) crabs)))
 
 (defn part-1 []
   (->> "input/2021/07" slurp parse (part-* cost-1)))
