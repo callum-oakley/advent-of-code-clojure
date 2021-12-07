@@ -6,11 +6,11 @@
   (let [f (->> s (re-seq #"\d+") (map read-string) frequencies)]
     (mapv #(get f % 0) (range 9))))
 
-(defn simulate [fish]
-  (iterate #(conj (update (subvec % 1) 6 + (% 0)) (% 0)) fish))
+(defn step [fish]
+  (conj (update (subvec fish 1) 6 + (fish 0)) (fish 0)))
 
 (defn part-* [days fish]
-  (apply + (nth (simulate fish) days)))
+  (->> fish (iterate step) (drop days) first (apply +)))
 
 (defn part-1 []
   (->> "input/2021/06" slurp parse (part-* 80)))
