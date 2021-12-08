@@ -1,30 +1,38 @@
 (ns aoc.2021.08
   (:require
    [aoc.map-updates :refer [update-keys]]
-   [clojure.math.combinatorics :as comb]
    [clojure.test :refer [deftest is]]))
 
-(def signal->digit
-  (update-keys
-   {"abcefg" 0 "cf" 1 "acdeg" 2 "acdfg" 3 "bcdf" 4
-    "adbfg" 5 "abdefg" 6 "acf" 7 "abcdefg" 8 "abcdfg" 9}
-   set))
-
-(def permutations
-  (->> "abcdefg" comb/permutations (map #(zipmap "abcdefg" %))))
-
 (defn parse [s]
-  (->> s (re-seq #"[a-g]+") (map set) (partition 14)))
+  (->> s (re-seq #"[a-g]+") (map set)
+       (partition 14) (map #(partition-all 10 %))))
 
-(defn decode [signal permutation]
-  (set (map permutation signal)))
+;; Across any 10 calibration signals, the same segments will always appear the
+;; same number of times. For example the top segment will always appear 8
+;; times, while the bottom segment will always appear 7 times. It turns out
+;; that if we replace the wire labels with these frequencies of occurance on
+;; the standard wiring, each digit corresponds to a unique multiset of
+;; frequencies (freqs->digit below).
+;;
+;; Applying this same process to any given set of 10 calibration signals and
+;; comparing to the standard allows us to deduce how they are wired.
 
-(defn valid? [permutation signals]
-  (every? #(signal->digit (decode % permutation)) signals))
+(def standard-wiring
+  {"abcefg" 0 "cf" 1 "acdeg" 2 "acdfg" 3 "bcdf" 4
+   "adbfg" 5 "abdefg" 6 "acf" 7 "abcdefg" 8 "abcdfg" 9})
 
-(defn output [signals]
-  (let [p (->> permutations (filter #(valid? % signals)) first)]
-    (apply str (map #(signal->digit (decode % p)) (drop 10 signals)))))
+(def freqs->digit
+  (let [f (->> standard-wiring keys (apply concat) frequencies)]
+    (update-keys standard-wiring #(sort (map f %)))))
+
+(defn wiring [signals]
+  (let [f (->> signals (apply concat) frequencies)]
+    (->> signals
+         (map (fn [signal] [signal (freqs->digit (sort (map f signal)))]))
+         (into {}))))
+
+(defn output [[calibration-signals out-signals]]
+  (apply str (map (wiring calibration-signals) out-signals)))
 
 (defn part-1* [entries]
   (->> entries (map #(seq (output %))) flatten (filter (set "1478")) count))
