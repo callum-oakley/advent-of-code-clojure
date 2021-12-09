@@ -1,6 +1,6 @@
 (ns aoc.2017.20
   (:require
-   [aoc.vectors :refer [+v manhattan-distance]]
+   [aoc.vector :refer [+v manhattan-distance]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 

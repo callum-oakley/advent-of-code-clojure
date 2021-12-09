@@ -1,6 +1,6 @@
 (ns aoc.2021.05
   (:require
-   [aoc.vectors :refer [+v -v *v div-v chessboard-distance]]
+   [aoc.vector :refer [+v -v *v div-v chessboard-distance]]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]

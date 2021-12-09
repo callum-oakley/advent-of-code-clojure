@@ -3,7 +3,7 @@
    [aoc.2017.10 :refer [knot-hash]]
    [aoc.hash :as hash]
    [aoc.search :as search]
-   [aoc.vectors :refer [+v]]
+   [aoc.vector :refer [+v]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 

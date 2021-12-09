@@ -1,7 +1,7 @@
 (ns aoc.2016.13
   (:require
    [aoc.search :as search]
-   [aoc.vectors :refer [+v]]
+   [aoc.vector :refer [+v]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 

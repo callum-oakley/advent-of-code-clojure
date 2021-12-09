@@ -1,6 +1,6 @@
 (ns aoc.2021.04
   (:require
-   [aoc.vectors :refer [transpose]]
+   [aoc.vector :refer [transpose]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 

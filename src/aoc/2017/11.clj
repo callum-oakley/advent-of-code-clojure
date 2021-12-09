@@ -1,6 +1,6 @@
 (ns aoc.2017.11
   (:require
-   [aoc.vectors :refer [+v]]
+   [aoc.vector :refer [+v]]
    [clojure.test :refer [deftest is]]))
 
 ;; https://www.redblobgames.com/grids/hexagons/#coordinates-axial

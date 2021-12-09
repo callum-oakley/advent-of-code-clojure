@@ -1,4 +1,4 @@
-(ns aoc.vectors
+(ns aoc.vector
   (:require
    [clojure.java.math :as math]))
 

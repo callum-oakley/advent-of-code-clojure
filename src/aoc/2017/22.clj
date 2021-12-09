@@ -1,6 +1,6 @@
 (ns aoc.2017.22
   (:require
-   [aoc.vectors :refer [+v *v]]
+   [aoc.vector :refer [+v *v]]
    [clojure.string :as str]
    [clojure.set :as set]
    [clojure.test :refer [deftest is]]))

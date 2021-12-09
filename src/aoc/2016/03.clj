@@ -1,6 +1,6 @@
 (ns aoc.2016.03
   (:require
-   [aoc.vectors :refer [transpose]]
+   [aoc.vector :refer [transpose]]
    [clojure.test :refer [deftest is]]))
 
 (defn part-* [f]
