@@ -31,15 +31,18 @@
 
 ;; Identify basins with their low point, so for a given position, return the
 ;; low point of the basin it's in.
-(defn basin [floor low-point? pos]
-  (cond
-    (= 9 (floor pos)) nil
-    (low-point? pos) pos
-    :else (recur floor low-point? (apply min-key floor (adjacent floor pos)))))
+(defn basin-fn [floor low-point?]
+  (let [go (memoize
+            (fn [k pos]
+              (cond
+                (= 9 (floor pos)) nil
+                (low-point? pos) pos
+                :else (k k (apply min-key floor (adjacent floor pos))))))]
+    (fn [pos] (go go pos))))
 
 (defn part-2* [floor]
   (let [low-point? (low-points floor)]
-    (->> floor keys (keep #(basin floor low-point? %))
+    (->> floor keys (keep (basin-fn floor low-point?))
          frequencies vals sort (take-last 3) (apply *))))
 
 (defn part-1 []
