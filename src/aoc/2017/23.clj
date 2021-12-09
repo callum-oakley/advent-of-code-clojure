@@ -1,5 +1,6 @@
 (ns aoc.2017.23
   (:require
+   [clojure.java.math :as math]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
@@ -17,7 +18,7 @@
       muls)))
 
 (defn prime? [n]
-  (every? (fn [d] (pos? (mod n d))) (range 2 (inc (Math/sqrt n)))))
+  (every? (fn [d] (pos? (mod n d))) (range 2 (inc (math/sqrt n)))))
 
 (defn part-1 []
   (run (->> "input/2017/23" slurp parse) 0 {} 0))

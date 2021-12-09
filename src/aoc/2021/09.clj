@@ -1,28 +1,17 @@
 (ns aoc.2021.09
   (:require
+   [aoc.grid :as grid]
    [aoc.vector :refer [+v]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (first
-   (reduce (fn [[floor y] line]
-             [(first
-               (reduce (fn [[floor x] c]
-                         [(assoc floor [y x] (- (int c) (int \0))) (inc x)])
-                       [floor 0]
-                       line))
-              (inc y)])
-           [{} 0]
-           (str/split-lines s))))
-
-(defn adjacent [floor pos]
-  (->> [[1 0] [0 1] [-1 0] [0 -1]] (map #(+v pos %)) (filter floor)))
+  (update-vals (grid/parse s) #(- (int %) (int \0))))
 
 (defn low-points [floor]
   (->> floor
        (filter (fn [[pos height]]
-                 (every? #(< height (floor %)) (adjacent floor pos))))
+                 (every? #(< height (floor %)) (grid/adjacent pos floor))))
        (map key)
        set))
 
@@ -37,7 +26,7 @@
               (cond
                 (= 9 (floor pos)) nil
                 (low-point? pos) pos
-                :else (k k (apply min-key floor (adjacent floor pos))))))]
+                :else (k k (apply min-key floor (grid/adjacent pos floor))))))]
     (fn [pos] (go go pos))))
 
 (defn part-2* [floor]

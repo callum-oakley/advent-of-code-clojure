@@ -1,51 +1,33 @@
 (ns aoc.2017.22
   (:require
    [aoc.vector :refer [+v *v]]
-   [clojure.string :as str]
-   [clojure.set :as set]
+   [aoc.grid :as grid]
    [clojure.test :refer [deftest is]]))
 
-(def left
-  {[0 1] [-1 0] [-1 0] [0 -1] [0 -1] [1 0] [1 0] [0 1]})
-
-(def right
-  (set/map-invert left))
-
 (defn parse [s]
-  (first
-   (reduce (fn [[nodes y] line]
-             [(first
-               (reduce (fn [[nodes x] c]
-                         [(assoc nodes [y x] (case c \. :clean \# :infected))
-                          (inc x)])
-                       [nodes 0]
-                       line))
-              (inc y)])
-           [{} 0]
-           (str/split-lines s))))
+  (update-vals (grid/parse s) #(case % \. :clean \# :infected)))
 
 (defn part-* [n transitions nodes]
-  (:infections
-   (nth (iterate (fn [{:keys [pos dir nodes infections]}]
-                   (let [current (get nodes pos :clean)
-                         dir (case current
-                                :clean (left dir)
-                                :weakened dir
-                                :infected (right dir)
-                                :flagged (*v -1 dir))
-                         current (transitions current)]
-                     {:pos (+v pos dir)
-                      :dir dir
-                      :nodes (assoc nodes pos current)
-                      :infections (if (= :infected current)
-                                    (inc infections)
-                                    infections)}))
-                 {:pos [(/ (apply max (map first (keys nodes))) 2)
-                        (/ (apply max (map second (keys nodes))) 2)]
-                  :dir [-1 0]
-                  :nodes nodes
-                  :infections 0})
-        n)))
+  (->> {:pos [(/ (apply max (map first (keys nodes))) 2)
+              (/ (apply max (map second (keys nodes))) 2)]
+        :dir grid/north
+        :nodes nodes
+        :infections 0}
+       (iterate (fn [{:keys [pos dir nodes infections]}]
+                  (let [current (get nodes pos :clean)
+                        dir (case current
+                              :clean (grid/left dir)
+                              :weakened dir
+                              :infected (grid/right dir)
+                              :flagged (*v -1 dir))
+                        current (transitions current)]
+                    {:pos (+v pos dir)
+                     :dir dir
+                     :nodes (assoc nodes pos current)
+                     :infections (if (= :infected current)
+                                   (inc infections)
+                                   infections)})))
+       (drop n) first :infections))
 
 (def transitions-1
   {:clean :infected :infected :clean})

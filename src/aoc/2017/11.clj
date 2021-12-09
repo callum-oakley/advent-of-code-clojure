@@ -1,6 +1,7 @@
 (ns aoc.2017.11
   (:require
    [aoc.vector :refer [+v]]
+   [clojure.java.math :as math]
    [clojure.test :refer [deftest is]]))
 
 ;; https://www.redblobgames.com/grids/hexagons/#coordinates-axial
@@ -11,7 +12,7 @@
        (re-seq #"[nesw]+" s)))
 
 (defn dist [[q r]]
-  (/ (+ (Math/abs q) (Math/abs r) (Math/abs (+ q r))) 2))
+  (/ (+ (math/abs q) (math/abs r) (math/abs (+ q r))) 2))
 
 (defn part-1 []
   (->> "input/2017/11" slurp parse (reduce +v) dist))

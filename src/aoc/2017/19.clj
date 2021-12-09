@@ -1,25 +1,19 @@
 (ns aoc.2017.19
   (:require
+   [aoc.grid :as grid]
    [aoc.vector :refer [+v]]
-   [clojure.set :as set]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def left
-  {[0 1] [-1 0] [-1 0] [0 -1] [0 -1] [1 0] [1 0] [0 1]})
-
-(def right
-  (set/map-invert left))
-
 (defn follow-route [diagram]
   (loop [pos [0 (str/index-of (first diagram) \|)]
-         dir [1 0]
+         dir grid/south
          route [(get-in diagram pos)]]
     (if-let [[pos dir] (some (fn [dir]
                                (let [pos (+v pos dir)]
                                  (when (not= \space (get-in diagram pos))
                                    [pos dir])))
-                             [dir (left dir) (right dir)])]
+                             [dir (grid/left dir) (grid/right dir)])]
       (recur pos dir (conj route (get-in diagram pos)))
       route)))
 

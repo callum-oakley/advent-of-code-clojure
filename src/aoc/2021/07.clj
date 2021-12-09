@@ -1,5 +1,6 @@
 (ns aoc.2021.07
   (:require
+   [clojure.java.math :as math]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
@@ -21,13 +22,13 @@
   (find-min #(cost crabs %) (apply min crabs) (apply max crabs)))
 
 (defn cost-1 [crabs x]
-  (apply + (map #(Math/abs (- % x)) crabs)))
+  (apply + (map #(math/abs (- % x)) crabs)))
 
 (defn triangle [n]
   (/ (* n (inc n)) 2))
 
 (defn cost-2 [crabs x]
-  (apply + (map #(triangle (Math/abs (- % x))) crabs)))
+  (apply + (map #(triangle (math/abs (- % x))) crabs)))
 
 (defn part-1 []
   (->> "input/2021/07" slurp parse (part-* cost-1)))
