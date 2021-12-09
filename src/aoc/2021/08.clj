@@ -1,6 +1,5 @@
 (ns aoc.2021.08
   (:require
-   [aoc.map-updates :refer [update-keys]]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
@@ -38,7 +37,7 @@
   (->> entries (map #(seq (output %))) flatten (filter (set "1478")) count))
 
 (defn part-2* [entries]
-  (->> entries (map #(Integer/parseInt (output %))) (apply +)))
+  (->> entries (map #(parse-long (output %))) (apply +)))
 
 (defn part-1 []
   (->> "input/2021/08" slurp parse part-1*))

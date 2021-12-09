@@ -1,6 +1,5 @@
 (ns aoc.2015.22
   (:require
-   [aoc.map-updates :refer [update-vals]]
    [aoc.search :as search]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))

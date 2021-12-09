@@ -1,6 +1,5 @@
 (ns aoc.2017.20
   (:require
-   [aoc.map-updates :refer [update-vals]]
    [aoc.vectors :refer [+v manhattan-distance]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))

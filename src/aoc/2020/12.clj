@@ -1,5 +1,6 @@
 (ns aoc.2020.12
   (:require
+   [clojure.java.math :as math]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
@@ -35,13 +36,13 @@
   ([] (part-1 (parse data)))
   ([instructions]
    (let [{[x y] :pos} (reduce step-1 {:pos [0 0] :dir [1 0]} instructions)]
-     (+ (Math/abs x) (Math/abs y)))))
+     (+ (math/abs x) (math/abs y)))))
 
 (defn part-2
   ([] (part-2 (parse data)))
   ([instructions]
    (let [{[x y] :pos} (reduce step-2 {:pos [0 0] :dir [10 1]} instructions)]
-     (+ (Math/abs x) (Math/abs y)))))
+     (+ (math/abs x) (math/abs y)))))
 
 (def sample
   ["F10" "N3" "F7" "R90" "F11"])
