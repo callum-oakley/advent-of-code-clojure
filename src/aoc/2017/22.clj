@@ -5,7 +5,7 @@
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (update-vals (grid/parse s) #(case % \. :clean \# :infected)))
+  (grid/parse s #(case % \. :clean \# :infected)))
 
 (defn part-* [n transitions nodes]
   (->> {:pos [(/ (apply max (map first (keys nodes))) 2)

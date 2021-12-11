@@ -6,7 +6,7 @@
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (update-vals (grid/parse s) #(- (int %) (int \0))))
+  (grid/parse s #(- (int %) (int \0))))
 
 (defn low-points [floor]
   (->> floor
