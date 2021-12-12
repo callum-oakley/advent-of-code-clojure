@@ -7,8 +7,8 @@
   (reduce (fn [graph line]
             (let [[a b] (str/split (str/trim line) #"-")]
               (-> graph
-                  (update a (fnil conj #{}) b)
-                  (update b (fnil conj #{}) a))))
+                  (update a (fnil conj []) b)
+                  (update b (fnil conj []) a))))
           {}
           (str/split-lines s)))
 
