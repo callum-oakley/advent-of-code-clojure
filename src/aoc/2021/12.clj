@@ -12,28 +12,27 @@
           {}
           (str/split-lines s)))
 
-(defn paths [graph valid? path]
-  (cond
-    (= (peek path) "end") [path]
-    (not (valid? path)) []
-    :else (->> path peek graph (mapcat #(paths graph valid? (conj path %))))))
-
-(defn valid-1? [path]
-  (->> path (filter #(= % (str/lower-case %))) frequencies vals
-       (filter #(< 1 %)) empty?))
-
-(defn valid-2? [path]
-  (let [fs (->> path (filter #(= % (str/lower-case %))) frequencies)
-        fs-of-fs (frequencies (vals fs))]
-    (and (= 1 (fs "start"))
-         (<= (get fs-of-fs 2 0) 1)
-         (zero? (get fs-of-fs 3 0)))))
+(defn paths [graph pos visited bonus?]
+  (let [{:keys [end big visited-small unvisited-small]}
+        (group-by #(cond
+                     (= % "start") :start
+                     (= % "end") :end
+                     (= % (str/upper-case %)) :big
+                     (visited %) :visited-small
+                     :else :unvisited-small)
+                  (graph pos))]
+    (+ (count end)
+       (apply + (map #(paths graph % visited bonus?) big))
+       (apply + (map #(paths graph % (conj visited %) bonus?)
+                     unvisited-small))
+       (apply + (when bonus?
+                  (map #(paths graph % visited false) visited-small))))))
 
 (defn part-1* [graph]
-  (count (paths graph valid-1? ["start"])))
+  (paths graph "start" #{"start"} false))
 
 (defn part-2* [graph]
-  (count (paths graph valid-2? ["start"])))
+  (paths graph "start" #{"start"} true))
 
 (defn part-1 []
   (->> "input/2021/12" slurp parse part-1*))
