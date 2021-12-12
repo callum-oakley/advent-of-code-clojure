@@ -12,27 +12,21 @@
           {}
           (str/split-lines s)))
 
-(defn paths [graph pos visited bonus?]
-  (let [{:keys [end big visited-small unvisited-small]}
-        (group-by #(cond
-                     (= % "start") :start
-                     (= % "end") :end
-                     (= % (str/upper-case %)) :big
-                     (visited %) :visited-small
-                     :else :unvisited-small)
-                  (graph pos))]
-    (+ (count end)
-       (apply + (map #(paths graph % visited bonus?) big))
-       (apply + (map #(paths graph % (conj visited %) bonus?)
-                     unvisited-small))
-       (apply + (when bonus?
-                  (map #(paths graph % visited false) visited-small))))))
+(defn paths [graph cave visited bonus?]
+  (->> cave graph
+       (keep #(cond
+                (= % "start") nil
+                (= % "end") 1
+                (= % (str/upper-case %)) (paths graph % visited bonus?)
+                (not (visited %)) (paths graph % (conj visited %) bonus?)
+                bonus? (paths graph % visited false)))
+       (apply +)))
 
 (defn part-1* [graph]
-  (paths graph "start" #{"start"} false))
+  (paths graph "start" #{} false))
 
 (defn part-2* [graph]
-  (paths graph "start" #{"start"} true))
+  (paths graph "start" #{} true))
 
 (defn part-1 []
   (->> "input/2021/12" slurp parse part-1*))
