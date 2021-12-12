@@ -13,14 +13,14 @@
           (str/split-lines s)))
 
 (defn paths [graph cave visited bonus?]
-  (->> cave graph
-       (keep #(cond
-                (= % "start") nil
-                (= % "end") 1
-                (= % (str/upper-case %)) (paths graph % visited bonus?)
-                (not (visited %)) (paths graph % (conj visited %) bonus?)
-                bonus? (paths graph % visited false)))
-       (apply +)))
+  (transduce (keep #(cond
+                      (= % "start") nil
+                      (= % "end") 1
+                      (= % (str/upper-case %)) (paths graph % visited bonus?)
+                      (not (visited %)) (paths graph % (conj visited %) bonus?)
+                      bonus? (paths graph % visited false)))
+             +
+             (graph cave)))
 
 (defn part-1* [graph]
   (paths graph "start" #{} false))
