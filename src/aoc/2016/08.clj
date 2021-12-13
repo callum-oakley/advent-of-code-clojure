@@ -21,13 +21,6 @@
 (defn rotate-col [pixels col n]
   (set (map (fn [[x y]] (if (= x col) [x (mod (+ n y) 6)] [x y])) pixels)))
 
-(defn pixels->str [pixels]
-  (->> (range 6)
-       (map (fn [y]
-              (apply str (map (fn [x] (if (pixels [x y]) \# \.)) (range 50)))))
-       (interpose "\n")
-       (apply str)))
-
 (defn part-* []
   (->> "input/2016/08" slurp str/split-lines (map parse)
        (reduce (fn [pixels [op args]]
@@ -43,4 +36,4 @@
   (count (part-*)))
 
 (defn part-2 []
-  (ocr/parse (pixels->str (part-*))))
+  (ocr/parse (ocr/draw (part-*))))
