@@ -3,24 +3,22 @@
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  [(first s)
-   (->> (re-find #"\w+" s) (partition 2 1) frequencies)
-   (->> (re-seq #"(\w\w) -> (\w)" s)
-        (map #(let [[_ [a b] [c]] %] [[a b] [[a c] [c b]]]))
+  [(->> s (re-find #"\w+") frequencies)
+   (->> s (re-find #"\w+") (partition 2 1) frequencies)
+   (->> s (re-seq #"(\w\w) -> (\w)")
+        (map #(let [[_ [a b] [c]] %] [[a b] c]))
         (into {}))])
 
-(defn step [reactions pairs]
-  (->> pairs
-       (map (fn [[pair n]] (when-let [[a b] (reactions pair)] {a n b n})))
-       (apply merge-with +)))
+(defn step [reactions [elements pairs]]
+  (reduce-kv (fn [[elements pairs] [a b] n]
+               (let [c (reactions [a b])]
+                 [(merge-with + elements {c n})
+                  (merge-with + pairs {[a c] n [c b] n})]))
+             [elements {}]
+             pairs))
 
-(defn grow [n [first-element pairs reactions]]
-  (let [elements (->> pairs (iterate #(step reactions %)) (drop n) first
-                      (map (fn [[[_ element] n]] {element n}))
-                      (apply merge-with +))]
-    ;; Counting the second element of every pair accounts for every element
-    ;; except the first one.
-    (update elements first-element inc)))
+(defn grow [n [elements pairs reactions]]
+  (first (nth (iterate #(step reactions %) [elements pairs]) n)))
 
 (defn part-* [n data]
   (->> (grow n data) vals (apply (juxt max min)) (apply -)))
