@@ -16,9 +16,9 @@
    (traversal queue start adjacent identity))
   ([queue start adjacent normalise]
    ((fn go [queue seen]
-      (when (peek queue)
-        (cons (peek queue)
-              (lazy-seq
+      (lazy-seq
+       (when (peek queue)
+         (cons (peek queue)
                (let [as (remove #(seen (normalise %)) (adjacent (peek queue)))]
                  (go (into (pop queue) as) (into seen (map normalise) as)))))))
     (conj queue start)
