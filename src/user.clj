@@ -68,11 +68,6 @@
   ([year day]
    (test/run-all-tests (re-pattern (format "aoc\\.%d\\.%02d" year day)))))
 
-(defn run-scrap [year day]
-  (when-let [f (resolve (symbol (format "aoc.%d.%02d/scrap" year day)))]
-    (download-input year day)
-    (pp/pprint (f))))
-
 (defn run
   ([]
    (let [start (System/currentTimeMillis)
@@ -90,7 +85,6 @@
    (if (<= year 25)
      (run default-year year day)
      (do
-       (run-scrap year day)
        (run year day 1)
        (run year day 2))))
   ([year day part]

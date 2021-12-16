@@ -3,16 +3,15 @@
 If you're reading this you probably either want to see my solutions -- they're
 arranged by year and then day at [src/aoc][] -- or you want to run them. Maybe
 you're me from the future. Entry points for running solutions and tests are in
-the [user namespace][], you probably want `run-tests`, `run`, or `rrr`
-(do all of refresh, run tests, and then run).
+the [user namespace][], you probably want `run-tests`, `run`, or `rrr`(do all
+of refresh, run tests, and then run).
 
 `run` will download input (exactly once ever for each puzzle) and submit
 solutions (or check them against a local cache). When it does make requests it
 looks for a `.session` file.
 
 Solutions are functions of no arguments called `part-1` or `part-2` in the
-relevant namespace. `run` will also run functions called `scrap` for the
-purpose of checking intermediate results without submitting anything.
+relevant namespace.
 
 Arguments to `run` (and `run-tests` and `rrr`) are integers: year, day, part;
 all optional.

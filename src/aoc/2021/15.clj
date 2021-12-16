@@ -11,8 +11,8 @@
 (defn part-* [cavern]
   (let [target (->> cavern keys sort last)]
     (:risk
-     ;; TODO why doesn't A* with manhattan distance give the correct answer?
-     ;; Is there a bug in my A* code?
+     ;; TODO why doesn't A* with manhattan distance give the correct answer? Is
+     ;; there a bug in my A* code?
      (search/dijkstra :risk
                       {:pos [0 0] :risk 0}
                       #(map (fn [pos]
