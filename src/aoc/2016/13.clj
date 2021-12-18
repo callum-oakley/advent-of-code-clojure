@@ -2,7 +2,6 @@
   (:require
    [aoc.search :as search]
    [aoc.vector :refer [+v]]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn wall? [n [x y]]

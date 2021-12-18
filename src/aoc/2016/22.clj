@@ -2,8 +2,7 @@
   (:require
    [aoc.search :as search]
    [aoc.vector :refer [+v]]
-   [clojure.string :as str]
-   [clojure.test :refer [deftest is]]))
+   [clojure.string :as str]))
 
 (defn parse [s]
   (->> s str/split-lines (drop 2)

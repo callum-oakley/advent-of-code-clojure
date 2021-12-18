@@ -1,7 +1,6 @@
 (ns aoc.2017.03
   (:require
    [aoc.vector :refer [+v *v manhattan-distance]]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (def rotate-clockwise

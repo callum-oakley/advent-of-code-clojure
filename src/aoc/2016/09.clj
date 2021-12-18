@@ -4,7 +4,7 @@
    [clojure.test :refer [deftest is]]))
 
 (defn decompress [s]
-  (if-let [[m prefix len mul suffix]
+  (if-let [[_ prefix len mul suffix]
            (re-matches #"([A-Z]*)\((\d+)x(\d+)\)(.*)" s)]
     (let [len (read-string len)
           mul (read-string mul)]
@@ -14,7 +14,7 @@
     s))
 
 (defn part-2* [s]
-  (if-let [[m prefix len mul suffix]
+  (if-let [[_ prefix len mul suffix]
            (re-matches #"([A-Z]*)\((\d+)x(\d+)\)(.*)" s)]
     (let [len (read-string len)
           mul (read-string mul)]

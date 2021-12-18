@@ -1,7 +1,7 @@
 (ns aoc.2020.18
   (:require
    [clojure.string :as str]
-   [clojure.test :refer [deftest is are]]))
+   [clojure.test :refer [deftest are]]))
 
 (def data
   (str/split-lines (slurp "input/2020/18")))

@@ -1,7 +1,6 @@
 (ns aoc.2015.06
   (:require
-   [clojure.string :as str]
-   [clojure.test :refer [deftest is]]))
+   [clojure.string :as str]))
 
 (defn parse [instruction]
   (let [[_ op x0 y0 x1 y1]

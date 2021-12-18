@@ -1,7 +1,6 @@
 (ns aoc.2016.25
   (:require
-   [clojure.string :as str]
-   [clojure.test :refer [deftest is]]))
+   [clojure.string :as str]))
 
 (defn parse [s]
   (mapv #(mapv read-string (re-seq #"\S+" %)) (str/split-lines s)))
@@ -18,7 +17,7 @@
 
 (defn part-1 []
   (let [m (parse (slurp "input/2016/25"))
-        signal (apply concat (replicate 50 [0 1]))]
+        signal (apply concat (repeat 50 [0 1]))]
     (some #(when (= signal
                     (take (count signal) (run m 0 {'a % 'b 0 'c 0 'd 0})))
              %)

@@ -20,7 +20,7 @@
 (defn part-* [limit endurance multiplier]
   (let [target (read-string (slurp "input/2015/20"))]
     (->> (deliver-presents limit endurance multiplier)
-         (filter (fn [[house presents]] (<= target presents)))
+         (filter (fn [[_ presents]] (<= target presents)))
          (map first)
          (apply min))))
 

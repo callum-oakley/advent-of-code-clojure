@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [clojure.set :as set]
-   [clojure.test :refer [deftest is are]]))
+   [clojure.test :refer [deftest are]]))
 
 (def data
   (str/split-lines (slurp "input/2020/05")))

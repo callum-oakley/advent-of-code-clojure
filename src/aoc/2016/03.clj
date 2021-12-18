@@ -1,7 +1,6 @@
 (ns aoc.2016.03
   (:require
-   [aoc.vector :refer [transpose]]
-   [clojure.test :refer [deftest is]]))
+   [aoc.vector :refer [transpose]]))
 
 (defn part-* [f]
   (->> (slurp "input/2016/03")

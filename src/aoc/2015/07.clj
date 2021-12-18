@@ -1,7 +1,7 @@
 (ns aoc.2015.07
   (:require
    [clojure.string :as str]
-   [clojure.test :refer [deftest is are]]))
+   [clojure.test :refer [deftest are]]))
 
 (defn parse [s]
   (->> (str/split-lines s)

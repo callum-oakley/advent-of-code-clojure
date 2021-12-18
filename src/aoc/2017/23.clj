@@ -1,8 +1,7 @@
 (ns aoc.2017.23
   (:require
    [clojure.java.math :as math]
-   [clojure.string :as str]
-   [clojure.test :refer [deftest is]]))
+   [clojure.string :as str]))
 
 (defn parse [s]
   (->> s str/split-lines (mapv #(map read-string (re-seq #"\S+" %)))))

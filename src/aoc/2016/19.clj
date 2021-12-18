@@ -1,6 +1,5 @@
 (ns aoc.2016.19
   (:require
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn part-1* [n]

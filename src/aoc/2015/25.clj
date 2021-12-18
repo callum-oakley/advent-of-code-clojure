@@ -1,6 +1,4 @@
-(ns aoc.2015.25
-  (:require
-   [clojure.test :refer [deftest is]]))
+(ns aoc.2015.25)
 
 (defn mod-pow [b e m]
   (.modPow (biginteger b) (biginteger e) (biginteger m)))

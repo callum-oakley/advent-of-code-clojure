@@ -1,7 +1,7 @@
 (ns aoc.2015.12
   (:require
    [clojure.data.json :as json]
-   [clojure.test :refer [deftest is are]]))
+   [clojure.test :refer [deftest are]]))
 
 (defn part-* [p v]
   (cond

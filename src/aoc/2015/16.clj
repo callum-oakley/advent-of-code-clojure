@@ -1,7 +1,6 @@
 (ns aoc.2015.16
   (:require
-   [clojure.string :as str]
-   [clojure.test :refer [deftest is]]))
+   [clojure.string :as str]))
 
 (defn parse [s]
   (map (fn [line]

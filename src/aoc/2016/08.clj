@@ -2,8 +2,7 @@
   (:require
    [aoc.ocr :as ocr]
    [clojure.set :as set]
-   [clojure.string :as str]
-   [clojure.test :refer [deftest is]]))
+   [clojure.string :as str]))
 
 (defn parse [s]
   [(cond

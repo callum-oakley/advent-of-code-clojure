@@ -36,7 +36,7 @@
           {}
           (for [a (keys targets) b (range a)] [a b])))
 
-(defn part-* [end {:keys [paths targets] :as state}]
+(defn part-* [end {:keys [targets] :as state}]
   (let [distances (distances state)]
     (->> targets keys (remove #{0}) comb/permutations
          (map #(->> (concat [0] % end)
