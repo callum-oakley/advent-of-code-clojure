@@ -14,12 +14,12 @@
 
 (defn walk [state steps]
   (update state :path into (map #(+v (-> state :path peek) (*v % (:dir state)))
-                                 (range 1 (inc steps)))))
+                                (range 1 (inc steps)))))
 
 (defn path [instructions]
   (:path (reduce (fn [state [t steps]] (-> state (turn t) (walk steps)))
-                  {:dir [0 1] :path [[0 0]]}
-                  instructions)))
+                 {:dir [0 1] :path [[0 0]]}
+                 instructions)))
 
 (defn part-1* [instructions]
   (manhattan-distance (peek (path instructions))))

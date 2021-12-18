@@ -41,6 +41,6 @@
               :hole (some (fn [[k v]] (when (zero? (:used v)) k)) state)
               :goal [29 0]
               :steps 0}
-            adjacent
-            #(= [0 0] (:goal %))
-            (juxt :hole :goal)))))
+             adjacent
+             #(= [0 0] (:goal %))
+             (juxt :hole :goal)))))

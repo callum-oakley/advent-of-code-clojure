@@ -36,7 +36,7 @@
   (apply traversal [] opts))
 
 (defn- search [queue start adjacent goal? & more]
-   (first (filter goal? (apply traversal queue start adjacent more))))
+  (first (filter goal? (apply traversal queue start adjacent more))))
 
 (defn bfs [& opts]
   (apply search PersistentQueue/EMPTY opts))
@@ -54,7 +54,7 @@
   ;; This was wrong in my first implementation (I was only considering the cost
   ;; of a node the first time you encountered it) so, a regression test:
   (is (= 2 (:cost
-            (dijkstra :cost #"foo.*(\w[a-z]+)?"
+            (dijkstra :cost
                       {:pos 'a :cost 0}
                       {{:pos 'a :cost 0} [{:pos 'b :cost 3} {:pos 'c :cost 1}]
                        {:pos 'c :cost 1} [{:pos 'b :cost 2}]}

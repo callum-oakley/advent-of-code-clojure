@@ -15,7 +15,7 @@
 (defn rotations-and-reflections [t]
   (let [r #(re-index % (fn [[y x]] [(- (count t) x 1) y]))
         f #(re-index % (fn [[y x]] [x y]))]
-    [   t     (r t)     (r (r t))     (r (r (r t)))
+    [t     (r t)     (r (r t))     (r (r (r t)))
      (f t) (f (r t)) (f (r (r t))) (f (r (r (r t))))]))
 
 (defn parse-tile [[title & tile]]

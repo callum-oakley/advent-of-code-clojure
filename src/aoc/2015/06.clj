@@ -4,9 +4,9 @@
 
 (defn parse [instruction]
   (let [[_ op x0 y0 x1 y1]
-         (re-matches
-          #"(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)"
-          instruction)]
+        (re-matches
+         #"(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)"
+         instruction)]
     [op (read-string x0) (read-string y0) (read-string x1) (read-string y1)]))
 
 (defn part-* [op->f]

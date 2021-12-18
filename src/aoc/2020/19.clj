@@ -64,8 +64,7 @@
     "aaaabbaaaabbaaa"
     "aaaabbaabbaaaaaaabbbabbbaaabbaabaaa"
     "babaaabbbaaabaababbaabababaaab"
-    "aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"]]
-  )
+    "aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"]])
 
 (deftest test-examples
   (is (= (part-1 (parse sample-1)) 2))

@@ -9,8 +9,8 @@
     [(map #(str/split % #" => ") (str/split-lines r)) (str/trim m)]))
 
 (defn indices-of [s value from-index]
-   (when-let [i (str/index-of s value from-index)]
-     (cons i (indices-of s value (inc i)))))
+  (when-let [i (str/index-of s value from-index)]
+    (cons i (indices-of s value (inc i)))))
 
 (defn step [replacements molecule]
   (set (mapcat
