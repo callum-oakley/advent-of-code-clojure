@@ -1,8 +1,8 @@
 (ns user
   (:require
    [clj-http.client :as client]
-   [clojure.java.io :as io]
    [clojure.pprint :as pp]
+   [clojure.java.io :as io]
    [clojure.test :as test]
    [clojure.tools.namespace.find :as find]
    [clojure.tools.namespace.repl :as repl]))

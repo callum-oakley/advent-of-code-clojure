@@ -20,6 +20,6 @@
 
 (deftest test-example
   (let [fish (parse "3,4,3,1,2")]
-    (= 26 (part-* 18 fish))
-    (= 5934 (part-* 80 fish))
-    (= 26984457539 (part-* 256 fish))))
+    (is (= 26 (part-* 18 fish)))
+    (is (= 5934 (part-* 80 fish)))
+    (is (= 26984457539 (part-* 256 fish)))))

@@ -1,8 +1,6 @@
 (ns aoc.2021.09
   (:require
    [aoc.grid :as grid]
-   [aoc.vector :refer [+v]]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
