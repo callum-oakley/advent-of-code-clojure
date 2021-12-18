@@ -1,6 +1,7 @@
 (ns aoc.search
   (:require
-   [clojure.data.priority-map :refer [priority-map]])
+   [clojure.data.priority-map :refer [priority-map]]
+   [clojure.test :refer [deftest is]])
   (:import
    [clojure.lang IPersistentCollection IPersistentStack PersistentQueue]))
 
@@ -15,14 +16,18 @@
   ([queue start adjacent]
    (traversal queue start adjacent identity))
   ([queue start adjacent normalise]
-   ((fn go [queue seen]
+   ((fn go [queue visited]
       (lazy-seq
-       (when (peek queue)
-         (cons (peek queue)
-               (let [as (remove #(seen (normalise %)) (adjacent (peek queue)))]
-                 (go (into (pop queue) as) (into seen (map normalise) as)))))))
+       (when-let [current (peek queue)]
+         (if (visited (normalise current))
+           (go (pop queue) visited)
+           (cons current
+                 (go (->> (adjacent current)
+                          (remove #(visited (normalise %)))
+                          (into (pop queue)))
+                     (conj visited (normalise current))))))))
     (conj queue start)
-    #{(normalise start)})))
+    #{})))
 
 (defn bft [& opts]
   (apply traversal PersistentQueue/EMPTY opts))
@@ -44,3 +49,14 @@
 
 (defn a* [cost heuristic & opts]
   (apply dijkstra #(+ (cost %) (heuristic %)) opts))
+
+(deftest test-dijkstra-corner-case
+  ;; This was wrong in my first implementation (I was only considering the cost
+  ;; of a node the first time you encountered it) so, a regression test:
+  (is (= 2 (:cost
+            (dijkstra :cost #"foo.*(\w[a-z]+)?"
+                      {:pos 'a :cost 0}
+                      {{:pos 'a :cost 0} [{:pos 'b :cost 3} {:pos 'c :cost 1}]
+                       {:pos 'c :cost 1} [{:pos 'b :cost 2}]}
+                      #(= 'b (:pos %))
+                      :pos)))))
