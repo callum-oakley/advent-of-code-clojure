@@ -6,52 +6,68 @@
    [clojure.set :as set]
    [clojure.test :refer [deftest is]]))
 
-(defn parse [s]
-  (map (fn [beacons]
-         [(->> (str/replace-first beacons #".*\n" "") (re-seq #"-?\d+")
-               (map read-string) (partition 3) set)
-          #{[0 0 0]}])
-       (str/split s #"\n\n")))
-
+;; Taking combinations of rotations around the axes generates all 24 rotations,
+;; but with redundancy, so filter them down to just the 24 we want.
 (def rotations
   (let [rx (fn [[x y z]] [x z (- y)])
         ry (fn [[x y z]] [z y (- x)])
         rz (fn [[x y z]] [y (- x) z])]
-    (map #(apply comp %) (comb/subsets [rx rx rx ry ry rz]))))
+    (->> [rx rx rx ry ry ry rz rz rz] comb/subsets
+         (map #((apply comp %) [1 2 3]))
+         distinct
+         (map #(eval
+                (list 'fn '[[x y z]]
+                      (mapv '{1 x 2 y 3 z -1 (- x) -2 (- y) -3 (- z)} %)))))))
 
-(defn combine-2 [[bs0 ss0] [bs1 ss1]]
-  (when-let [[[bs0 ss0] [bs1 ss1]]
-             (->> (for [r rotations
-                        :let [bs1 (map r bs1)
-                              ss1 (map r ss1)]
-                        b0 bs0
-                        b1 bs1]
-                    [[bs0 ss0]
-                     [(set (map #(+v (-v % b1) b0) bs1))
-                      (set (map #(+v (-v % b1) b0) ss1))]])
-                  (filter (fn [[[bs0 ss0] [bs1 ss1]]]
-                            (<= 12 (count (set/intersection bs0 bs1)))))
-                  first)]
-    [(set/union bs0 bs1) (set/union ss0 ss1)]))
+(defn fingerprint [beacons]
+  (->> (comb/combinations beacons 2)
+       (map #(apply manhattan-distance %))
+       frequencies))
+
+(defn parse [s]
+  (map (fn [beacons]
+         (let [beacons (->> (str/replace-first beacons #".*\n" "")
+                            (re-seq #"-?\d+") (map read-string) (partition 3)
+                            set)]
+           {:beacons beacons
+            :scanners #{[0 0 0]}
+            :fingerprint (fingerprint beacons)}))
+       (str/split s #"\n\n")))
+
+(defn fingerprints-match? [f0 f1]
+  (<= 66 ; 12 choose 2
+      (apply + (keep (fn [[k v0]] (when-let [v1 (f1 k)] (min v0 v1))) f0))))
+
+(defn fix [relative fixed]
+  (when (fingerprints-match? (:fingerprint relative) (:fingerprint fixed))
+    (first
+     (for [r rotations
+           :let [rbs (map r (:beacons relative))]
+           fb (:beacons fixed)
+           rb rbs
+           :let [rbs (set (map #(+v (-v % rb) fb) rbs))]
+           :when (<= 12 (count (set/intersection rbs (:beacons fixed))))]
+       [relative
+        {:beacons rbs
+         :scanners (set (map #(+v (-v % rb) fb) (map r (:scanners relative))))
+         :fingerprint (:fingerprint relative)}]))))
 
 (defn combine [scans]
-  (if (= 1 (count scans))
-    (first scans)
-    (let [scans (sort-by (fn [[bs _]] (count bs)) > scans)]
-      (println (map (fn [[bs _]] (count bs)) scans))
-      (->> (for [as scans bs scans :when (not= as bs)] [as bs])
-           (some (fn [[as bs]]
-                   (when-let [cs (combine-2 as bs)]
-                     (combine (conj (remove #{as bs} scans) cs)))))))))
+  (loop [fixed #{(first scans)}
+         relative (set (rest scans))]
+    (if (seq relative)
+      (let [[r f] (first (remove nil? (for [r relative f fixed] (fix r f))))]
+        (recur (conj fixed f) (disj relative r)))
+      (apply merge-with set/union (map #(dissoc % :fingerprint) fixed)))))
 
-(defn max-dist [ss]
-  (apply max (for [s0 ss s1 ss] (manhattan-distance s0 s1))))
+(defn max-dist [scanners]
+  (apply max (for [s0 scanners s1 scanners] (manhattan-distance s0 s1))))
 
 (defn part-1 []
-  (->> "input/2021/19" slurp parse combine first count))
+  (->> "input/2021/19" slurp parse combine :beacons count))
 
 (defn part-2 []
-  (->> "input/2021/19" slurp parse combine second max-dist))
+  (->> "input/2021/19" slurp parse combine :scanners max-dist))
 
 (deftest test-example
   (let [sample
@@ -91,5 +107,5 @@
          -575,615,604 -485,667,467 -680,325,-822 -627,-443,-432 872,-547,-609
          833,512,582 807,604,487 839,-516,451 891,-625,532 -652,-548,-490
          30,-46,-14"]
-    (is (= 79 (count (first (combine (parse sample))))))
-    (is (= 3621 (max-dist (second (combine (parse sample))))))))
+    (is (= 79 (count (:beacons (combine (parse sample))))))
+    (is (= 3621 (max-dist (:scanners (combine (parse sample))))))))
