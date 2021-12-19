@@ -38,26 +38,35 @@
   (<= 66 ; 12 choose 2
       (apply + (keep (fn [[k v0]] (when-let [v1 (f1 k)] (min v0 v1))) f0))))
 
+(defn offset [beacons-0 beacons-1]
+  (->> (for [b0 beacons-0 b1 beacons-1] (-v b1 b0))
+       frequencies
+       (some (fn [[diff freq]] (when (<= 12 freq) diff)))))
+
 (defn fix [relative fixed]
   (when (fingerprints-match? (:fingerprint relative) (:fingerprint fixed))
-    (first
-     (for [r rotations
-           :let [rbs (map r (:beacons relative))]
-           fb (:beacons fixed)
-           rb rbs
-           :let [rbs (set (map #(+v (-v % rb) fb) rbs))]
-           :when (<= 12 (count (set/intersection rbs (:beacons fixed))))]
-       [relative
-        {:beacons rbs
-         :scanners (set (map #(+v (-v % rb) fb) (map r (:scanners relative))))
-         :fingerprint (:fingerprint relative)}]))))
+    (->> rotations
+         (map (fn [rotation]
+                (-> relative
+                    (update :beacons (fn [b] (set (map rotation b))))
+                    (update :scanners (fn [s] (set (map rotation s)))))))
+         (some (fn [rotated]
+                 (when-let [diff (offset (:beacons rotated) (:beacons fixed))]
+                   (-> rotated
+                       (update :beacons (fn [b] (set (map #(+v diff %) b))))
+                       (update :scanners (fn [s] (set (map #(+v diff %) s)))))))))))
 
 (defn combine [scans]
   (loop [fixed #{(first scans)}
          relative (set (rest scans))]
     (if (seq relative)
-      (let [[r f] (first (remove nil? (for [r relative f fixed] (fix r f))))]
-        (recur (conj fixed f) (disj relative r)))
+      (let [[r r-fixed] (some (fn [f]
+                                (some (fn [r]
+                                        (when-let [r-fixed (fix r f)]
+                                          [r r-fixed]))
+                                      relative))
+                              fixed)]
+        (recur (conj fixed r-fixed) (disj relative r)))
       (apply merge-with set/union (map #(dissoc % :fingerprint) fixed)))))
 
 (defn max-dist [scanners]
