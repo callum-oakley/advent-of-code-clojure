@@ -1,15 +1,15 @@
 (ns aoc.2021.19
   (:require
-   [aoc.vector :refer [-v]]
+   [aoc.vector :refer [+v -v]]
    [clojure.math.combinatorics :as comb]
    [clojure.string :as str]
    [clojure.set :as set]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (set (map #(->> (str/replace-first % #".*\n" "") (re-seq #"-?\d+")
-                  (map read-string) (partition 3))
-            (str/split s #"\n\n"))))
+  (map #(->> (str/replace-first % #".*\n" "") (re-seq #"-?\d+")
+             (map read-string) (partition 3) set)
+       (str/split s #"\n\n")))
 
 (def rotations
   (let [rx (fn [[x y z]] [x z (- y)])
@@ -22,19 +22,20 @@
              :let [bs (map r bs)]
              a as
              b bs]
-         [(set (map #(-v % a) as)) (set (map #(-v % b) bs))])
+         [as (set (map #(+v (-v % b) a) bs))])
        (filter (fn [[as bs]] (<= 12 (count (set/intersection as bs)))))
        first
        (apply set/union)))
 
 (defn combine [scans]
-  (println (count scans))
   (if (= 1 (count scans))
     (first scans)
-    (->> (for [as scans bs (disj scans as)] [as bs])
-         (some (fn [[as bs]]
-                 (when-let [cs (seq (combine-2 as bs))]
-                   (combine (-> scans (disj as bs) (conj cs)))))))))
+    (let [scans (sort-by count > scans)]
+      (println (map count scans))
+      (->> (for [as scans bs scans :when (not= as bs)] [as bs])
+           (some (fn [[as bs]]
+                   (when-let [cs (not-empty (combine-2 as bs))]
+                     (combine (conj (remove #{as bs} scans) cs)))))))))
 
 (defn part-1 []
   (->> "input/2021/19" slurp parse combine count))
