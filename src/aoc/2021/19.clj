@@ -1,14 +1,16 @@
 (ns aoc.2021.19
   (:require
-   [aoc.vector :refer [+v -v]]
+   [aoc.vector :refer [+v -v manhattan-distance]]
    [clojure.math.combinatorics :as comb]
    [clojure.string :as str]
    [clojure.set :as set]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (map #(->> (str/replace-first % #".*\n" "") (re-seq #"-?\d+")
-             (map read-string) (partition 3) set)
+  (map (fn [beacons]
+         [(->> (str/replace-first beacons #".*\n" "") (re-seq #"-?\d+")
+               (map read-string) (partition 3) set)
+          #{[0 0 0]}])
        (str/split s #"\n\n")))
 
 (def rotations
@@ -17,28 +19,39 @@
         rz (fn [[x y z]] [y (- x) z])]
     (map #(apply comp %) (comb/subsets [rx rx rx ry ry rz]))))
 
-(defn combine-2 [as bs]
-  (->> (for [r rotations
-             :let [bs (map r bs)]
-             a as
-             b bs]
-         [as (set (map #(+v (-v % b) a) bs))])
-       (filter (fn [[as bs]] (<= 12 (count (set/intersection as bs)))))
-       first
-       (apply set/union)))
+(defn combine-2 [[bs0 ss0] [bs1 ss1]]
+  (when-let [[[bs0 ss0] [bs1 ss1]]
+             (->> (for [r rotations
+                        :let [bs1 (map r bs1)
+                              ss1 (map r ss1)]
+                        b0 bs0
+                        b1 bs1]
+                    [[bs0 ss0]
+                     [(set (map #(+v (-v % b1) b0) bs1))
+                      (set (map #(+v (-v % b1) b0) ss1))]])
+                  (filter (fn [[[bs0 ss0] [bs1 ss1]]]
+                            (<= 12 (count (set/intersection bs0 bs1)))))
+                  first)]
+    [(set/union bs0 bs1) (set/union ss0 ss1)]))
 
 (defn combine [scans]
   (if (= 1 (count scans))
     (first scans)
-    (let [scans (sort-by count > scans)]
-      (println (map count scans))
+    (let [scans (sort-by (fn [[bs _]] (count bs)) > scans)]
+      (println (map (fn [[bs _]] (count bs)) scans))
       (->> (for [as scans bs scans :when (not= as bs)] [as bs])
            (some (fn [[as bs]]
-                   (when-let [cs (not-empty (combine-2 as bs))]
+                   (when-let [cs (combine-2 as bs)]
                      (combine (conj (remove #{as bs} scans) cs)))))))))
 
+(defn max-dist [ss]
+  (apply max (for [s0 ss s1 ss] (manhattan-distance s0 s1))))
+
 (defn part-1 []
-  (->> "input/2021/19" slurp parse combine count))
+  (->> "input/2021/19" slurp parse combine first count))
+
+(defn part-2 []
+  (->> "input/2021/19" slurp parse combine second max-dist))
 
 (deftest test-example
   (let [sample
@@ -78,4 +91,5 @@
          -575,615,604 -485,667,467 -680,325,-822 -627,-443,-432 872,-547,-609
          833,512,582 807,604,487 839,-516,451 891,-625,532 -652,-548,-490
          30,-46,-14"]
-    (is (= 79 (count (combine (parse sample)))))))
+    (is (= 79 (count (first (combine (parse sample))))))
+    (is (= 3621 (max-dist (second (combine (parse sample))))))))
