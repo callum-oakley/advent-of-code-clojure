@@ -40,3 +40,7 @@
    (->> [north north-east east south-east south south-west west north-west]
         (map #(+v pos %))))
   ([pos g] (filter g (adjacent-8 pos))))
+
+(defn adjacent-9
+  ([pos] (cons pos (adjacent-8 pos)))
+  ([pos g] (filter g (adjacent-9 pos))))
