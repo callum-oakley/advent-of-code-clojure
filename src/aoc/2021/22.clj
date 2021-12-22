@@ -6,7 +6,7 @@
   (->> s (re-seq #"(?:on|off|-?\d+)") (map read-string) (partition 7)
        ;; Exclusive upper bounds make the maths easier.
        (map (fn [[op x0 x1 y0 y1 z0 z1]]
-              [op x0 (inc x1) y0 (inc y1) z0 (inc z1)]))))
+              [op [x0 (inc x1) y0 (inc y1) z0 (inc z1)]]))))
 
 (defn volume [[x0 x1 y0 y1 z0 z1]]
   (* (- x1 x0) (- y1 y0) (- z1 z0)))
@@ -14,49 +14,42 @@
 (defn clamp [x low high]
   (min (max x low) high))
 
-(defn cuboid-intersection [[x0 x1 y0 y1 z0 z1] [x2 x3 y2 y3 z2 z3]]
-  [(clamp x2 x0 x1) (clamp x3 x0 x1)
-   (clamp y2 y0 y1) (clamp y3 y0 y1)
-   (clamp z2 z0 z1) (clamp z3 z0 z1)])
+(defn intersection [[x0 x1 y0 y1 z0 z1] [x2 x3 y2 y3 z2 z3]]
+  (let [i [(clamp x2 x0 x1) (clamp x3 x0 x1)
+           (clamp y2 y0 y1) (clamp y3 y0 y1)
+           (clamp z2 z0 z1) (clamp z3 z0 z1)]]
+    (when (pos? (volume i))
+      i)))
 
-(defn cuboid-diff
-  "Returns the set of points in the first cuboid but not the second, expressed
-   as a sequence of disjoint cuboids"
-  [[x0 x1 y0 y1 z0 z1 :as cuboid0] [x2 x3 y2 y3 z2 z3 :as cuboid1]]
-  (let [i (cuboid-intersection cuboid0 cuboid1)]
-    (if (zero? (volume i))
-      [cuboid0]
-      (let [xs [[x0 (clamp x2 x0 x1)]
-                [(clamp x2 x0 x1) (clamp x3 x0 x1)]
-                [(clamp x3 x0 x1) x1]]
-            ys [[y0 (clamp y2 y0 y1)]
-                [(clamp y2 y0 y1) (clamp y3 y0 y1)]
-                [(clamp y3 y0 y1) y1]]
-            zs [[z0 (clamp z2 z0 z1)]
-                [(clamp z2 z0 z1) (clamp z3 z0 z1)]
-                [(clamp z3 z0 z1) z1]]]
-        (->> (for [x xs y ys z zs] (concat x y z))
-             (remove #(or (= i %) (zero? (volume %)))))))))
+(defn rests [coll]
+  (when (seq coll)
+    (cons coll (rests (rest coll)))))
+
+(defn disjoint-volume
+  "The volume contributed by cuboid which is not subsequently covered by
+   intersections"
+  [cuboid intersections]
+  (->> intersections rests
+       (map (fn [[c & cs]] (disjoint-volume c (keep #(intersection c %) cs))))
+       (apply +)
+       (- (volume cuboid))))
 
 (defn part-* [steps]
-  (reduce (fn [on [op & [x0 x1 y0 y1 z0 z1 :as cuboid]]]
-            (case op
-              on (->> on
-                      (reduce (fn [diff part]
-                                (mapcat #(cuboid-diff % part) diff))
-                              [cuboid])
-                      (into on))
-              off (mapcat #(cuboid-diff % cuboid) on)))
-          []
-          steps))
-
-(defn part-1* [steps]
-  (->> steps part-*
-       (map #(volume (cuboid-intersection % [-50 51 -50 51 -50 51])))
+  (->> steps rests
+       (keep (fn [[[op c] & steps]]
+               (when (= 'on op)
+                 (disjoint-volume c (keep #(intersection c (% 1)) steps)))))
        (apply +)))
 
+(defn part-1* [steps]
+  (->> steps
+       (keep (fn [[op c]]
+               (when-let [i (intersection [-50 51 -50 51 -50 51] c)]
+                 [op i])))
+       part-*))
+
 (defn part-2* [steps]
-  (->> steps part-* (map volume) (apply +)))
+  (part-* steps))
 
 (defn part-1 []
   (->> "input/2021/22" slurp parse part-1*))
