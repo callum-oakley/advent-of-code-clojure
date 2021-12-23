@@ -26,19 +26,17 @@
     (cons coll (rests (rest coll)))))
 
 (defn disjoint-volume
-  "The volume contributed by cuboid which is not subsequently covered by
-   intersections"
-  [cuboid intersections]
-  (->> intersections rests
-       (map (fn [[c & cs]] (disjoint-volume c (keep #(intersection c %) cs))))
-       (apply +)
-       (- (volume cuboid))))
+  "The volume contributed by c which is not subsequently covered by cs"
+  [c cs]
+  (->> cs (keep #(intersection c %)) rests
+       (map (fn [[c & cs]] (disjoint-volume c cs)))
+       (apply +) (- (volume c))))
 
 (defn part-* [steps]
   (->> steps rests
        (keep (fn [[[op c] & steps]]
                (when (= 'on op)
-                 (disjoint-volume c (keep #(intersection c (% 1)) steps)))))
+                 (disjoint-volume c (map second steps)))))
        (apply +)))
 
 (defn part-1* [steps]
