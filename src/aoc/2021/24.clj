@@ -25,7 +25,11 @@
                    input))
       (zero? (reg 'z)))))
 
-;; rough scribbles that got me to the answer. not very well explained:
+;; Rough scribbles that got me to the answer. Not very well explained. The more
+;; useful insight is to think of z in base 26, and 1 operations push a new
+;; digit on the right (the "condition" is impossible to satisfy), while 26
+;; operations pop a digit off the right as long as the condition is satisfied
+;; (and every one must be, since there are exactly 7 pushes and 7 pops).
 (defn valid?* [input]
   (let [w (digits input)]
     (reduce-kv (fn [z i [a b c]]
