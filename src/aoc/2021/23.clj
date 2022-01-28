@@ -3,7 +3,6 @@
    [aoc.grid :as grid]
    [aoc.search :as search]
    [aoc.vector :refer [manhattan-distance]]
-   [clojure.java.math :as math]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
@@ -70,7 +69,7 @@
    (reduce-kv (fn [[energy depth] [y x] amphipod]
                 (if (and amphipod (not= (room-x amphipod) x))
                   [(+ energy (* (step-energy amphipod)
-                                (+ (math/abs (- (room-x amphipod) x))
+                                (+ (abs (- (room-x amphipod) x))
                                    y
                                    (depth amphipod))))
                    (update depth amphipod inc)]

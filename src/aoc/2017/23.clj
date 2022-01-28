@@ -1,6 +1,6 @@
 (ns aoc.2017.23
   (:require
-   [clojure.java.math :as math]
+   [clojure.math :as math]
    [clojure.string :as str]))
 
 (defn parse [s]

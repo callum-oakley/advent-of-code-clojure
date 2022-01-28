@@ -1,6 +1,4 @@
-(ns aoc.vector
-  (:require
-   [clojure.java.math :as math]))
+(ns aoc.vector)
 
 (defn +v [& vs]
   (apply mapv + vs))
@@ -19,8 +17,8 @@
 
 (defn manhattan-distance
   ([u v] (manhattan-distance (-v v u)))
-  ([v] (apply + (map math/abs v))))
+  ([v] (apply + (map abs v))))
 
 (defn chessboard-distance
   ([u v] (chessboard-distance (-v v u)))
-  ([v] (apply max (map math/abs v))))
+  ([v] (apply max (map abs v))))
