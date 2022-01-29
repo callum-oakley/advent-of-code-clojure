@@ -1,10 +1,10 @@
 (ns aoc.2019.02
   (:require
-   [aoc.2019.intcode :as intcode]
+   [aoc.2019.intcode :as i]
    [clojure.test :refer [deftest are]]))
 
 (defn gravity-assist [noun verb]
-  ((intcode/run (assoc (intcode/load "input/2019/02") 1 noun 2 verb)) 0))
+  (get-in (i/run (assoc (i/load "input/2019/02") 1 noun 2 verb)) [:mem 0]))
 
 (defn part-1 []
   (gravity-assist 12 2))
@@ -16,9 +16,8 @@
         (for [noun (range 100) verb (range 100)] [noun verb])))
 
 (deftest test-intcode
-  (are [initial final] (= (intcode/parse final)
-                          (intcode/run (intcode/parse initial)))
-    "1,0,0,0,99" "2,0,0,0,99"
-    "2,3,0,3,99" "2,3,0,6,99"
-    "2,4,4,5,99,0" "2,4,4,5,99,9801"
-    "1,1,1,4,99,5,6,0,99" "30,1,1,4,2,5,6,0,99"))
+  (are [initial final] (= final (:mem (i/run initial)))
+    [1 0 0 0 99] [2 0 0 0 99]
+    [2 3 0 3 99] [2 3 0 6 99]
+    [2 4 4 5 99 0] [2 4 4 5 99 9801]
+    [1 1 1 4 99 5 6 0 99] [30 1 1 4 2 5 6 0 99]))
