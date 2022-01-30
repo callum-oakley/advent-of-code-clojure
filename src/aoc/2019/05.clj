@@ -4,7 +4,7 @@
    [clojure.test :refer [deftest is]]))
 
 (defn diagnostics [in]
-  (i/run-io (i/load "input/2019/05") [in]))
+  (i/run (i/load "input/2019/05") [in]))
 
 (defn part-1 []
   (last (diagnostics 1)))
