@@ -4,7 +4,7 @@
    [clojure.test :refer [deftest are]]))
 
 (defn gravity-assist [noun verb]
-  (get-in (i/run (assoc (i/load "input/2019/02") 1 noun 2 verb)) [:mem 0]))
+  (first (:mem (i/run (assoc (i/load "input/2019/02") 1 noun 2 verb)))))
 
 (defn part-1 []
   (gravity-assist 12 2))
@@ -16,7 +16,7 @@
         (for [noun (range 100) verb (range 100)] [noun verb])))
 
 (deftest test-intcode
-  (are [initial final] (= final (:mem (i/run initial)))
+  (are [initial final] (= final (take (count initial) (:mem (i/run initial))))
     [1 0 0 0 99] [2 0 0 0 99]
     [2 3 0 3 99] [2 3 0 6 99]
     [2 4 4 5 99 0] [2 4 4 5 99 9801]
