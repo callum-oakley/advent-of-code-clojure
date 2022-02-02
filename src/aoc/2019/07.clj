@@ -5,7 +5,7 @@
    [clojure.test :refer [deftest is]]))
 
 (defn amp-1 [mem phases]
-  (reduce (fn [signal phase] (first (i/run mem [phase signal]))) 0 phases))
+  (reduce (fn [signal phase] (first (i/run-io mem [phase signal]))) 0 phases))
 
 (defn amp-2 [mem phases]
   (loop [[a b c d e] (update (mapv #(i/>> (i/run mem) %) phases) 0 i/>> 0)]

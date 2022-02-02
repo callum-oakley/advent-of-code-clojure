@@ -4,13 +4,13 @@
    [clojure.test :refer [deftest are]]))
 
 (defn part-1 []
-  (first (i/run (i/load "input/2019/09") [1])))
+  (first (i/run-io (i/load "input/2019/09") [1])))
 
 (defn part-2 []
-  (first (i/run (i/load "input/2019/09") [2])))
+  (first (i/run-io (i/load "input/2019/09") [2])))
 
 (deftest test-examples
-  (are [mem out] (= out (i/run mem []))
+  (are [mem out] (= out (i/run-io mem []))
     [109 1 204 -1 1001 100 1 100 1008 100 16 101 1006 101 0 99]
     [109 1 204 -1 1001 100 1 100 1008 100 16 101 1006 101 0 99]
 
