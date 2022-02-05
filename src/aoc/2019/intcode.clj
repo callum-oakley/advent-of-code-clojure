@@ -28,7 +28,7 @@
          8 (recur (assoc mem (! 3) (if (= ($ 1) ($ 2)) 1 0)) (+ head 4) base)
          9 (recur mem (+ head 2) (+ base ($ 1)))
          99 {:state :halt :mem mem})))
-   (vec (concat mem (repeat (max 0 (- 2048 (count mem))) 0))) 0 0))
+   (vec (concat mem (repeat (max 0 (- 4096 (count mem))) 0))) 0 0))
 
 (defn >>
   "Resumes a vm with any arguments given (none for :out and one for :in)."
