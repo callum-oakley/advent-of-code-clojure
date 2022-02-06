@@ -35,21 +35,26 @@
   [vm & args] (apply (:k vm) args))
 
 (defn io
-  "Feeds input to the vm and collects output. Returns on halt or end of input."
-  [vm in]
-  (loop [vm vm in in out []]
-    (case (:state vm)
-      :in (if (seq in)
-            (recur (>> vm (first in)) (rest in) out)
-            (assoc vm :out out))
-      :out (recur (>> vm) in (conj out (:out vm)))
-      :halt (assoc vm :out out))))
+  "Feeds input to the vm and collects output. Returns on halt or end of input,
+   or when outn outputs have been collected."
+  ([vm in] (io vm in ##Inf))
+  ([vm in outn]
+   (loop [vm (if (and (= :out (:state vm)) (vector? (:out vm))) (>> vm) vm)
+          in in out []]
+     (case (:state vm)
+       :in (if (seq in)
+             (recur (>> vm (first in)) (rest in) out)
+             [out vm])
+       :out (if (< (inc (count out)) outn)
+              (recur (>> vm) in (conj out (:out vm)))
+              [(conj out (:out vm)) (>> vm)])
+       :halt [out vm]))))
 
 (defn run-io
   "Runs a vm on mem with the given input, returning output. Throws if input is
    exhausted before halt."
   [mem in]
-  (let [vm (io (run mem) in)]
+  (let [[out vm] (io (run mem) in)]
     (case (:state vm)
       :input (throw (Exception. "Input exhausted"))
-      :halt (:out vm))))
+      :halt out)))
