@@ -62,3 +62,19 @@
     (case (:state vm)
       :input (throw (Exception. "Input exhausted"))
       :halt out)))
+
+(defn run-interactive
+  "Runs a vm on mem, taking input as ASCII from stdin, and writing output as
+   ASCII on stdout. Reads and writes whole lines at a time."
+  [mem]
+  (loop [vm (run mem) in [] out []]
+    (case (:state vm)
+      :in (if (seq in)
+            (recur (>> vm (first in)) (rest in) out)
+            (recur vm (map int (str (read-line) "\n")) out))
+      :out (if (= 10 (:out vm))
+             (do
+               (println (apply str (map char out)))
+               (recur (>> vm) in []))
+             (recur (>> vm) in (conj out (:out vm))))
+      :halt nil)))
