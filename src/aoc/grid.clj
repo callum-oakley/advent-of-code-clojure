@@ -35,6 +35,14 @@
   ([pos] (->> [north east south west] (map #(+v pos %))))
   ([pos g] (filter g (adjacent pos))))
 
+(defn adjacent-5
+  ([pos] (cons pos (adjacent pos)))
+  ([pos g] (filter g (adjacent-5 pos))))
+
+(defn adjacent-corners
+  ([pos] (->> [north-east south-east south-west north-west] (map #(+v pos %))))
+  ([pos g] (filter g (adjacent pos))))
+
 (defn adjacent-8
   ([pos]
    (->> [north north-east east south-east south south-west west north-west]
