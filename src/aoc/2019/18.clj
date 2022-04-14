@@ -2,62 +2,58 @@
   (:require
    [aoc.grid :as g]
    [aoc.search :as search]
-   [clojure.math.combinatorics :as comb]
    [clojure.set :as set]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(defn wall? [tile] (= \# tile))
-(defn floor? [tile] (= \. tile))
-;; It's convenient to treat \@ as a key
+;; It's convenient to treat @ as a key
 (defn key? [tile] (or (= \@ tile) (java.lang.Character/isLowerCase tile)))
 (defn door? [tile] (java.lang.Character/isUpperCase tile))
 (defn ->key [door] (java.lang.Character/toLowerCase door))
 
 (defn parse [s]
-  (into {} (remove (fn [[_ tile]] (wall? tile))) (g/parse s)))
+  (into {} (remove (fn [[_ tile]] (= \# tile))) (g/parse s)))
 
-;; The distance of the shortest path from from a to b, and the keys required
-;; along the way -- if such a path exists.
-(defn path [g a b]
-  (dissoc
-   (search/bfs
-    {:pos a :steps 0 :keys #{}}
-    (fn [{:keys [pos steps keys]}]
-      (->> (g/adjacent pos g)
-           (filter #(or (= b %) (door? (g %)) (floor? (g %))))
-           (map #(if (door? (g %))
-                   {:pos % :steps (inc steps) :keys (conj keys (->key (g %)))}
-                   {:pos % :steps (inc steps) :keys keys}))))
-    #(= b (:pos %))
-    :pos)
-   :pos))
+;; All keys reachable from pos, along with the steps and keys required.
+(defn reachable [g pos]
+  (->> (search/bft
+        {:pos pos :steps 0 :keys #{}}
+        (fn [state]
+          (when (or (= pos (:pos state)) (not (key? (g (:pos state)))))
+            (map #(-> state
+                      (assoc :pos %)
+                      (update :steps inc)
+                      (cond-> (door? (g %))
+                        (update :keys conj (->key (g %)))))
+                 (g/adjacent (:pos state) g))))
+        :pos)
+       rest
+       (map #(update % :pos g))
+       (filter #(key? (:pos %)))))
 
-;; TODO we could make this faster by traversing the grid from each start point
-;; once, rather than checking every pair.
-(defn paths [g]
-  (let [keys (keep (fn [[pos tile]] (when (key? tile) pos)) g)]
-    (reduce (fn [ps [a b]]
-              (if-let [p (path g a b)]
-                (merge-with merge ps {(g a) {(g b) p} (g b) {(g a) p}})
-                ps))
-            {}
-            (comb/combinations keys 2))))
+(defn key-graph [g]
+  (reduce (fn [kg pos] (assoc kg (g pos) (reachable g pos)))
+          {}
+          (keep (fn [[pos tile]] (when (key? tile) pos)) g)))
 
+;; Compute a weighted graph of the distance between keys up front, along with
+;; the keys required to traverse each edge, then dijkstra on the higher level
+;; key graph.
 (defn part-* [g]
   (let [keys (->> g vals (filter key?) set)
-        ps (paths g)]
+        kg (key-graph g)]
     (:steps
-     (search/dijkstra
-      :steps
-      {:pos \@ :steps 0 :keys #{\@}}
-      (fn [{:keys [pos steps keys]}]
-        (keep (fn [[pos p]]
-                (when (set/subset? (:keys p) keys)
-                  {:pos pos :steps (+ steps (:steps p)) :keys (conj keys pos)}))
-              (ps pos)))
-      #(= keys (:keys %))
-      (juxt :pos :keys)))))
+     (search/dijkstra :steps
+                      {:pos \@ :steps 0 :keys #{\@}}
+                      (fn [state]
+                        (keep #(when (set/subset? (:keys %) (:keys state))
+                                 (-> state
+                                     (assoc :pos (:pos %))
+                                     (update :steps + (:steps %))
+                                     (update :keys conj (:pos %))))
+                              (kg (:pos state))))
+                      #(= keys (:keys %))
+                      (juxt :pos :keys)))))
 
 (defn part-1 []
   (->> "input/2019/18" slurp parse part-*))
