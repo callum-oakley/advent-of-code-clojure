@@ -7,8 +7,8 @@
    [clojure.test :refer [deftest is]]))
 
 ;; It's convenient to treat @ 0 1 2 3 as keys
-(defn key? [tile] (or (#{\@ \0 \1 \2 \3} tile)
-                      (java.lang.Character/isLowerCase tile)))
+(defn key? [tile]
+  (or (#{\@ \0 \1 \2 \3} tile) (java.lang.Character/isLowerCase tile)))
 (defn door? [tile] (java.lang.Character/isUpperCase tile))
 (defn ->key [door] (java.lang.Character/toLowerCase door))
 
