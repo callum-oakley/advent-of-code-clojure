@@ -43,8 +43,7 @@
    or when outn outputs have been collected."
   ([vm in] (io vm in ##Inf))
   ([vm in outn]
-   (loop [vm (if (and (= :out (:state vm)) (vector? (:out vm))) (>> vm) vm)
-          in in out []]
+   (loop [vm vm in in out []]
      (case (:state vm)
        :in (if (seq in)
              (recur (>> vm (first in)) (rest in) out)
