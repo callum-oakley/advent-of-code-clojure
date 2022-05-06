@@ -29,7 +29,7 @@
   "Runs a vm on mem until a read, write, or halt operation is encountered, then
    returns the vm. Check :state and resume with >>, or wrap with io."
   [mem]
-  (run* (vec (concat mem (repeat (max 0 (- 4096 (count mem))) 0))) 0 0))
+  (run* (vec (concat mem (repeat (max 0 (- 6000 (count mem))) 0))) 0 0))
 
 (defn >>
   "Resumes a vm with any arguments given (none for :out and one for :in)."
@@ -59,21 +59,22 @@
   [mem in]
   (let [[out vm] (io (run mem) in)]
     (case (:state vm)
-      :input (throw (Exception. "Input exhausted"))
+      :in (throw (Exception. "Input exhausted"))
       :halt out)))
 
 (defn run-interactive
   "Runs a vm on mem, taking input as ASCII from stdin, and writing output as
    ASCII on stdout. Reads and writes whole lines at a time."
-  [mem]
-  (loop [vm (run mem) in [] out []]
-    (case (:state vm)
-      :in (if (seq in)
-            (recur (>> vm (first in)) (rest in) out)
-            (recur vm (map int (str (read-line) "\n")) out))
-      :out (if (= 10 (:out vm))
-             (do
-               (println (apply str (map char out)))
-               (recur (>> vm) in []))
-             (recur (>> vm) in (conj out (:out vm))))
-      :halt nil)))
+  ([mem] (run-interactive mem []))
+  ([mem in]
+   (loop [vm (run mem) in in out []]
+     (case (:state vm)
+       :in (if (seq in)
+             (recur (>> vm (first in)) (rest in) out)
+             (recur vm (map int (str (read-line) "\n")) out))
+       :out (if (= 10 (:out vm))
+              (do
+                (println (apply str (map char out)))
+                (recur (>> vm) in []))
+              (recur (>> vm) in (conj out (:out vm))))
+       :halt nil))))

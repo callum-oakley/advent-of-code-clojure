@@ -20,7 +20,7 @@
    (str/split-lines s)))
 
 (defn compose [m shuffles]
-  (reduce (fn [[a b] [c d]] [(mod (*' a c) m) (mod (+ (*' b c) d) m)])
+  (reduce (fn [[a b] [c d]] [(mod (* a c) m) (mod (+ (* b c) d) m)])
           [1 0]
           shuffles))
 
