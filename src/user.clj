@@ -73,19 +73,19 @@
     (download-input year day)
     (pp/pprint (f))))
 
-(defmacro with-timer [& body]
-  `(let [start# (System/currentTimeMillis)
-         res# (do ~@body)]
-     [res# (double (/ (- (System/currentTimeMillis) start#) 1000))]))
+(defn with-timer [f]
+  (let [start (System/currentTimeMillis)
+        res (f)]
+    [res (double (/ (- (System/currentTimeMillis) start) 1000))]))
 
 (defn run
   ([]
-   (let [[_ duration] (with-timer (run! run (range 2015 2022)))]
+   (let [[_ duration] (with-timer (fn [] (run! run (range 2015 2022))))]
      (println (format "aoc      (total) %9.3fs" duration))))
   ([year]
    (if (<= year 25)
      (run default-year year)
-     (let [[_ duration] (with-timer (run! #(run year %) (range 1 26)))]
+     (let [[_ duration] (with-timer (fn [] (run! #(run year %) (range 1 26))))]
        (println (format "aoc.%d (total) %9.3fs" year duration)))))
   ([year day]
    (if (<= year 25)
@@ -98,7 +98,7 @@
    (let [sym (symbol (format "aoc.%d.%02d/part-%d" year day part))]
      (when-let [f (resolve sym)]
        (download-input year day)
-       (let [[answer duration] (with-timer (f))
+       (let [[answer duration] (with-timer f)
              check (check-answer year day part answer)]
          (println (format "%s %7.3fs   %-44s %s" sym duration answer check)))))))
 
