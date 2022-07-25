@@ -6,21 +6,20 @@
 (defn react [polymer]
   (reduce (fn [acc x]
             (let [y (first acc)]
-              (if (and y (not= x y)
-                       (= (Character/toLowerCase x) (Character/toLowerCase y)))
+              ;; uppercase and lowercase differ by 32
+              (if (and y (= 32 (abs (- x y))))
                 (rest acc)
                 (cons x acc))))
           nil
           polymer))
 
 (defn part-1 []
-  (->> "input/2018/05" slurp str/trim react count))
+  (->> "input/2018/05" slurp str/trim (map int) react count))
 
 (defn part-2 []
-  (let [polymer (->> "input/2018/05" slurp str/trim react)]
-    (apply min (map #(count (react (remove #{(char (+ 65 %)) (char (+ 97 %))}
-                                           polymer)))
-                    (range 26)))))
+  (let [polymer (->> "input/2018/05" slurp str/trim (map int) react)]
+    (apply min (map #(count (react (remove #{% (+ % 32)} polymer)))
+                    (range 65 91)))))
 
 (deftest test-example
-  (is (= 10 (count (react "dabAcCaCBAcCcaDA")))))
+  (is (= 10 (count (react (map int "dabAcCaCBAcCcaDA"))))))
