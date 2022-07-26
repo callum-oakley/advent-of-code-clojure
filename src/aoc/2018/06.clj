@@ -26,6 +26,7 @@
               (if (contains? point->area point)
                 (update point->area point inc)
                 point->area)))
+          ;; Points on the perimiter belong to infinite areas.
           (reduce
            (fn [point->area pos]
              (if-let [point (closest pos)]
@@ -38,6 +39,8 @@
           (for [x (range (inc min-x) max-x) y (range (inc min-y) max-y)] [x y]))
          vals (apply max))))
 
+;; Would it be faster to start at the average of all the points, and then grow
+;; the area from there?
 (defn part-2* [max-dist points]
   (let [min-x (apply min (map first points))
         max-x (apply max (map first points))
@@ -46,6 +49,7 @@
     (count
      (filter
       (fn [pos] (< (apply + (map #(manhattan-distance pos %) points)) max-dist))
+      ;; The area could be bigger than this, but it isn't in this case.
       (for [x (range (inc min-x) max-x) y (range (inc min-y) max-y)] [x y])))))
 
 (defn part-1 []
