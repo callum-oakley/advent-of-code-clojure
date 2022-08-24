@@ -24,7 +24,10 @@
   ([s parse-c]
    (first (reduce (fn [[g y] line]
                     [(first (reduce (fn [[g x] c]
-                                      [(assoc g [y x] (parse-c c)) (inc x)])
+                                      [(if-let [pc (parse-c c)]
+                                         (assoc g [y x] (parse-c c))
+                                         g)
+                                       (inc x)])
                                     [g 0]
                                     line))
                      (inc y)])
