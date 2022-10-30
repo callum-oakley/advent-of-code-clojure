@@ -64,7 +64,7 @@
                (mapcat #(room room-height %)
                        (remove #(all-home? room-height grid %) "ABCD")))))
 
-(defn heuristic [room-height grid]
+(defn heuristic [_ grid]
   (first
    (reduce-kv (fn [[energy depth] [y x] amphipod]
                 (if (and amphipod (not= (room-x amphipod) x))

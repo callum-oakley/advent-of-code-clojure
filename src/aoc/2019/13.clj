@@ -24,7 +24,7 @@
         :halt score))))
 
 (defn part-1 []
-  (count (filter (fn [[x y t]] (= 2 t))
+  (count (filter (fn [[_ _ t]] (= 2 t))
                  (partition 3 (i/run-io (i/load "input/2019/13") [])))))
 
 (defn part-2 []

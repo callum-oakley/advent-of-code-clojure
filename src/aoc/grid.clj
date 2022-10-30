@@ -25,7 +25,7 @@
    (first (reduce (fn [[g y] line]
                     [(first (reduce (fn [[g x] c]
                                       [(if-let [pc (parse-c c)]
-                                         (assoc g [y x] (parse-c c))
+                                         (assoc g [y x] pc)
                                          g)
                                        (inc x)])
                                     [g 0]

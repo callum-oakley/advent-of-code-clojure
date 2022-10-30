@@ -33,7 +33,7 @@
 
 (defn part-1 []
   (loop [net (network) i 0]
-    (if-let [[x y] (:nat net)]
+    (if-let [[_ y] (:nat net)]
       y
       (recur (tick net i) (mod (inc i) 50)))))
 

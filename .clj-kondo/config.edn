@@ -1,0 +1,5 @@
+{:linters
+ ;; part-1 and part-2 functions are "unused" (but not really)
+ {:clojure-lsp/unused-public-var {:level :off}
+  ;; springscript doesn't resolve symbols
+  :unresolved-symbol {:exclude [(aoc.2019.21/springscript)]}}}

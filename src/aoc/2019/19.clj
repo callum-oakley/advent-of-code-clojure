@@ -1,7 +1,6 @@
 (ns aoc.2019.19
   (:require
-   [aoc.2019.intcode :as i]
-   [clojure.test :refer [deftest is]]))
+   [aoc.2019.intcode :as i]))
 
 (defn part-1 []
   (let [mem (i/load "input/2019/19")

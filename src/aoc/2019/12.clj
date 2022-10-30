@@ -1,6 +1,6 @@
 (ns aoc.2019.12
   (:require
-   [aoc.vector :refer [+v transpose]]
+   [aoc.vector :refer [transpose]]
    [clojure.math.numeric-tower :refer [lcm]]
    [clojure.test :refer [deftest is]]))
 
@@ -19,8 +19,7 @@
   (* (apply + (map abs p)) (apply + (map abs v))))
 
 (defn period [s]
-  (let [initial (first s)]
-    (inc (count (take-while #(not= (first s) %) (rest s))))))
+  (inc (count (take-while #(not= (first s) %) (rest s)))))
 
 (defn part-1* [steps moons]
   (->> moons (map transpose) transpose

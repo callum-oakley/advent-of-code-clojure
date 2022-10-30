@@ -1,6 +1,5 @@
 (ns aoc.2019.22
   (:require
-   [clojure.math :as math]
    [clojure.string :as str]
    [clojure.test :refer [deftest are]]))
 
