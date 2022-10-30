@@ -10,7 +10,7 @@
 (defn part-* [[initial rules]]
   (map-indexed
    (fn [gen pots]
-     (apply + (keep-indexed (fn [i pot] (if (= \# pot) (- i (* 2 gen)))) pots)))
+     (apply + (keep-indexed (fn [i pot] (when (= \# pot) (- i (* 2 gen)))) pots)))
    (iterate (fn [pots]
               (apply str (map #(get rules (apply str %) ".")
                               (partition 5 1 (str "...." pots "....")))))

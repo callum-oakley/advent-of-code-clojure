@@ -1,2 +1,6 @@
+.clj-kondo
 .cpcache
+.lsp
+.nrepl-port
 .session
+output.calva-repl

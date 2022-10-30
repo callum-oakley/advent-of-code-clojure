@@ -7,7 +7,7 @@
   (->> "input/2018/03" slurp (re-seq #"\d+") (map read-string) (partition 5)))
 
 (defn fabric [claims]
-  (reduce (fn [fabric [id x0 y0 w h]]
+  (reduce (fn [fabric [_ x0 y0 w h]]
             (reduce (fn [fabric [x y]] (update fabric [x y] (fnil inc 0)))
                     fabric
                     (square x0 y0 w h)))
