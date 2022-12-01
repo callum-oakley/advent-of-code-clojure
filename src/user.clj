@@ -7,7 +7,7 @@
    [clojure.tools.namespace.find :as find]
    [clojure.tools.namespace.repl :as repl]))
 
-(def default-year 2018)
+(def default-year 2022)
 
 (run! require (find/find-namespaces-in-dir (io/file "src")))
 
