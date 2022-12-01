@@ -14,7 +14,7 @@
           (partition 4) (map vec) (partition 3))
      (->> instructions (re-seq #"\d+") (map read-string) (partition 4))]))
 
-(defn apply-op [reg op a b c]
+(defn tick [reg [op a b c]]
   (assoc reg c (case op
                  addr (+ (reg a) (reg b))
                  addi (+ (reg a) b)
@@ -34,7 +34,7 @@
                  eqrr (if (= (reg a) (reg b)) 1 0))))
 
 (defn valid-ops [[before [_ a b c] after]]
-  (set (filter #(= after (apply-op before % a b c)) ops)))
+  (set (filter #(= after (tick before [% a b c])) ops)))
 
 (defn eliminate
   "Reduces a one->many map to a one->one map by process of elimination."
@@ -59,7 +59,7 @@
   (first
    (let [[samples instructions] (parse (slurp "input/2018/16"))
          code->op (eliminate (code->ops samples))]
-     (reduce (fn [reg [code a b c]] (apply-op reg (code->op code) a b c))
+     (reduce (fn [reg [code a b c]] (tick reg [(code->op code) a b c]))
              [0 0 0 0]
              instructions))))
 
