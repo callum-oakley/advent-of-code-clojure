@@ -6,8 +6,8 @@
 
 ;; The program halts after the test on line 28 if r0 is equal to r5. r0 doesn't
 ;; otherwise feature in the calculation, so by running the program and noting r5
-;; each time we reach line 28, we produce a sequence of valid settings for r0
-;; to cause the program to halt.
+;; each time we reach line 28, we produce a sequence of valid settings for r0 to
+;; cause the program to halt.
 (defn valid []
   (let [[ip instructions] (parse (slurp "input/2018/21"))]
     ((fn go [reg]
