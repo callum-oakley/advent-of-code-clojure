@@ -42,6 +42,6 @@
    dir e\n29116 f\n2557 g\n62596 h.lst\n$ cd e\n$ ls\n584 i\n$ cd ..\n$ cd ..
    $ cd d\n$ ls\n4060174 j\n8033020 d.log\n5626152 d.ext\n7214296 k")
 
-((deftest test-example
-   (is (= 95437 (part-1* (parse example))))
-   (is (= 24933642 (part-2* (parse example))))))
+(deftest test-example
+  (is (= 95437 (part-1* (parse example))))
+  (is (= 24933642 (part-2* (parse example)))))
