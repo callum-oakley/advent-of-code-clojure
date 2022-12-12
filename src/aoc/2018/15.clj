@@ -14,19 +14,18 @@
 (defn in-range? [cave pos target-type]
   (some #(= target-type (:type (cave %))) (g/adjacent pos)))
 
+;; The cost function is fiddly, here's everything it needs to cover:
+;; - To move, the unit first considers the squares that are in range and
+;;   determines which of those squares it could reach in the fewest steps.
+;; - If multiple squares are in range and tied for being reachable in the fewest
+;;   steps, the square which is first in reading order is chosen.
+;; - If multiple steps would put the unit equally closer to its destination, the
+;;   unit chooses the step which is first in reading order. Missing either of
+;; the last two steps produces correct results for all the examples, but fails
+;; on the problem proper...
 (defn first-step [cave pos target-type]
   (:first-step
-   ;; The cost function is fiddly, here's everything it needs to cover:
-   ;; - To move, the unit first considers the squares that are in range and
-   ;;   determines which of those squares it could reach in the fewest steps.
-   ;; - If multiple squares are in range and tied for being reachable in the
-   ;;   fewest steps, the square which is first in reading order is chosen.
-   ;; - If multiple steps would put the unit equally closer to its destination,
-   ;;   the unit chooses the step which is first in reading order.
-   ;; Missing either of the last two steps produces correct results for all the
-   ;; examples, but fails on the problem proper...
-   (search/dijkstra (juxt :dist :pos :first-step)
-                    {:dist 0 :pos pos}
+   (search/dijkstra {:dist 0 :pos pos}
                     (fn [state]
                       (keep (fn [step]
                               (when (= :empty (:type (cave step)))
@@ -35,8 +34,9 @@
                                     (assoc :pos step)
                                     (update :first-step #(or % step)))))
                             (sort (g/adjacent (:pos state)))))
+                    :pos
                     #(in-range? cave (:pos %) target-type)
-                    :pos)))
+                    (juxt :dist :pos :first-step))))
 
 (defn move [cave pos target-type]
   (if-let [pos* (first-step cave pos target-type)]

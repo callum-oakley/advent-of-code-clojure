@@ -17,10 +17,11 @@
 (defn part-1* [seed]
   (:path (search/bfs {:pos [0 0] :path ""}
                      #(adjacent seed %)
+                     identity
                      #(= [3 3] (:pos %)))))
 
 (defn part-2* [seed]
-  (->> (search/dft {:pos [0 0] :path ""} #(adjacent seed %))
+  (->> (search/dft {:pos [0 0] :path ""} #(adjacent seed %) identity)
        (filter #(= [3 3] (:pos %)))
        (map #(count (:path %)))
        (apply max)))

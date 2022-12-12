@@ -20,8 +20,8 @@
                  (->> (grid/adjacent (:pos state) g)
                       (filter #(<= (g (:pos state)) (inc (g %))))
                       (map (fn [pos] {:pos pos :steps (inc (:steps state))}))))
-               #(start? (:pos %))
-               :pos)))
+               :pos
+               #(start? (:pos %)))))
 
 (defn part-1 []
   (let [[g start goal _] (parse (slurp "input/2022/12"))]

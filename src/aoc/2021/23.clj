@@ -78,13 +78,13 @@
               grid)))
 
 (defn part-* [room-height grid]
-  (:energy (search/a* :energy
-                      #(heuristic room-height (:grid %))
-                      {:grid grid :energy 0}
+  (:energy (search/a* {:grid grid :energy 0}
                       #(moves room-height %)
+                      :grid
                       (fn [{:keys [grid]}]
                         (every? #(all-home? room-height grid %) "ABCD"))
-                      :grid)))
+                      :energy
+                      #(heuristic room-height (:grid %)))))
 
 (defn part-1 []
   (->> "input/2021/23" slurp parse (part-* 2)))

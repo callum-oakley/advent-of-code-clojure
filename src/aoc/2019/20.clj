@@ -32,29 +32,30 @@
                             (if-let [pos (portals (:pos %))]
                               (cons pos (g/adjacent (:pos %) maze))
                               (g/adjacent (:pos %) maze)))
-                      #(= (portals "ZZ") (:pos %))
-                      :pos)))
+                      :pos
+                      #(= (portals "ZZ") (:pos %)))))
 
 (defn part-2* [[maze portals]]
   (let [min-x (apply min (map first maze)) min-y (apply min (map second maze))
         max-x (apply max (map first maze)) max-y (apply max (map second maze))
         in? (fn [[x y]] (and (< min-x x max-x) (< min-y y max-y)))]
-    (:steps (search/bfs {:pos (portals "AA") :level 0 :steps 0}
-                        (fn [state]
-                          (remove #(or (nil? %) (neg? (:level %)))
-                                  (cons (when-let [pos (portals (:pos state))]
-                                          {:pos pos
-                                           :level (if (in? (:pos state))
-                                                    (inc (:level state))
-                                                    (dec (:level state)))
-                                           :steps (inc (:steps state))})
-                                        (map (fn [pos]
-                                               {:pos pos
-                                                :level (:level state)
-                                                :steps (inc (:steps state))})
-                                             (g/adjacent (:pos state) maze)))))
-                        #(and (zero? (:level %)) (= (portals "ZZ") (:pos %)))
-                        (juxt :pos :level)))))
+    (:steps
+     (search/bfs {:pos (portals "AA") :level 0 :steps 0}
+                 (fn [state]
+                   (remove #(or (nil? %) (neg? (:level %)))
+                           (cons (when-let [pos (portals (:pos state))]
+                                   {:pos pos
+                                    :level (if (in? (:pos state))
+                                             (inc (:level state))
+                                             (dec (:level state)))
+                                    :steps (inc (:steps state))})
+                                 (map (fn [pos]
+                                        {:pos pos
+                                         :level (:level state)
+                                         :steps (inc (:steps state))})
+                                      (g/adjacent (:pos state) maze)))))
+                 (juxt :pos :level)
+                 #(and (zero? (:level %)) (= (portals "ZZ") (:pos %)))))))
 
 (defn part-1 []
   (->> "input/2019/20" slurp parse part-1*))

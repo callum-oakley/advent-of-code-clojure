@@ -52,7 +52,6 @@
         kg (key-graph g)]
     (:steps
      (search/dijkstra
-      :steps
       {:robots robots :steps 0 :keys (set robots)}
       (fn [state]
         (mapcat (fn [n]
@@ -63,8 +62,9 @@
                                (update :keys conj (:pos %))))
                         (kg (get-in state [:robots n]))))
                 (range (count (:robots state)))))
+      (juxt :robots :keys)
       #(= keys (:keys %))
-      (juxt :robots :keys)))))
+      :steps))))
 
 (defn part-1 []
   (->> "input/2019/18" slurp parse (part-* [\@])))

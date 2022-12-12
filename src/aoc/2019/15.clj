@@ -17,7 +17,7 @@
 
 (defn part-1* []
   (search/bfs {:vm (i/run (i/load "input/2019/15")) :pos [0 0] :steps 0}
-              adjacent :done? :pos))
+              adjacent :pos :done?))
 
 (defn part-1 []
   (:steps (part-1*)))

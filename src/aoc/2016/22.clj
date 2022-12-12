@@ -42,5 +42,5 @@
               :goal [29 0]
               :steps 0}
              adjacent
-             #(= [0 0] (:goal %))
-             (juxt :hole :goal)))))
+             (juxt :hole :goal)
+             #(= [0 0] (:goal %))))))

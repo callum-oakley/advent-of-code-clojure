@@ -11,13 +11,13 @@
 (defn part-* [cavern]
   (let [target (->> cavern keys sort last)]
     (:risk
-     (search/dijkstra :risk
-                      {:pos [0 0] :risk 0}
+     (search/dijkstra {:pos [0 0] :risk 0}
                       #(map (fn [pos]
                               {:pos pos :risk (+ (:risk %) (cavern pos))})
                             (grid/adjacent (:pos %) cavern))
+                      :pos
                       #(= target (:pos %))
-                      :pos))))
+                      :risk))))
 
 (defn tile [cavern]
   (let [[height width] (->> cavern keys sort last (map inc))

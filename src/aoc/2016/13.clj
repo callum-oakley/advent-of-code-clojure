@@ -17,8 +17,8 @@
 (defn part-1* [n target]
   (:steps (search/bfs {:pos [1 1] :steps 0}
                       #(adjacent n nil %)
-                      #(= target (:pos %))
-                      :pos)))
+                      :pos
+                      #(= target (:pos %)))))
 
 (defn part-1 []
   (part-1* (read-string (slurp "input/2016/13")) [31 39]))

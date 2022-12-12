@@ -26,8 +26,8 @@
                              (map #(+v % pos))
                              (filter paths)
                              (map (fn [pos] {:pos pos :steps (inc steps)}))))
-                      #(= goal (:pos %))
-                      :pos)))
+                      :pos
+                      #(= goal (:pos %)))))
 
 (defn distances [{:keys [paths targets]}]
   (reduce (fn [distances [a b]]

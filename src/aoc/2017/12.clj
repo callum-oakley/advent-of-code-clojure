@@ -10,12 +10,13 @@
        (into {})))
 
 (defn part-1* [graph]
-  (count (search/dft 0 graph)))
+  (count (search/dft 0 graph identity)))
 
 (defn part-2* [graph]
   (loop [components 0 unexplored (set (keys graph))]
     (if-let [a (first unexplored)]
-      (recur (inc components) (apply disj unexplored (search/dft a graph)))
+      (recur (inc components)
+             (apply disj unexplored (search/dft a graph identity)))
       components)))
 
 (defn part-1 []

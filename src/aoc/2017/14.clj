@@ -22,7 +22,8 @@
                         (filter disk)))]
     (loop [regions 0 unexplored disk]
       (if-let [a (first unexplored)]
-        (recur (inc regions) (apply disj unexplored (search/dft a adjacent)))
+        (recur (inc regions)
+               (apply disj unexplored (search/dft a adjacent identity)))
         regions))))
 
 (defn part-1 []

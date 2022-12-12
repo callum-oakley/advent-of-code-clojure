@@ -26,17 +26,18 @@
 (defn part-2* [replacements molecule]
   (let [replacements (map reverse replacements)]
     (:steps
-     (search/a* :steps
-                ;; This heuristic is NOT admissible, but in this case the
-                ;; relaxation returns the correct result in a reasonable time.
-                #(-> % :molecule count)
-                {:molecule molecule
+     (search/a* {:molecule molecule
                  :steps 0}
                 #(map (fn [m]
                         {:molecule m
                          :steps (inc (:steps %))})
                       (step replacements (:molecule %)))
-                #(= "e" (:molecule %))))))
+                :molecule
+                #(= "e" (:molecule %))
+                :steps
+                ;; This heuristic is NOT admissible, but in this case the
+                ;; relaxation returns the correct result in a reasonable time.
+                #(-> % :molecule count)))))
 
 (defn part-1 []
   (apply part-1* (parse (slurp "input/2015/19"))))

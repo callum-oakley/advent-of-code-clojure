@@ -42,12 +42,12 @@
        (map #(case % 0 0 1 1 (- (* 2 %) 3))) (apply +)))
 
 (defn part-* [floors]
-  (:steps (search/a* :steps
-                     #(heuristic (:floors %))
-                     {:floors floors :elevator 0 :steps 0}
+  (:steps (search/a* {:floors floors :elevator 0 :steps 0}
                      adjacent
+                     #(-> % (dissoc :steps) (update :floors normalise))
                      #(->> % :floors drop-last (every? empty?))
-                     #(-> % (dissoc :steps) (update :floors normalise)))))
+                     :steps
+                     #(heuristic (:floors %)))))
 
 (defn part-1 []
   (-> "input/2016/11" slurp parse part-*))

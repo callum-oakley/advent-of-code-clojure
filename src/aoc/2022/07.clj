@@ -22,7 +22,7 @@
   (if (int? fs) fs (apply + (map size (vals fs)))))
 
 (defn part-* [fs]
-  (map size (search/bft fs #(filter map? (vals %)))))
+  (map size (search/bft fs #(filter map? (vals %)) identity)))
 
 (defn part-1* [fs]
   (apply + (filter #(<= % 100000) (part-* fs))))
