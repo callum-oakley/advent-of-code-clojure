@@ -23,13 +23,11 @@
                :pos
                #(start? (:pos %)))))
 
-(defn part-1 []
-  (let [[g start goal _] (parse (slurp "input/2022/12"))]
-    (part-* g goal #{start})))
+(defn part-1 [data]
+  (let [[g start goal _] data] (part-* g goal #{start})))
 
-(defn part-2 []
-  (let [[g _ goal low-points] (parse (slurp "input/2022/12"))]
-    (part-* g goal low-points)))
+(defn part-2 [data]
+  (let [[g _ goal low-points] data] (part-* g goal low-points)))
 
 (def example
   "Sabqponm\nabcryxxl\naccszExk\nacctuvwj\nabdefghi")

@@ -8,11 +8,11 @@
       (+ i m)
       (recur (rest signal) (inc i)))))
 
-(defn part-1 []
-  (->> "input/2022/06" slurp (marker 4)))
+(defn part-1 [signal]
+  (marker 4 signal))
 
-(defn part-2 []
-  (->> "input/2022/06" slurp (marker 14)))
+(defn part-2 [signal]
+  (marker 14 signal))
 
 (deftest test-example
   (is (= 7 (marker 4 "mjqjpqmgbljsphdztnvjfqwrcgsmlb")))

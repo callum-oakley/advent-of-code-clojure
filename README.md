@@ -10,9 +10,8 @@ the [user namespace][], you probably want `run-tests`, `run`, or `rrr`
 solutions (or check them against a local cache). When it does make requests it
 looks for a `.session` file.
 
-Solutions are functions of no arguments called `part-1` or `part-2` in the
-relevant namespace. `run` will also run functions called `scrap` for the
-purpose of checking intermediate results without submitting anything.
+Solutions are functions of the puzzle input called `part-1` or `part-2` in the
+relevant namespace. If `parse` is provided the input will be parsed first.
 
 Arguments to `run` (and `run-tests` and `rrr`) are integers: year, day, part;
 all optional.

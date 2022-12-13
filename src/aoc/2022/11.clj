@@ -43,11 +43,11 @@
   (->> monkeys (play p (case p 1 20 2 10000))
        (map :inspections) (sort >) (take 2) (apply *)))
 
-(defn part-1 []
-  (->> "input/2022/11" slurp parse (part-* 1)))
+(defn part-1 [monkeys]
+  (part-* 1 monkeys))
 
-(defn part-2 []
-  (->> "input/2022/11" slurp parse (part-* 2)))
+(defn part-2 [monkeys]
+  (part-* 2 monkeys))
 
 (def example
   "Monkey 0:
@@ -79,5 +79,5 @@
        If false: throw to monkey 1")
 
 (deftest test-example
-  (is (= 10605 (part-* 1 (parse example))))
-  (is (= 2713310158 (part-* 2 (parse example)))))
+  (is (= 10605 (part-1 (parse example))))
+  (is (= 2713310158 (part-2 (parse example)))))

@@ -24,18 +24,12 @@
 (defn part-* [fs]
   (map size (search/bft fs #(filter map? (vals %)) identity)))
 
-(defn part-1* [fs]
+(defn part-1 [fs]
   (apply + (filter #(<= % 100000) (part-* fs))))
 
-(defn part-2* [fs]
+(defn part-2 [fs]
   (let [free (- 70000000 (size fs))]
     (apply min (filter #(<= 30000000 (+ free %)) (part-* fs)))))
-
-(defn part-1 []
-  (->> "input/2022/07" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2022/07" slurp parse part-2*))
 
 (def example
   "$ cd /\n$ ls\ndir a\n14848514 b.txt\n8504156 c.dat\ndir d\n$ cd a\n$ ls
@@ -43,5 +37,5 @@
    $ cd d\n$ ls\n4060174 j\n8033020 d.log\n5626152 d.ext\n7214296 k")
 
 (deftest test-example
-  (is (= 95437 (part-1* (parse example))))
-  (is (= 24933642 (part-2* (parse example)))))
+  (is (= 95437 (part-1 (parse example))))
+  (is (= 24933642 (part-2 (parse example)))))

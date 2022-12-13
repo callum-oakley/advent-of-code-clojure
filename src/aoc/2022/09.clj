@@ -29,13 +29,13 @@
             [#{} (vec (repeat length [0 0]))]
             instructions))))
 
-(defn part-1 []
-  (->> "input/2022/09" slurp parse (part-* 2)))
+(defn part-1 [data]
+  (part-* 2 data))
 
-(defn part-2 []
-  (->> "input/2022/09" slurp parse (part-* 10)))
+(defn part-2 [data]
+  (part-* 10 data))
 
 (deftest test-example
-  (is (= 13 (part-* 2 (parse "R 4 U 4 L 3 D 1 R 4 D 1 L 5 R 2"))))
-  (is (= 1 (part-* 10 (parse "R 4 U 4 L 3 D 1 R 4 D 1 L 5 R 2"))))
-  (is (= 36 (part-* 10 (parse "R 5 U 8 L 8 D 3 R 17 D 10 L 25 U 20")))))
+  (is (= 13 (part-1 (parse "R 4 U 4 L 3 D 1 R 4 D 1 L 5 R 2"))))
+  (is (= 1 (part-2 (parse "R 4 U 4 L 3 D 1 R 4 D 1 L 5 R 2"))))
+  (is (= 36 (part-2 (parse "R 5 U 8 L 8 D 3 R 17 D 10 L 25 U 20")))))

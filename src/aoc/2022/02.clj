@@ -24,26 +24,20 @@
 (defn score [rounds]
   (apply + (map '{R 1 P 2 S 3 L 0 D 3 W 6} (flatten rounds))))
 
-(defn part-1* [strategy]
+(defn part-1 [strategy]
   (->> strategy
        (map #(map '{A R B P C S X R Y P Z S} %))
        (map (fn [[opponent response]]
           [response (response->outcome opponent response)]))
        score))
 
-(defn part-2* [strategy]
+(defn part-2 [strategy]
   (->> strategy
        (map #(map '{A R B P C S X L Y D Z W} %))
        (map (fn [[opponent outcome]]
           [(outcome->response opponent outcome) outcome]))
        score))
 
-(defn part-1 []
-  (->> "input/2022/02" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2022/02" slurp parse part-2*))
-
 (deftest test-example
-  (is (= 15 (part-1* (parse "A Y B X C Z"))))
-  (is (= 12 (part-2* (parse "A Y B X C Z")))))
+  (is (= 15 (part-1 (parse "A Y B X C Z"))))
+  (is (= 12 (part-2 (parse "A Y B X C Z")))))

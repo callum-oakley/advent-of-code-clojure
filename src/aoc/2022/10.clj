@@ -23,18 +23,12 @@
              #{}
              signal))
 
-(defn part-1* [instructions]
+(defn part-1 [instructions]
   (let [signal (cpu instructions)]
     (apply + (map #(* (signal (dec %)) %) (range 20 260 40)))))
 
-(defn part-2* [instructions]
-  (ocr/draw (crt (cpu instructions))))
-
-(defn part-1 []
-  (->> "input/2022/10" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2022/10" slurp parse part-2* ocr/parse))
+(defn part-2 [instructions]
+  (ocr/parse (ocr/draw (crt (cpu instructions)))))
 
 (def example
   "addx 15\naddx -11\naddx 6\naddx -3\naddx 5\naddx -1\naddx -8\naddx 13\naddx 4
@@ -54,11 +48,11 @@
    addx 2\naddx 2\naddx -6\naddx -11\nnoop\nnoop\nnoop")
 
 (deftest test-example
-  (is (= 13140 (part-1* (parse example))))
+  (is (= 13140 (part-1 (parse example))))
   (is (= (str/join "\n" ["##..##..##..##..##..##..##..##..##..##.."
                          "###...###...###...###...###...###...###."
                          "####....####....####....####....####...."
                          "#####.....#####.....#####.....#####....."
                          "######......######......######......####"
                          "#######.......#######.......#######....."])
-         (part-2* (parse example)))))
+         (ocr/draw (crt (cpu (parse example)))))))

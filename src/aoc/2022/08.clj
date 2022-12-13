@@ -22,18 +22,12 @@
                       :else (inc visible))))
                 [grid/north grid/east grid/south grid/west])))
 
-(defn part-1* [trees]
+(defn part-1 [trees]
   (count (filter #(visible? trees %) trees)))
 
-(defn part-2* [trees]
+(defn part-2 [trees]
   (apply max (map #(scenic-score trees %) trees)))
 
-(defn part-1 []
-  (->> "input/2022/08" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2022/08" slurp parse part-2*))
-
 (deftest test-example
-  (is (= 21 (part-1* (parse "30373\n25512\n65332\n33549\n35390"))))
-  (is (= 8 (part-2* (parse "30373\n25512\n65332\n33549\n35390")))))
+  (is (= 21 (part-1 (parse "30373\n25512\n65332\n33549\n35390"))))
+  (is (= 8 (part-2 (parse "30373\n25512\n65332\n33549\n35390")))))

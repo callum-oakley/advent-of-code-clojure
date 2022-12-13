@@ -25,15 +25,15 @@
   (let [stacks (rearrange p stacks instructions)]
     (->> stacks keys sort (map stacks) (map peek) (apply str))))
 
-(defn part-1 []
-  (->> "input/2022/05" slurp parse (part-* 1)))
+(defn part-1 [data]
+  (part-* 1 data))
 
-(defn part-2 []
-  (->> "input/2022/05" slurp parse (part-* 2)))
+(defn part-2 [data]
+  (part-* 2 data))
 
 (def example
   "    [D]    \n[N] [C]    \n[Z] [M] [P]\n\n1 2 1 3 1 3 2 2 1 1 1 2")
 
 (deftest test-example []
-  (is (= "CMZ" (part-* 1 (parse example))))
-  (is (= "MCD" (part-* 2 (parse example)))))
+  (is (= "CMZ" (part-1 (parse example))))
+  (is (= "MCD" (part-2 (parse example)))))
