@@ -20,9 +20,9 @@
 ;; - If multiple squares are in range and tied for being reachable in the fewest
 ;;   steps, the square which is first in reading order is chosen.
 ;; - If multiple steps would put the unit equally closer to its destination, the
-;;   unit chooses the step which is first in reading order. Missing either of
-;; the last two steps produces correct results for all the examples, but fails
-;; on the problem proper...
+;;   unit chooses the step which is first in reading order.
+;; Missing either of the last two steps produces correct results for all the
+;; examples, but fails on the problem proper...
 (defn first-step [cave pos target-type]
   (:first-step
    (search/dijkstra {:dist 0 :pos pos}
