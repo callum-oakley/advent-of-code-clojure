@@ -8,13 +8,13 @@
 (defn cmp [l r]
   (cond
     (and (int? l) (int? r)) (compare l r)
-    (and (int? l) (vector? r)) (cmp (vector l) r)
-    (and (vector? l) (int? r)) (cmp l (vector r))
+    (int? l) (recur (vector l) r)
+    (int? r) (recur l (vector r))
     :else (if (or (empty? l) (empty? r))
             (compare l r)
             (let [c (cmp (first l) (first r))]
               (if (zero? c)
-                (cmp (subvec l 1) (subvec r 1))
+                (recur (subvec l 1) (subvec r 1))
                 c)))))
 
 (defn part-1 [packets]
