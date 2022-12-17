@@ -12,6 +12,9 @@
   (peek [_] (first (peek priority-map)))
   (pop [_] (PriorityQueue. (pop priority-map) priority)))
 
+(defn priority-queue [priority]
+  (->PriorityQueue (priority-map) priority))
+
 (defn- traversal [queue start adjacent normalise]
   ((fn go [queue visited]
      (lazy-seq
@@ -38,11 +41,35 @@
   (first (filter goal? (dft start adjacent normalise))))
 
 (defn dijkstra [start adjacent normalise goal? cost]
-  (let [queue (->PriorityQueue (priority-map) cost)]
+  (let [queue (priority-queue cost)]
     (first (filter goal? (traversal queue start adjacent normalise)))))
 
 (defn a* [start adjacent normalise goal? cost heuristic]
   (dijkstra start adjacent normalise goal? #(+ (cost %) (heuristic %))))
+
+(defn branch-and-bound
+  "Finds the lowest cost solution in the search space, exploring lowest cost
+   branches first and using bound to eliminate branches that can't contain
+   better solutions than we've already seen."
+  [start adjacent normalise cost bound]
+  (loop [queue (conj (priority-queue cost) start) visited #{} best ##Inf]
+    (if-let [current (peek queue)]
+      (if (or (<= best (bound current)) (visited (normalise current)))
+        (recur (pop queue) visited best)
+        (let [best (min best (cost current))]
+          (recur (->> (adjacent current)
+                      (remove #(or (<= best (bound %)) (visited (normalise %))))
+                      (into (pop queue)))
+                 (conj visited (normalise current))
+                 best)))
+      best)))
+
+(defn branch-and-bound-max
+  "Finds the highest score solution in the search space, exploring highest score
+   branches first and using bound to eliminate branches that can't contain
+   better solutions than we've already seen."
+  [start adjacent normalise score bound]
+  (- (branch-and-bound start adjacent normalise #(- (score %)) #(- (bound %)))))
 
 ;; This was wrong in my first implementation (I was only considering the cost of
 ;; a node the first time you encountered it) so, a regression test:
