@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [clojure.set :as set]
-   [aoc.vector :refer [+v]]))
+   [aoc.vector :refer [+v transpose]]))
 
 (def north [-1 0])
 (def north-east [-1 1])
@@ -53,3 +53,11 @@
 (defn adjacent-9
   ([pos] (cons pos (adjacent-8 pos)))
   ([pos g] (filter g (adjacent-9 pos))))
+
+(defn adjacent-3d
+  ([pos] (->> [[1 0 0] [-1 0 0] [0 1 0] [0 -1 0] [0 0 1] [0 0 -1]]
+              (map #(+v pos %))))
+  ([pos g] (filter g (adjacent-3d pos))))
+
+(defn box [vs]
+  (map (fn [axis] [(apply min axis) (apply max axis)]) (transpose vs)))
