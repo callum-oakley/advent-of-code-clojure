@@ -6,7 +6,7 @@
 (defn parse [s]
   (->> s (re-seq #"position: (\d)") (map second) (map read-string)))
 
-(defn game-1 [[p1 p2]]
+(defn part-1 [[p1 p2]]
   (loop [dice (cycle (range 1 101)) rolls 0 p1 p1 p2 p2 s1 0 s2 0]
     (if (<= 1000 s2)
       (* s1 rolls)
@@ -24,13 +24,9 @@
             (apply +v)
             reverse)))))
 
-(defn part-1 []
-  (->> "input/2021/21" slurp parse game-1))
-
-(defn part-2 []
-  (let [[p1 p2] (->> "input/2021/21" slurp parse)]
-    (apply max (game-2 p1 p2 0 0))))
+(defn part-2 [[p1 p2]]
+  (apply max (game-2 p1 p2 0 0)))
 
 (deftest test-example
-  (is (= 739785 (game-1 [4 8])))
+  (is (= 739785 (part-1 [4 8])))
   (is (= [444356092776315 341960390180808] (game-2 4 8 0 0))))

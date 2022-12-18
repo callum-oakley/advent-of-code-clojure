@@ -33,17 +33,11 @@
 (defn output [[calibration-signals out-signals]]
   (apply str (map (wiring calibration-signals) out-signals)))
 
-(defn part-1* [entries]
+(defn part-1 [entries]
   (->> entries (map #(seq (output %))) flatten (filter (set "1478")) count))
 
-(defn part-2* [entries]
+(defn part-2 [entries]
   (->> entries (map #(parse-long (output %))) (apply +)))
-
-(defn part-1 []
-  (->> "input/2021/08" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2021/08" slurp parse part-2*))
 
 (def sample
   "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb |
@@ -68,5 +62,5 @@
    fgae cfgab fg bagce")
 
 (deftest test-example
-  (is (= 26 (part-1* (parse sample))))
-  (is (= 61229 (part-2* (parse sample)))))
+  (is (= 26 (part-1 (parse sample))))
+  (is (= 61229 (part-2 (parse sample)))))

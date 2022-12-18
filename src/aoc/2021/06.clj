@@ -12,11 +12,11 @@
 (defn part-* [days fish]
   (->> fish (iterate step) (drop days) first (apply +)))
 
-(defn part-1 []
-  (->> "input/2021/06" slurp parse (part-* 80)))
+(defn part-1 [fish]
+  (part-* 80 fish))
 
-(defn part-2 []
-  (->> "input/2021/06" slurp parse (part-* 256)))
+(defn part-2 [fish]
+  (part-* 256 fish))
 
 (deftest test-example
   (let [fish (parse "3,4,3,1,2")]

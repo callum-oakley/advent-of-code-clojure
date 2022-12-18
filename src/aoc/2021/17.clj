@@ -23,22 +23,16 @@
 (defn max-height [[_ dy]]
   (/ (* dy (inc dy)) 2))
 
-(defn part-1* [target]
+(defn part-1 [target]
   (->> target hits (map max-height) (apply max)))
 
-(defn part-2* [target]
+(defn part-2 [target]
   (->> target hits count))
-
-(defn part-1 []
-  (->> "input/2021/17" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2021/17" slurp parse part-2*))
 
 (deftest test-examples
   (is (hit? (parse "target area: x=20..30, y=-10..-5") [7 2]))
   (is (hit? (parse "target area: x=20..30, y=-10..-5") [6 3]))
   (is (hit? (parse "target area: x=20..30, y=-10..-5") [9 0]))
   (is (not (hit? (parse "target area: x=20..30, y=-10..-5") [17 -4])))
-  (is (= 45 (part-1* (parse "target area: x=20..30, y=-10..-5"))))
-  (is (= 112 (part-2* (parse "target area: x=20..30, y=-10..-5")))))
+  (is (= 45 (part-1 (parse "target area: x=20..30, y=-10..-5"))))
+  (is (= 112 (part-2 (parse "target area: x=20..30, y=-10..-5")))))

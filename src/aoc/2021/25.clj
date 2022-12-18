@@ -19,7 +19,7 @@
 (defn move [east south from to]
   (if (or (east to) (south to)) from to))
 
-(defn part-1* [[[height width] [east south]]]
+(defn part-1 [[[height width] [east south]]]
   (loop [east east south south steps 0]
     (let [east* (set (map (fn [[y x]]
                             (move east south [y x] [y (mod (inc x) width)]))
@@ -31,16 +31,9 @@
         (inc steps)
         (recur east* south* (inc steps))))))
 
-(defn part-1 []
-  (->> "input/2021/25" slurp parse part-1*))
-
 (deftest test-example
-  (is (= 58 (part-1* (parse (str/join "\n" ["v...>>.vv>"
-                                            ".vv>>.vv.."
-                                            ">>.>v>...v"
-                                            ">>v>>.>.v."
-                                            "v>v.vv.v.."
-                                            ">.>>..v..."
-                                            ".vv..>.>v."
-                                            "v.v..>>v.v"
-                                            "....v..v.>"]))))))
+  (is (= 58 (part-1 (parse (str/join "\n" ["v...>>.vv>" ".vv>>.vv.."
+                                           ">>.>v>...v" ">>v>>.>.v."
+                                           "v>v.vv.v.." ">.>>..v..."
+                                           ".vv..>.>v." "v.v..>>v.v"
+                                           "....v..v.>"]))))))

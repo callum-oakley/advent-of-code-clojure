@@ -19,17 +19,11 @@
        :score (->> board flatten (remove called) (apply +) (* called-last))}
       (recur (rest ns) (conj called (first ns)) (first ns) (inc moves)))))
 
-(defn part-1* [[ns boards]]
+(defn part-1 [[ns boards]]
   (->> boards (map #(play ns %)) (apply min-key :moves) :score))
 
-(defn part-2* [[ns boards]]
+(defn part-2 [[ns boards]]
   (->> boards (map #(play ns %)) (apply max-key :moves) :score))
-
-(defn part-1 []
-  (->> "input/2021/04" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2021/04" slurp parse part-2*))
 
 (deftest test-example
   (let [sample "7,4,9,5,11,17,23,2,0,14,21,24,10,16,
@@ -43,5 +37,5 @@
 
                 14 21 17 24 4 10 16 15 9 19 18 8 23 26 20
                 22 11 13 6 5 2 0 12 3 7"]
-    (is (= 4512 (part-1* (parse sample))))
-    (is (= 1924 (part-2* (parse sample))))))
+    (is (= 4512 (part-1 (parse sample))))
+    (is (= 1924 (part-2 (parse sample))))))

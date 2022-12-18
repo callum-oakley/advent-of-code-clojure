@@ -14,17 +14,13 @@
                 y [x (if (< a y) (- (* 2 a) y) y)]))
             dots)))
 
-(defn part-1* [[dots folds]]
+(defn part-1 [[dots folds]]
   (count (fold dots (first folds))))
 
-(defn part-1 []
-  (->> "input/2021/13" slurp parse part-1*))
-
-(defn part-2 []
-  (let [[dots folds] (->> "input/2021/13" slurp parse)]
-    (ocr/parse (ocr/draw (reduce fold dots folds)))))
+(defn part-2 [[dots folds]]
+  (ocr/parse (ocr/draw (reduce fold dots folds))))
 
 (deftest test-examples
-  (is (= 17 (part-1* (parse "6,10 0,14 9,10 0,3 10,4 4,11 6,0 6,12 4,1 0,13
-                             10,12 3,4 3,0 8,4 1,10 2,14 8,10 9,0
-                             fold along y=7 fold along x=5")))))
+  (is (= 17 (part-1 (parse "6,10 0,14 9,10 0,3 10,4 4,11 6,0 6,12 4,1 0,13
+                            10,12 3,4 3,0 8,4 1,10 2,14 8,10 9,0
+                            fold along y=7 fold along x=5")))))

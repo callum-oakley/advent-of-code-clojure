@@ -3,6 +3,9 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (map read-string (str/split-lines s)))
+
 (defn carry [n i x]
   (if (vector? n)
     (update n i carry i x)
@@ -46,15 +49,11 @@
     (+ (* 3 (magnitude (n 0))) (* 2 (magnitude (n 1))))
     n))
 
-(defn part-2* [ns]
+(defn part-1 [ns]
+  (magnitude (apply +s ns)))
+
+(defn part-2 [ns]
   (apply max (for [x ns y ns] (magnitude (+s x y)))))
-
-(defn part-1 []
-  (->> "input/2021/18" slurp str/split-lines (map read-string)
-       (apply +s) magnitude))
-
-(defn part-2 []
-  (->> "input/2021/18" slurp str/split-lines (map read-string) part-2*))
 
 (deftest test-examples
   (let [homework [[[[0 [5 8]] [[1 7] [9 6]]] [[4 [1 2]] [[1 4] 2]]]
@@ -67,5 +66,5 @@
                   [[9 3] [[9 9] [6 [4 9]]]]
                   [[2 [[7 7] 7]] [[5 8] [[9 3] [0 2]]]]
                   [[[[5 2] 5] [8 [3 7]]] [[5 [7 5]] [4 4]]]]]
-    (is (= 4140 (magnitude (apply +s homework))))
-    (is (= 3993 (part-2* homework)))))
+    (is (= 4140 (part-1 homework)))
+    (is (= 3993 (part-2 homework)))))

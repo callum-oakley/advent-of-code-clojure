@@ -1,7 +1,6 @@
 (ns aoc.2021.24
   (:require
-   [clojure.string :as str]
-   [clojure.test :refer [deftest is]]))
+   [clojure.string :as str]))
 
 (defn parse [s]
   (map #(map read-string (str/split % #" ")) (str/split-lines s)))
@@ -58,12 +57,8 @@
                 [26 -14 10] ; 9 + 6 - 14 = 1    9 + 6 - 14 = 1
                 ])))
 
-(defn part-1 []
-  (let [n 99394899891971]
-    (when (valid? (parse (slurp "input/2021/24")) n)
-      n)))
+(defn part-1 [instructions]
+  (let [n 99394899891971] (when (valid? instructions n) n)))
 
-(defn part-2 []
-  (let [n 92171126131911]
-    (when (valid? (parse (slurp "input/2021/24")) n)
-      n)))
+(defn part-2 [instructions]
+  (let [n 92171126131911] (when (valid? instructions n) n)))

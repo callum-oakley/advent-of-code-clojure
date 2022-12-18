@@ -29,11 +29,11 @@
   (* (rating width most-common-bit xs)
      (rating width (complement most-common-bit) xs)))
 
-(defn part-1 []
-  (->> "input/2021/03" slurp parse (part-1* 12)))
+(defn part-1 [xs]
+  (part-1* 12 xs))
 
-(defn part-2 []
-  (->> "input/2021/03" slurp parse (part-2* 12)))
+(defn part-2 [xs]
+  (part-2* 12 xs))
 
 (deftest test-example
   (let [sample (parse "00100 11110 10110 10111 10101 01111

@@ -3,16 +3,16 @@
    [aoc.grid :as grid]
    [aoc.search :as search]
    [aoc.vector :refer [manhattan-distance]]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
   (update-vals (->> s grid/parse (remove (comp #{\# \space} val)) (into {}))
                #(case % \. nil %)))
 
-(defn unfold [s]
-  (let [[top bottom] (->> s str/split-lines (split-at 3))]
-    (str/join "\n" (concat top ["  #D#C#B#A#  " "  #D#B#A#C#  "] bottom))))
+(defn unfold [grid]
+  (assoc (update-keys grid (fn [[y x]] (if (<= 3 y) [(+ 2 y) x] [y x])))
+         [3 3] \D [3 5] \C [3 7] \B [3 9] \A
+         [4 3] \D [4 5] \B [4 7] \A [4 9] \C))
 
 (def hall
   #{[1 1] [1 2] [1 4] [1 6] [1 8] [1 10] [1 11]})
@@ -77,22 +77,21 @@
               [0 {\A 0 \B 0 \C 0 \D 0}]
               grid)))
 
-(defn part-* [room-height grid]
-  (:energy (search/a* {:grid grid :energy 0}
-                      #(moves room-height %)
-                      :grid
-                      (fn [{:keys [grid]}]
-                        (every? #(all-home? room-height grid %) "ABCD"))
-                      :energy
-                      #(heuristic room-height (:grid %)))))
+(defn part-1 [grid]
+  (let [[[min-y max-y]] (grid/box (keys grid))
+        room-height (- max-y min-y)]
+    (:energy (search/a* {:grid grid :energy 0}
+                        #(moves room-height %)
+                        :grid
+                        (fn [{:keys [grid]}]
+                          (every? #(all-home? room-height grid %) "ABCD"))
+                        :energy
+                        #(heuristic room-height (:grid %))))))
 
-(defn part-1 []
-  (->> "input/2021/23" slurp parse (part-* 2)))
-
-(defn part-2 []
-  (->> "input/2021/23" slurp unfold parse (part-* 4)))
+(defn part-2 [grid]
+  (part-1 (unfold grid)))
 
 (deftest test-example
   (let [sample "#############\n#...........#\n###B#C#B#D###\n  #A#D#C#A#"]
-    (is (= 12521 (part-* 2 (parse sample))))
-    (is (= 44169 (part-* 4 (parse (unfold sample)))))))
+    (is (= 12521 (part-1 (parse sample))))
+    (is (= 44169 (part-2 (parse sample))))))

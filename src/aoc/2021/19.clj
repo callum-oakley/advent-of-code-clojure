@@ -72,11 +72,11 @@
 (defn max-dist [scanners]
   (apply max (for [s0 scanners s1 scanners] (manhattan-distance s0 s1))))
 
-(defn part-1 []
-  (->> "input/2021/19" slurp parse combine :beacons count))
+(defn part-1 [scans]
+  (->> scans combine :beacons count))
 
-(defn part-2 []
-  (->> "input/2021/19" slurp parse combine :scanners max-dist))
+(defn part-2 [scans]
+  (->> scans combine :scanners max-dist))
 
 (deftest test-example
   (let [sample
@@ -116,5 +116,5 @@
          -575,615,604 -485,667,467 -680,325,-822 -627,-443,-432 872,-547,-609
          833,512,582 807,604,487 839,-516,451 891,-625,532 -652,-548,-490
          30,-46,-14"]
-    (is (= 79 (count (:beacons (combine (parse sample))))))
-    (is (= 3621 (max-dist (:scanners (combine (parse sample))))))))
+    (is (= 79 (part-1 (parse sample))))
+    (is (= 3621 (part-2 (parse sample))))))

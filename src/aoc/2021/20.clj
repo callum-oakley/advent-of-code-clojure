@@ -26,11 +26,11 @@
 (defn part-* [n [algorithm image]]
   (->> image (iterate #(enhance algorithm %)) (drop n) first :on count))
 
-(defn part-1 []
-  (->> "input/2021/20" slurp parse (part-* 2)))
+(defn part-1 [data]
+  (part-* 2 data))
 
-(defn part-2 []
-  (->> "input/2021/20" slurp parse (part-* 50)))
+(defn part-2 [data]
+  (part-* 50 data))
 
 (def sample
   "..#.#..#####.#.#.#.###.##.....###.##.#..###.####..#####..#....#..#..##..##
@@ -44,5 +44,5 @@
    #..#.\n#....\n##..#\n..#..\n..###")
 
 (deftest test-example
-  (is (= 35 (part-* 2 (parse sample))))
-  (is (= 3351 (part-* 50 (parse sample)))))
+  (is (= 35 (part-1 (parse sample))))
+  (is (= 3351 (part-2 (parse sample)))))

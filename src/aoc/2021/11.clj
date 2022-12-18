@@ -42,18 +42,15 @@
                     [octopus->energy (+ flashes flashes*)])))
        (drop steps) first second))
 
-(defn part-2* [octopus->energy]
+(defn part-1 [octopus->energy]
+  (part-1* 100 octopus->energy))
+
+(defn part-2 [octopus->energy]
   (loop [octopus->energy octopus->energy steps 0]
     (let [[octopus->energy flashes] (step octopus->energy)]
       (if (= flashes (count octopus->energy))
         (inc steps)
         (recur octopus->energy (inc steps))))))
-
-(defn part-1 []
-  (->> "input/2021/11" slurp parse (part-1* 100)))
-
-(defn part-2 []
-  (->> "input/2021/11" slurp parse part-2*))
 
 (def sample
   (str/join "\n"
@@ -63,5 +60,5 @@
 (deftest test-examples
   (is (= 9 (part-1* 1 (parse "11111\n19991\n19191\n19991\n11111"))))
   (is (= 204 (part-1* 10 (parse sample))))
-  (is (= 1656 (part-1* 100 (parse sample))))
-  (is (= 195 (part-2* (parse sample)))))
+  (is (= 1656 (part-1 (parse sample))))
+  (is (= 195 (part-2 (parse sample)))))

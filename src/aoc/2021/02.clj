@@ -15,13 +15,11 @@
           [0 0 0]
           commands))
 
-(defn part-1 []
-  (let [[hor dep _] (->> "input/2021/02" slurp parse dive)]
-    (* hor dep)))
+(defn part-1 [commands]
+  (let [[hor dep _] (dive commands)] (* hor dep)))
 
-(defn part-2 []
-  (let [[hor _ dep] (->> "input/2021/02" slurp parse dive)]
-    (* hor dep)))
+(defn part-2 [commands]
+  (let [[hor _ dep] (dive commands)] (* hor dep)))
 
 (deftest test-example
   (let [commands (parse "forward 5 down 5 forward 8 up 3 down 8 forward 2")]

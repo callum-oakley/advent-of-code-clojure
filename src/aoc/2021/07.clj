@@ -29,12 +29,12 @@
 (defn cost-2 [crabs x]
   (apply + (map #(triangle (abs (- % x))) crabs)))
 
-(defn part-1 []
-  (->> "input/2021/07" slurp parse (part-* cost-1)))
+(defn part-1 [crabs]
+  (part-* cost-1 crabs))
 
-(defn part-2 []
-  (->> "input/2021/07" slurp parse (part-* cost-2)))
+(defn part-2 [crabs]
+  (part-* cost-2 crabs))
 
 (deftest test-example
-  (is (= 37 (part-* cost-1 (parse "16,1,2,0,4,2,7,1,2,14"))))
-  (is (= 168 (part-* cost-2 (parse "16,1,2,0,4,2,7,1,2,14")))))
+  (is (= 37 (part-1 (parse "16,1,2,0,4,2,7,1,2,14"))))
+  (is (= 168 (part-2 (parse "16,1,2,0,4,2,7,1,2,14")))))
