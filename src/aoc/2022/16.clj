@@ -33,7 +33,7 @@
            (str/split-lines s))))
 
 (defn part-* [workers time [tunnels valves]]
-  (search/branch-and-bound-max
+  (search/branch-and-bound
    {:workers (vec (repeat workers {:pos 'AA :minute 0}))
     :pressure 0
     :valves valves}

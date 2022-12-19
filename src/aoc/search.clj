@@ -1,6 +1,6 @@
 (ns aoc.search
   (:require
-   [clojure.data.priority-map :refer [priority-map]]
+   [clojure.data.priority-map :as pm]
    [clojure.test :refer [deftest is]])
   (:import
    [clojure.lang IPersistentCollection IPersistentStack PersistentQueue]))
@@ -12,8 +12,11 @@
   (peek [_] (first (peek priority-map)))
   (pop [_] (PriorityQueue. (pop priority-map) priority)))
 
-(defn priority-queue [priority]
-  (->PriorityQueue (priority-map) priority))
+(defn priority-queue-min-first [priority]
+  (->PriorityQueue (pm/priority-map) priority))
+
+(defn priority-queue-max-first [priority]
+  (->PriorityQueue (pm/priority-map-by #(compare %2 %1)) priority))
 
 (defn- traversal [queue start adjacent normalise]
   ((fn go [queue visited]
@@ -41,35 +44,32 @@
   (first (filter goal? (dft start adjacent normalise))))
 
 (defn dijkstra [start adjacent normalise goal? cost]
-  (let [queue (priority-queue cost)]
+  (let [queue (priority-queue-min-first cost)]
     (first (filter goal? (traversal queue start adjacent normalise)))))
 
 (defn a* [start adjacent normalise goal? cost heuristic]
   (dijkstra start adjacent normalise goal? #(+ (cost %) (heuristic %))))
 
 (defn branch-and-bound
-  "Finds the lowest cost solution in the search space, exploring lowest cost
-   branches first and using bound to eliminate branches that can't contain
-   better solutions than we've already seen."
-  [start adjacent normalise cost bound]
-  (loop [queue (conj (priority-queue cost) start) visited #{} best ##Inf]
-    (if-let [current (peek queue)]
-      (if (or (<= best (bound current)) (visited (normalise current)))
-        (recur (pop queue) visited best)
-        (let [best (min best (cost current))]
-          (recur (->> (adjacent current)
-                      (remove #(or (<= best (bound %)) (visited (normalise %))))
-                      (into (pop queue)))
-                 (conj visited (normalise current))
-                 best)))
-      best)))
-
-(defn branch-and-bound-max
   "Finds the highest score solution in the search space, exploring highest score
    branches first and using bound to eliminate branches that can't contain
    better solutions than we've already seen."
   [start adjacent normalise score bound]
-  (- (branch-and-bound start adjacent normalise #(- (score %)) #(- (bound %)))))
+  (let [<= (fn [a b] (<= (compare a b) 0))]
+    (loop [queue (conj (priority-queue-max-first score) start)
+           visited #{}
+           best (score start)]
+     (if-let [current (peek queue)]
+       (if (or (<= (bound current) best) (visited (normalise current)))
+         (recur (pop queue) visited best)
+         (let [best (if (<= (score current) best) best (score current))]
+           (recur (->> (adjacent current)
+                       (remove #(or (<= (bound %) best)
+                                    (visited (normalise %))))
+                       (into (pop queue)))
+                  (conj visited (normalise current))
+                  best)))
+       best))))
 
 ;; This was wrong in my first implementation (I was only considering the cost of
 ;; a node the first time you encountered it) so, a regression test:
