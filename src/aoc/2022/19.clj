@@ -13,48 +13,50 @@
                :geo {:ore geo-ore :obs geo-obs}}))))
 
 (defn quality [blueprint time]
-  (search/branch-and-bound
-   {:minute 1
-    :robots {:ore 1 :cla 0 :obs 0 :geo 0}
-    :resources {:ore 0 :cla 0 :obs 0 :geo 0}
-    :skipped #{}}
-   (fn [{:keys [minute robots resources skipped]}]
-     (when (<= minute time)
-       (let [affordable? (fn [robot]
-                           (every? (fn [[resource n]]
-                                     (<= n (resources resource)))
-                                   (blueprint robot)))]
-         ;; Always build a geo robot if we can afford to
-         (if (affordable? :geo)
-           [{:minute (inc minute)
-             :robots (update robots :geo inc)
-             :resources (+m (-m resources (blueprint :geo)) robots)
-             :skipped #{}}]
-           (let [options (filter affordable? [:ore :cla :obs])]
-             ;; It might be better to wait, but if we do take note of what we
-             ;; skipped building because there's no point building them next
-             ;; time.
-             (cons
-              {:minute (inc minute)
-               :robots robots
-               :resources (+m resources robots)
-               :skipped (set options)}
-              (map (fn [robot]
-                     {:minute (inc minute)
-                      :robots (update robots robot inc)
-                      :resources (+m (-m resources (blueprint robot)) robots)
-                      :skipped #{}})
-                   ;; Don't build robots for resources we already have a lot of.
-                   ;; Where "a lot" is... 16.
-                   (remove #(or (skipped %) (< 16 (resources %)))
-                           options))))))))
-   identity
-   #(:geo (:resources %))
-   ;; A very crude upper bound assuming we can make a geo robot in every
-   ;; remaining minute.
-   (fn [{:keys [minute robots resources]}]
-     (let [m (- (inc time) minute)]
-       (+ (:geo resources) (* m (:geo robots)) (/ (* (dec m) m) 2))))))
+  (:geo
+   (:resources
+    (search/branch-and-bound-max
+     {:minute 1
+      :robots {:ore 1 :cla 0 :obs 0 :geo 0}
+      :resources {:ore 0 :cla 0 :obs 0 :geo 0}
+      :skipped #{}}
+     (fn [{:keys [minute robots resources skipped]}]
+       (when (<= minute time)
+         (let [affordable? (fn [robot]
+                             (every? (fn [[resource n]]
+                                       (<= n (resources resource)))
+                                     (blueprint robot)))]
+           ;; Always build a geo robot if we can afford to
+           (if (affordable? :geo)
+             [{:minute (inc minute)
+               :robots (update robots :geo inc)
+               :resources (+m (-m resources (blueprint :geo)) robots)
+               :skipped #{}}]
+             (let [options (filter affordable? [:ore :cla :obs])]
+               ;; It might be better to wait, but if we do take note of what we
+               ;; skipped building because there's no point building them next
+               ;; time.
+               (cons
+                {:minute (inc minute)
+                 :robots robots
+                 :resources (+m resources robots)
+                 :skipped (set options)}
+                (map (fn [robot]
+                       {:minute (inc minute)
+                        :robots (update robots robot inc)
+                        :resources (+m (-m resources (blueprint robot)) robots)
+                        :skipped #{}})
+                     ;; Don't build robots for resources we already have a lot
+                     ;; of. Where "a lot" is... 16.
+                     (remove #(or (skipped %) (< 16 (resources %)))
+                             options))))))))
+     identity
+     #(:geo (:resources %))
+     ;; A very crude upper bound assuming we can make a geo robot in every
+     ;; remaining minute.
+     (fn [{:keys [minute robots resources]}]
+       (let [m (- (inc time) minute)]
+         (+ (:geo resources) (* m (:geo robots)) (/ (* (dec m) m) 2))))))))
 
 (defn part-1 [blueprints]
   (apply + (map-indexed (fn [i blueprint] (* (inc i) (quality blueprint 24)))

@@ -33,39 +33,40 @@
            (str/split-lines s))))
 
 (defn part-* [workers time [tunnels valves]]
-  (search/branch-and-bound
-   {:workers (vec (repeat workers {:pos 'AA :minute 0}))
-    :pressure 0
-    :valves valves}
-   (fn [{:keys [workers pressure valves]}]
-     (keep (fn [[dest cost w]]
-             (when (valves dest)
-               (let [minute (+ cost (:minute (workers w)))]
-                 (when (< minute time)
-                   {:workers (assoc workers w {:pos dest :minute minute})
-                    :pressure (+ pressure (* (- time minute) (valves dest)))
-                    :valves (dissoc valves dest)}))))
-           (mapcat (fn [w] (map #(conj % w) (tunnels (:pos (workers w)))))
-                   (range (count workers)))))
-   (fn [state] (update state workers #(sort-by :minute %)))
-   :pressure
-   ;; Computes an upper bound on the pressure that we could ultimately release
-   ;; from this state, by always choosing:
-   ;;   - the worker with the most time remaining
-   ;;   - the valve with the highest release value
-   ;; and assuming the cost of opening that valve is the lowest cost remaining.
-   (fn [{:keys [workers pressure valves]}]
-     (if (seq valves)
-       (let [[dest p] (apply max-key second valves)
-             w (apply min-key #(:minute (workers %)) (range (count workers)))
-             min-c (apply min (map (tunnels (:pos (workers w))) (keys valves)))
-             minute (+ min-c (:minute (workers w)))]
-         (if (< minute time)
-           (recur {:workers (assoc workers w {:pos dest :minute minute})
-                   :pressure (+ pressure (* (- time minute) p))
-                   :valves (dissoc valves dest)})
-           pressure))
-       pressure))))
+  (:pressure
+   (search/branch-and-bound-max
+    {:workers (vec (repeat workers {:pos 'AA :minute 0}))
+     :pressure 0
+     :valves valves}
+    (fn [{:keys [workers pressure valves]}]
+      (keep (fn [[dest cost w]]
+              (when (valves dest)
+                (let [minute (+ cost (:minute (workers w)))]
+                  (when (< minute time)
+                    {:workers (assoc workers w {:pos dest :minute minute})
+                     :pressure (+ pressure (* (- time minute) (valves dest)))
+                     :valves (dissoc valves dest)}))))
+            (mapcat (fn [w] (map #(conj % w) (tunnels (:pos (workers w)))))
+                    (range (count workers)))))
+    (fn [state] (update state workers #(sort-by :minute %)))
+    :pressure
+    ;; Computes an upper bound on the pressure that we could ultimately release
+    ;; from this state, by always choosing:
+    ;;   - the worker with the most time remaining
+    ;;   - the valve with the highest release value
+    ;; and assuming the cost of opening that valve is the lowest cost remaining.
+    (fn [{:keys [workers pressure valves]}]
+      (if (seq valves)
+        (let [[dest p] (apply max-key second valves)
+              w (apply min-key #(:minute (workers %)) (range (count workers)))
+              min-c (apply min (map (tunnels (:pos (workers w))) (keys valves)))
+              minute (+ min-c (:minute (workers w)))]
+          (if (< minute time)
+            (recur {:workers (assoc workers w {:pos dest :minute minute})
+                    :pressure (+ pressure (* (- time minute) p))
+                    :valves (dissoc valves dest)})
+            pressure))
+        pressure)))))
 
 (defn part-1 [input]
   (part-* 1 30 input))
