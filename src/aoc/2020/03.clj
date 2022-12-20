@@ -3,8 +3,7 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/03")))
+(def parse str/split-lines)
 
 (defn path [dy dx height width]
   (for [i (range)
@@ -17,14 +16,11 @@
        (filter #(= (get-in grid %) \#))
        count))
 
-(defn part-1
-  ([] (part-1 data))
-  ([grid] (count-trees grid 1 3)))
+(defn part-1 [grid]
+  (count-trees grid 1 3))
 
-(defn part-2
-  ([] (part-2 data))
-  ([grid] (apply * (map #(apply count-trees grid %)
-                        [[1 1] [1 3] [1 5] [1 7] [2 1]]))))
+(defn part-2 [grid]
+  (apply * (map #(apply count-trees grid %) [[1 1] [1 3] [1 5] [1 7] [2 1]])))
 
 (def sample
   ["..##......."

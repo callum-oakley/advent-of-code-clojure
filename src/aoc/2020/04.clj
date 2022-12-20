@@ -14,9 +14,6 @@
 (defn parse [s]
   (map parse-passport (str/split s #"\n\n")))
 
-(def data
-  (parse (slurp "input/2020/04")))
-
 (defn valid-1? [passport]
   (set/subset?
    #{:byr :iyr :eyr :hgt :hcl :ecl :pid}
@@ -36,14 +33,11 @@
    (#{"amb" "blu" "brn" "gry" "grn" "hzl" "oth"} ecl)
    (re-matches #"\d{9}" pid)))
 
-(defn part-1
-  ([] (part-1 data))
-  ([passports] (count (filter valid-1? passports))))
+(defn part-1 [passports]
+  (count (filter valid-1? passports)))
 
-(defn part-2
-  ([] (part-2 data))
-  ([passports]
-   (count (filter (every-pred valid-1? valid-2?) passports))))
+(defn part-2 [passports]
+  (count (filter (every-pred valid-1? valid-2?) passports)))
 
 (def sample
   (parse "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd

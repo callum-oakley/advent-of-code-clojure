@@ -4,15 +4,12 @@
    [clojure.set :as set]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/21")))
-
 (defn parse-food [food]
   (let [[_ ingredients allergens] (re-matches #"(.+) \(contains (.+)\)" food)]
     [(set (str/split ingredients #" ")) (str/split allergens #", ")]))
 
-(defn parse [foods]
-  (map parse-food foods))
+(defn parse [s]
+  (map parse-food (str/split-lines s)))
 
 (defn identify-potentially-dangerous [foods]
   (->> foods
@@ -20,12 +17,10 @@
                  (map (fn [allergen] {allergen ingredients}) allergens)))
        (apply merge-with set/intersection)))
 
-(defn part-1
-  ([] (part-1 (parse data)))
-  ([foods]
-   (->> (mapcat first foods)
-        (remove (apply set/union (vals (identify-potentially-dangerous foods))))
-        count)))
+(defn part-1 [foods]
+  (->> (mapcat first foods)
+       (remove (apply set/union (vals (identify-potentially-dangerous foods))))
+       count))
 
 (defn map-vals [f m]
   (into {} (map (fn [[k v]] [k (f v)]) m)))
@@ -42,19 +37,17 @@
        (assoc dangerous allergen (first ingredients)))
       dangerous)))
 
-(defn part-2
-  ([] (part-2 (parse data)))
-  ([foods]
-   (->> (solve (identify-potentially-dangerous foods) {})
-        (sort-by first)
-        (map second)
-        (str/join ","))))
+(defn part-2 [foods]
+  (->> (solve (identify-potentially-dangerous foods) {})
+       (sort-by first)
+       (map second)
+       (str/join ",")))
 
 (def sample
-  ["mxmxvkd kfcds sqjhc nhms (contains dairy, fish)"
-   "trh fvjkl sbzzf mxmxvkd (contains dairy)"
-   "sqjhc fvjkl (contains soy)"
-   "sqjhc mxmxvkd sbzzf (contains fish)"])
+  (str "mxmxvkd kfcds sqjhc nhms (contains dairy, fish)\n"
+       "trh fvjkl sbzzf mxmxvkd (contains dairy)\n"
+       "sqjhc fvjkl (contains soy)\n"
+       "sqjhc mxmxvkd sbzzf (contains fish)"))
 
 (deftest test-examples
   (is (= (part-1 (parse sample)) 5))

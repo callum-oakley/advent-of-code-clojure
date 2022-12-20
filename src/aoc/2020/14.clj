@@ -4,9 +4,6 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/14")))
-
 (defn parse-instruction [instruction]
   (let [[_ mask index value]
         (re-matches
@@ -25,8 +22,8 @@
        :index (read-string index)
        :value (read-string value)})))
 
-(defn parse [instructions]
-  (map parse-instruction instructions))
+(defn parse [s]
+  (map parse-instruction (str/split-lines s)))
 
 (defn step-1 [[mem or-mask and-mask] instruction]
   (case (:op instruction)
@@ -49,27 +46,19 @@
           or-mask
           xor-masks]))
 
-(defn part-1
-  ([] (part-1 (parse data)))
-  ([instructions]
-   (apply + (vals (first (reduce step-1 [{} 0 0] instructions))))))
+(defn part-1 [instructions]
+  (apply + (vals (first (reduce step-1 [{} 0 0] instructions)))))
 
-(defn part-2
-  ([] (part-2 (parse data)))
-  ([instructions]
-   (apply + (vals (first (reduce step-2 [{} 0 0] instructions))))))
+(defn part-2 [instructions]
+  (apply + (vals (first (reduce step-2 [{} 0 0] instructions)))))
 
 (def sample-1
-  ["mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"
-   "mem[8] = 11"
-   "mem[7] = 101"
-   "mem[8] = 0"])
+  (str "mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X\n"
+       "mem[8] = 11\nmem[7] = 101\nmem[8] = 0"))
 
 (def sample-2
-  ["mask = 000000000000000000000000000000X1001X"
-   "mem[42] = 100"
-   "mask = 00000000000000000000000000000000X0XX"
-   "mem[26] = 1"])
+  (str "mask = 000000000000000000000000000000X1001X\nmem[42] = 100\n"
+       "mask = 00000000000000000000000000000000X0XX\nmem[26] = 1"))
 
 (deftest test-examples
   (is (= (part-1 (parse sample-1)) 165))

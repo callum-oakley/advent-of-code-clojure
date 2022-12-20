@@ -1,16 +1,10 @@
 (ns aoc.2020.17
   (:require
-   [clojure.string :as str]
+   [aoc.grid :as grid]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/17")))
-
-(defn parse [grid]
-  (set (for [y (range (count grid))
-             x (range (count (first grid)))
-             :when (= (get-in grid [y x]) \#)]
-         [0 y x 0])))
+(defn parse [s]
+  (set (map (fn [[y x]] [0 y x 0]) (keys (grid/parse s #{\#})))))
 
 (defn neighbors-4 [[z y x w]]
   (for [dz [-1 0 1] dy [-1 0 1] dx [-1 0 1] dw [-1 0 1]
@@ -28,16 +22,12 @@
         (if (grid pos) (<= 2 c 3) (= c 3))))
     (distinct (mapcat neighbors grid)))))
 
-(defn part-1
-  ([] (part-1 (parse data)))
-  ([grid]
-   (count (first (drop 6 (iterate #(step neighbors-3 %) grid))))))
+(defn part-1 [grid]
+  (count (first (drop 6 (iterate #(step neighbors-3 %) grid)))))
 
-(defn part-2
-  ([] (part-2 (parse data)))
-  ([grid]
-   (count (first (drop 6 (iterate #(step neighbors-4 %) grid))))))
+(defn part-2 [grid]
+  (count (first (drop 6 (iterate #(step neighbors-4 %) grid)))))
 
 (deftest test-examples
-  (is (= (part-1 (parse [".#." "..#" "###"])) 112))
-  (is (= (part-2 (parse [".#." "..#" "###"])) 848)))
+  (is (= (part-1 (parse ".#.\n..#\n###")) 112))
+  (is (= (part-2 (parse ".#.\n..#\n###")) 848)))

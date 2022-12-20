@@ -3,6 +3,9 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (map read-string (str/split s #",")))
+
 ;; Van Eck's sequence https://youtu.be/etMJxB-igrc
 (defn turn [[prev i mem]]
   (let [seen (get mem prev)
@@ -23,16 +26,12 @@
         (concat seed))
    (dec n)))
 
-(defn part-1 []
-  (->> (str/split (slurp "input/2020/15") #",")
-       (map read-string)
-       (game 2020)))
+(defn part-1 [seed]
+  (game 2020 seed))
 
-(defn part-2 []
-  (->> (str/split (slurp "input/2020/15") #",")
-       (map read-string)
-       (game 30000000)))
+(defn part-2 [seed]
+  (game 30000000 seed))
 
 (deftest test-examples
-  (is (= (game 2020 [0 3 6]) 436))
-  (is (= (game 30000000 [0 3 6]) 175594)))
+  (is (= (part-1 [0 3 6]) 436))
+  (is (= (part-2 [0 3 6]) 175594)))

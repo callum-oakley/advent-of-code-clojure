@@ -1,17 +1,10 @@
 (ns aoc.2020.11
   (:require
-   [clojure.string :as str]
+   [aoc.grid :as grid]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/11")))
-
-(defn parse [grid]
-  (into {} (for [y (range (count grid))
-                 x (range (count (first grid)))]
-             [[y x] (case (get-in grid [y x])
-                      \L :empty
-                      \. :floor)])))
+(defn parse [s]
+  (grid/parse s #(case % \L :empty \. :floor)))
 
 (def directions
   (for [y [-1 0 1] x [-1 0 1] :when (not= [y x] [0 0])] [y x]))
@@ -47,19 +40,15 @@
       seats
       (recur nearby tolerance seats*))))
 
-(defn part-1
-  ([] (part-1 (parse data)))
-  ([seats]
-   (count (filter #{:occupied} (vals (simulate adjacent 4 seats))))))
+(defn part-1 [seats]
+  (count (filter #{:occupied} (vals (simulate adjacent 4 seats)))))
 
-(defn part-2
-  ([] (part-2 (parse data)))
-  ([seats]
-   (count (filter #{:occupied} (vals (simulate visible 5 seats))))))
+(defn part-2 [seats]
+  (count (filter #{:occupied} (vals (simulate visible 5 seats)))))
 
 (def sample
-  ["L.LL.LL.LL" "LLLLLLL.LL" "L.L.L..L.." "LLLL.LL.LL" "L.LL.LL.LL"
-   "L.LLLLL.LL" "..L.L....." "LLLLLLLLLL" "L.LLLLLL.L" "L.LLLLL.LL"])
+  (str "L.LL.LL.LL\nLLLLLLL.LL\nL.L.L..L..\nLLLL.LL.LL\nL.LL.LL.LL\n"
+       "L.LLLLL.LL\n..L.L.....\nLLLLLLLLLL\nL.LLLLLL.L\nL.LLLLL.LL"))
 
 (deftest test-examples
   (is (= (part-1 (parse sample)) 37))

@@ -3,11 +3,8 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/12")))
-
-(defn parse [instructions]
-  (map #(vector (first %) (read-string (subs % 1))) instructions))
+(defn parse [s]
+  (map #(vector (first %) (read-string (subs % 1))) (str/split-lines s)))
 
 (def compass
   {\N [0 1] \S [0 -1] \E [1 0] \W [-1 0]})
@@ -31,20 +28,16 @@
     {:pos pos :dir (move dir (compass op) arg)}
     (step-1 ship [op arg])))
 
-(defn part-1
-  ([] (part-1 (parse data)))
-  ([instructions]
-   (let [{[x y] :pos} (reduce step-1 {:pos [0 0] :dir [1 0]} instructions)]
-     (+ (abs x) (abs y)))))
+(defn part-1 [instructions]
+  (let [{[x y] :pos} (reduce step-1 {:pos [0 0] :dir [1 0]} instructions)]
+    (+ (abs x) (abs y))))
 
-(defn part-2
-  ([] (part-2 (parse data)))
-  ([instructions]
-   (let [{[x y] :pos} (reduce step-2 {:pos [0 0] :dir [10 1]} instructions)]
-     (+ (abs x) (abs y)))))
+(defn part-2 [instructions]
+  (let [{[x y] :pos} (reduce step-2 {:pos [0 0] :dir [10 1]} instructions)]
+    (+ (abs x) (abs y))))
 
 (def sample
-  ["F10" "N3" "F7" "R90" "F11"])
+  "F10\nN3\nF7\nR90\nF11")
 
 (deftest test-examples
   (is (= (part-1 (parse sample)) 25))

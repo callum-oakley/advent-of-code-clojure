@@ -3,23 +3,22 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(defn parse [line]
-  (let [[_ n m [c] pass] (re-find #"(\d+)-(\d+) (.): (.*)" line)]
-    [(read-string n) (read-string m) c pass]))
-
-(def data
-  (map parse (str/split-lines (slurp "input/2020/02"))))
+(defn parse [s]
+  (map (fn [line]
+         (let [[_ n m [c] pass] (re-find #"(\d+)-(\d+) (.): (.*)" line)]
+           [(read-string n) (read-string m) c pass]))
+       (str/split-lines s)))
 
 (defn valid-1? [[min max c pass]]
   (<= min (count (filter #{c} pass)) max))
 
-(defn part-1 []
+(defn part-1 [data]
   (count (filter valid-1? data)))
 
 (defn valid-2? [[i j c pass]]
   (= (count (filter #{c} (map #(nth pass (dec %)) [i j]))) 1))
 
-(defn part-2 []
+(defn part-2 [data]
   (count (filter valid-2? data)))
 
 (deftest test-valid-1?

@@ -4,8 +4,8 @@
    [clojure.set :as set]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split (slurp "input/2020/06") #"\n\n"))
+(defn parse [s]
+  (str/split s #"\n\n"))
 
 (defn process-group [combine group]
   (->> (str/split-lines group)
@@ -13,14 +13,11 @@
        (apply combine)
        count))
 
-(defn part-1
-  ([] (part-1 data))
-  ([groups] (apply + (map #(process-group set/union %) groups))))
+(defn part-1 [groups]
+  (apply + (map #(process-group set/union %) groups)))
 
-(defn part-2
-  ([] (part-2 data))
-  ([groups]
-   (apply + (map #(process-group set/intersection %) groups))))
+(defn part-2 [groups]
+  (apply + (map #(process-group set/intersection %) groups)))
 
 (def sample
   ["abc" "a\nb\nc" "ab\nac" "a\na\na\na" "b"])

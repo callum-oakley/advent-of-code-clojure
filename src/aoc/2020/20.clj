@@ -4,9 +4,6 @@
    [clojure.set :as set]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (map str/split-lines (str/split (slurp "input/2020/20") #"\n\n")))
-
 (defn re-index [tile f]
   (vec (for [y (range (count tile))]
          (vec (for [x (range (count (first tile)))]
@@ -22,8 +19,9 @@
   [(read-string (second (re-find #"(\d+)" title)))
    (rotations-and-reflections (mapv vec tile))])
 
-(defn parse [tiles]
-  (into {} (map parse-tile tiles)))
+(defn parse [s]
+  (into {} (map #(parse-tile (map str/trim (str/split-lines %)))
+                (str/split s #"\n\n"))))
 
 (defn border [tile edge]
   (for [i (range 10)]
@@ -99,53 +97,40 @@
                            monster)))
          count)))
 
-(defn part-1
-  ([] (part-1 (parse data)))
-  ([tiles]
-   (let [blueprint (assemble tiles)
-         ymin (apply min (map (fn [[y _]] y) (keys blueprint)))
-         xmin (apply min (map (fn [[_ x]] x) (keys blueprint)))
-         ymax (apply max (map (fn [[y _]] y) (keys blueprint)))
-         xmax (apply max (map (fn [[_ x]] x) (keys blueprint)))]
-     (apply * (for [y [ymin ymax] x [xmin xmax]] ((blueprint [y x]) 0))))))
+(defn part-1 [tiles]
+  (let [blueprint (assemble tiles)
+        ymin (apply min (map (fn [[y _]] y) (keys blueprint)))
+        xmin (apply min (map (fn [[_ x]] x) (keys blueprint)))
+        ymax (apply max (map (fn [[y _]] y) (keys blueprint)))
+        xmax (apply max (map (fn [[_ x]] x) (keys blueprint)))]
+    (apply * (for [y [ymin ymax] x [xmin xmax]] ((blueprint [y x]) 0)))))
 
-(defn part-2
-  ([] (part-2 (parse data)))
-  ([tiles]
-   (let [blueprint (assemble tiles)
-         image (draw tiles blueprint)
-         monsters (apply max
-                         (map count-monsters (rotations-and-reflections image)))]
-     (- (count (filter #{\#} (flatten image))) (* monsters (count monster))))))
+(defn part-2 [tiles]
+  (let [blueprint (assemble tiles)
+        image (draw tiles blueprint)
+        monsters (apply max
+                        (map count-monsters (rotations-and-reflections image)))]
+    (- (count (filter #{\#} (flatten image))) (* monsters (count monster)))))
 
 (def sample
-  [["Tile 2311:"
-    "..##.#..#." "##..#....." "#...##..#." "####.#...#" "##.##.###."
-    "##...#.###" ".#.#.#..##" "..#....#.." "###...#.#." "..###..###"]
-   ["Tile 1951:"
-    "#.##...##." "#.####...#" ".....#..##" "#...######" ".##.#....#"
-    ".###.#####" "###.##.##." ".###....#." "..#.#..#.#" "#...##.#.."]
-   ["Tile 1171:"
-    "####...##." "#..##.#..#" "##.#..#.#." ".###.####." "..###.####"
-    ".##....##." ".#...####." "#.##.####." "####..#..." ".....##..."]
-   ["Tile 1427:"
-    "###.##.#.." ".#..#.##.." ".#.##.#..#" "#.#.#.##.#" "....#...##"
-    "...##..##." "...#.#####" ".#.####.#." "..#..###.#" "..##.#..#."]
-   ["Tile 1489:"
-    "##.#.#...." "..##...#.." ".##..##..." "..#...#..." "#####...#."
-    "#..#.#.#.#" "...#.#.#.." "##.#...##." "..##.##.##" "###.##.#.."]
-   ["Tile 2473:"
-    "#....####." "#..#.##..." "#.##..#..." "######.#.#" ".#...#.#.#"
-    ".#########" ".###.#..#." "########.#" "##...##.#." "..###.#.#."]
-   ["Tile 2971:"
-    "..#.#....#" "#...###..." "#.#.###..." "##.##..#.." ".#####..##"
-    ".#..####.#" "#..#.#..#." "..####.###" "..#.#.###." "...#.#.#.#"]
-   ["Tile 2729:"
-    "...#.#.#.#" "####.#...." "..#.#....." "....#..#.#" ".##..##.#."
-    ".#.####..." "####.#.#.." "##.####..." "##..#.##.." "#.##...##."]
-   ["Tile 3079:"
-    "#.#.#####." ".#..######" "..#......." "######...." "####.#..#."
-    ".#...#.##." "#.#####.##" "..#.###..." "..#......." "..#.###..."]])
+  "Tile 2311:\n..##.#..#.\n##..#.....\n#...##..#.\n####.#...#\n##.##.###.
+               ##...#.###\n.#.#.#..##\n..#....#..\n###...#.#.\n..###..###\n
+   Tile 1951:\n#.##...##.\n#.####...#\n.....#..##\n#...######\n.##.#....#
+               .###.#####\n###.##.##.\n.###....#.\n..#.#..#.#\n#...##.#..\n
+   Tile 1171:\n####...##.\n#..##.#..#\n##.#..#.#.\n.###.####.\n..###.####
+               .##....##.\n.#...####.\n#.##.####.\n####..#...\n.....##...\n
+   Tile 1427:\n###.##.#..\n.#..#.##..\n.#.##.#..#\n#.#.#.##.#\n....#...##
+               ...##..##.\n...#.#####\n.#.####.#.\n..#..###.#\n..##.#..#.\n
+   Tile 1489:\n##.#.#....\n..##...#..\n.##..##...\n..#...#...\n#####...#.
+               #..#.#.#.#\n...#.#.#..\n##.#...##.\n..##.##.##\n###.##.#..\n
+   Tile 2473:\n#....####.\n#..#.##...\n#.##..#...\n######.#.#\n.#...#.#.#
+               .#########\n.###.#..#.\n########.#\n##...##.#.\n..###.#.#.\n
+   Tile 2971:\n..#.#....#\n#...###...\n#.#.###...\n##.##..#..\n.#####..##
+               .#..####.#\n#..#.#..#.\n..####.###\n..#.#.###.\n...#.#.#.#\n
+   Tile 2729:\n...#.#.#.#\n####.#....\n..#.#.....\n....#..#.#\n.##..##.#.
+               .#.####...\n####.#.#..\n##.####...\n##..#.##..\n#.##...##.\n
+   Tile 3079:\n#.#.#####.\n.#..######\n..#.......\n######....\n####.#..#.
+               .#...#.##.\n#.#####.##\n..#.###...\n..#.......\n..#.###...")
 
 (deftest test-examples
   (is (= (part-1 (parse sample)) 20899048083289))

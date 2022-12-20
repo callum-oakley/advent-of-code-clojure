@@ -3,15 +3,12 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/08")))
-
 (defn parse-instruction [instruction]
   (let [[op arg] (str/split instruction #" ")]
     [(keyword op) (read-string arg)]))
 
-(defn parse [instructions]
-  (mapv parse-instruction instructions))
+(defn parse [s]
+  (mapv parse-instruction (str/split-lines s)))
 
 (defn run [instructions]
   (loop [i 0 acc 0 seen #{}]
@@ -24,25 +21,22 @@
                 :jmp (recur (+ i arg)    acc      (conj seen i))
                 :nop (recur (inc i)      acc      (conj seen i)))))))
 
-(defn part-1
-  ([] (part-1 (parse data)))
-  ([instructions] (nth (run instructions) 1)))
+(defn part-1 [instructions]
+  (nth (run instructions) 1))
 
-(defn part-2
-  ([] (part-2 (parse data)))
-  ([instructions]
-   (first
-    (keep-indexed
-     (fn [i [op]]
-       (when-let [op ({:jmp :nop :nop :jmp} op)]
-         (let [[res acc] (run (assoc-in instructions [i 0] op))]
-           (when (= res :ok) acc))))
-     instructions))))
+(defn part-2 [instructions]
+  (first
+   (keep-indexed
+    (fn [i [op]]
+      (when-let [op ({:jmp :nop :nop :jmp} op)]
+        (let [[res acc] (run (assoc-in instructions [i 0] op))]
+          (when (= res :ok) acc))))
+    instructions)))
 
 (def sample
-  ["nop +0" "acc +1" "jmp +4"
-   "acc +3" "jmp -3" "acc -99"
-   "acc +1" "jmp -4" "acc +6"])
+  (str/join "\n" ["nop +0" "acc +1" "jmp +4"
+                  "acc +3" "jmp -3" "acc -99"
+                  "acc +1" "jmp -4" "acc +6"]))
 
 (deftest test-examples
   (is (= (part-1 (parse sample)) 5))

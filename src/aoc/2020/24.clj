@@ -1,11 +1,10 @@
 (ns aoc.2020.24
   (:require
    [aoc.vector :refer [+v]]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/24")))
+(defn parse [s]
+  (re-seq #"\w+" s))
 
 (def dirs
   {"e" [1 0] "se" [0 1] "sw" [-1 1] "w" [-1 0] "nw" [0 -1] "ne" [1 -1]})
@@ -34,38 +33,24 @@
         (if (black tile) (<= 1 c 2) (= c 2))))
     (distinct (mapcat adjacent black)))))
 
-(defn part-1
-  ([] (part-1 data))
-  ([instructions]
-   (count (initial-state instructions))))
+(defn part-1 [instructions]
+  (count (initial-state instructions)))
 
-(defn part-2
-  ([] (part-2 data))
-  ([instructions]
-   (count (first (drop 100 (iterate step (initial-state instructions)))))))
+(defn part-2 [instructions]
+  (count (first (drop 100 (iterate step (initial-state instructions))))))
 
 (def sample
-  ["sesenwnenenewseeswwswswwnenewsewsw"
-   "neeenesenwnwwswnenewnwwsewnenwseswesw"
-   "seswneswswsenwwnwse"
-   "nwnwneseeswswnenewneswwnewseswneseene"
-   "swweswneswnenwsewnwneneseenw"
-   "eesenwseswswnenwswnwnwsewwnwsene"
-   "sewnenenenesenwsewnenwwwse"
-   "wenwwweseeeweswwwnwwe"
-   "wsweesenenewnwwnwsenewsenwwsesesenwne"
-   "neeswseenwwswnwswswnw"
-   "nenwswwsewswnenenewsenwsenwnesesenew"
-   "enewnwewneswsewnwswenweswnenwsenwsw"
-   "sweneswneswneneenwnewenewwneswswnese"
-   "swwesenesewenwneswnwwneseswwne"
-   "enesenwswwswneneswsenwnewswseenwsese"
-   "wnwnesenesenenwwnenwsewesewsesesew"
-   "nenewswnwewswnenesenwnesewesw"
-   "eneswnwswnwsenenwnwnwwseeswneewsenese"
-   "neswnwewnwnwseenwseesewsenwsweewe"
-   "wseweeenwnesenwwwswnew"])
+  "sesenwnenenewseeswwswswwnenewsewsw neeenesenwnwwswnenewnwwsewnenwseswesw
+   seswneswswsenwwnwse nwnwneseeswswnenewneswwnewseswneseene
+   swweswneswnenwsewnwneneseenw eesenwseswswnenwswnwnwsewwnwsene
+   sewnenenenesenwsewnenwwwse wenwwweseeeweswwwnwwe
+   wsweesenenewnwwnwsenewsenwwsesesenwne neeswseenwwswnwswswnw
+   nenwswwsewswnenenewsenwsenwnesesenew enewnwewneswsewnwswenweswnenwsenwsw
+   sweneswneswneneenwnewenewwneswswnese swwesenesewenwneswnwwneseswwne
+   enesenwswwswneneswsenwnewswseenwsese wnwnesenesenenwwnenwsewesewsesesew
+   nenewswnwewswnenesenwnesewesw eneswnwswnwsenenwnwnwwseeswneewsenese
+   neswnwewnwnwseenwseesewsenwsweewe wseweeenwnesenwwwswnew")
 
 (deftest test-examples
-  (is (= (part-1 sample) 10))
-  (is (= (part-2 sample) 2208)))
+  (is (= (part-1 (parse sample)) 10))
+  (is (= (part-2 (parse sample)) 2208)))

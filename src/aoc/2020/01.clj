@@ -4,8 +4,8 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def expense-report
-  (map read-string (str/split-lines (slurp "input/2020/01"))))
+(defn parse [s]
+  (map read-string (str/split-lines s)))
 
 (defn process-report [n report]
   (->> (comb/combinations report n)
@@ -13,13 +13,11 @@
        first
        (apply *)))
 
-(defn part-1
-  ([] (part-1 expense-report))
-  ([report] (process-report 2 report)))
+(defn part-1 [report]
+  (process-report 2 report))
 
-(defn part-2
-  ([] (part-2 expense-report))
-  ([report] (process-report 3 report)))
+(defn part-2 [report]
+  (process-report 3 report))
 
 (deftest test-examples
   (is (= (part-1 [1721 979 366 299 675 1456]) 514579))

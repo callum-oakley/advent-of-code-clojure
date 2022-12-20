@@ -4,11 +4,11 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (mapv read-string (str/split-lines (slurp "input/2020/09"))))
+(defn parse [s]
+  (mapv read-string (str/split-lines s)))
 
 (defn part-1
-  ([] (part-1 25 data))
+  ([numbers] (part-1 25 numbers))
   ([preamble-len numbers]
    (when (> (count numbers) preamble-len)
      (let [preamble (take preamble-len numbers)
@@ -19,7 +19,7 @@
          target)))))
 
 (defn part-2
-  ([] (part-2 25 data))
+  ([numbers] (part-2 25 numbers))
   ([preamble-len numbers]
    (let [invalid (part-1 preamble-len numbers)]
      (loop [i 0 j 1]

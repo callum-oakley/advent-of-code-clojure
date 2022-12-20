@@ -3,34 +3,30 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (map read-string (str/split-lines (slurp "input/2020/10"))))
+(defn parse [s]
+  (map read-string (str/split-lines s)))
 
-(defn part-1
-  ([] (part-1 data))
-  ([adapters]
-   (let [device (+ (apply max adapters) 3)
-         diffs (->> (conj adapters 0 device)
-                    sort
-                    (partition 2 1)
-                    (map (fn [[a b]] (- b a)))
-                    frequencies)]
-     (* (get diffs 1 0) (get diffs 3 0)))))
+(defn part-1 [adapters]
+  (let [device (+ (apply max adapters) 3)
+        diffs (->> (conj adapters 0 device)
+                   sort
+                   (partition 2 1)
+                   (map (fn [[a b]] (- b a)))
+                   frequencies)]
+    (* (get diffs 1 0) (get diffs 3 0))))
 
-(defn part-2
-  ([] (part-2 data))
-  ([adapters]
-   (let [device (+ (apply max adapters) 3)
+(defn part-2 [adapters]
+  (let [device (+ (apply max adapters) 3)
          ;; The number of routes to each adapter is the sum of the number of
          ;; routes to each of the possible previous adapters (it's like a messy
          ;; Pascal's triangle) so we can get the solution in one pass.
-         routes (reduce
-                 (fn [r a]
-                   (assoc r a
-                          (apply + (map #(get r % 0) (range (- a 3) a)))))
-                 {0 1}
-                 (sort (conj adapters device)))]
-     (get routes device))))
+        routes (reduce
+                (fn [r a]
+                  (assoc r a
+                         (apply + (map #(get r % 0) (range (- a 3) a)))))
+                {0 1}
+                (sort (conj adapters device)))]
+    (get routes device)))
 
 (deftest test-examples
   (is (= (part-1 [16 10 15 5 1 11 7 19 6 12 4]) 35))

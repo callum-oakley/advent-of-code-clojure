@@ -3,8 +3,8 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest are]]))
 
-(def data
-  (str/split-lines (slurp "input/2020/18")))
+(defn parse [s]
+  (map #(read-string (str "(" % ")")) (str/split-lines s)))
 
 ;; I didn't know about it at the time, but this would have been a great
 ;; application for walk/postwalk.
@@ -16,11 +16,11 @@
     f (recur p (list* ((resolve f) x y) g more))
     :else x))
 
-(defn part-1 []
-  (apply + (pmap #(math {'+ 0 '* 0} (read-string (str "(" % ")"))) data)))
+(defn part-1 [data]
+  (apply + (pmap #(math {'+ 0 '* 0} %) data)))
 
-(defn part-2 []
-  (apply + (pmap #(math {'+ 1 '* 0} (read-string (str "(" % ")"))) data)))
+(defn part-2 [data]
+  (apply + (pmap #(math {'+ 1 '* 0} %) data)))
 
 (deftest test-examples
   (are [x y] (= (math {'+ 0 '* 0} x) y)

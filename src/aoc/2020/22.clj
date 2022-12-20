@@ -3,11 +3,9 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(def data
-  (map str/split-lines (str/split (slurp "input/2020/22") #"\n\n")))
-
-(defn parse [decks]
-  (map #(->> % rest (mapv read-string)) decks))
+(defn parse [s]
+  (map #(->> % rest (mapv read-string))
+       (map str/split-lines (str/split s #"\n\n"))))
 
 (defn score [deck]
   (apply + (map-indexed (fn [i c] (* c (inc i))) (reverse deck))))
@@ -38,18 +36,14 @@
               1 (recur [(conj d1* c1 c2) d2*] seen*)
               2 (recur [d1* (conj d2* c2 c1)] seen*)))))
 
-(defn part-1
-  ([] (part-1 (parse data)))
-  ([[d1 d2]]
-   (score (:deck (game-1 [d1 d2])))))
+(defn part-1 [[d1 d2]]
+  (score (:deck (game-1 [d1 d2]))))
 
-(defn part-2
-  ([] (part-2 (parse data)))
-  ([[d1 d2]]
-   (score (:deck (game-2 [d1 d2] #{})))))
+(defn part-2 [[d1 d2]]
+  (score (:deck (game-2 [d1 d2] #{}))))
 
 (def sample
-  [["Player 1:" "9" "2" "6" "3" "1"] ["Player 2:" "5" "8" "4" "7" "10"]])
+  "Player 1:\n9\n2\n6\n3\n1\n\nPlayer 2:\n5\n8\n4\n7\n10")
 
 (deftest test-examples
   (is (= (part-1 (parse sample)) 306))
