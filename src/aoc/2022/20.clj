@@ -9,13 +9,17 @@
     [vals (mapv #(mod (inc %) m) (range m)) (mapv #(mod (dec %) m) (range m))]))
 
 (defn mix [[vals next prev]]
-  (let [m (count vals)]
+  (let [m (dec (count vals))]
     (reduce-kv (fn [[vals next prev] i val]
                  (let [p (prev i)
                        n (next i)
                        next (assoc next p n)
                        prev (assoc prev n p)
-                       p ((apply comp (repeat (mod val (dec m)) next)) p)
+                       p (let [dist (mod val m)]
+                           ((apply comp (if (< dist (/ m 2))
+                                          (repeat dist next)
+                                          (repeat (- m dist) prev)))
+                            p))
                        n (next p)]
                    [vals (assoc next p i i n) (assoc prev i p n i)]))
                [vals next prev]
