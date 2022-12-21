@@ -49,7 +49,7 @@
      :form-params {:level part :answer (str answer)}})))
 
 (defn check-answer [year day part answer]
-  (if (or (int? answer) (string? answer))
+  (if (or (integer? answer) (string? answer))
     (if-let [target (get-answer year day part)]
       (if (= target (str answer)) "*" "WRONG")
       (let [res (submit-answer year day part answer)]
