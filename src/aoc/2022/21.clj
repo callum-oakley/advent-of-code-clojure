@@ -6,7 +6,7 @@
 (defn parse [s]
   (into {} (map (fn [line]
                   (let [[m & job] (map read-string (re-seq #"[^:\s]+" line))]
-                    [m (if (= 1 (count job)) (first job) job)]))
+                    [m (if (= 1 (count job)) (first job) (vec job))]))
                 (str/split-lines s))))
 
 (defn part-1 [monkeys]
@@ -18,24 +18,10 @@
    'root))
 
 (defn part-2 [monkeys]
-  ((fn go [m]
-     (cond
-       (= m 'humn) [1 0]                  ;; 1h + 0
-       (int? (monkeys m)) [0 (monkeys m)] ;; 0h + (monkeys m)
-       :else (let [[x op y] (monkeys m)
-                   [a b] (go x)           ;; ah + b
-                   [c d] (go y)]          ;; ch + d
-               (if (= m 'root)
-                 (/ (- d b) (- a c)) ;; ah + b = ch + d => h = (d - b) / (a - c)
-                 (case op
-                   + [(+ a c) (+ b d)]
-                   - [(- a c) (- b d)]
-                   ;; optimistic guess that we never have to handle the
-                   ;; difficult cases for * or /
-                   * (cond (zero? a) [(* b c) (* b d)]
-                           (zero? c) [(* d a) (* d b)])
-                   / (when (zero? c) [(/ a d) (/ b d)]))))))
-   'root))
+  (let [f (fn [h] (-> monkeys (assoc-in ['root 1] '-) (assoc 'humn h) part-1))]
+    ;; Since monkeys is a tree, f is a linear function of h, so we can find the
+    ;; root by taking the value of f at two points and extrapolating.
+    (/ (f 0) (- (f 0) (f 1)))))
 
 (def example
   "root: pppw + sjmn\ndbpl: 5\ncczh: sllz + lgvd\nzczc: 2\nptdq: humn - dvpt
