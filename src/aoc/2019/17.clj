@@ -6,7 +6,9 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(defn parse [ascii]
+(def parse i/parse)
+
+(defn parse-ascii [ascii]
   (reduce (fn [[scaffold robot y x] c]
             (case c
               \# [(conj scaffold [y x]) robot y (inc x)]
@@ -73,13 +75,12 @@
        (map (fn [[y x]] (* y x)))
        (apply +)))
 
-(defn part-1 []
-  (part-1* (parse (map char (i/run-io (i/load "input/2019/17") [])))))
+(defn part-1 [mem]
+  (part-1* (parse-ascii (map char (i/run-io mem [])))))
 
-(defn part-2 []
-  (let [mem (i/load "input/2019/17")
-        compression (->> (i/run-io mem []) (map char) parse
-                         walk compressions first)]
+(defn part-2 [mem]
+  (let [compression
+        (->> (i/run-io mem []) (map char) parse-ascii walk compressions first)]
     (last (i/run-io (assoc mem 0 2)
                     (map int (format "%s\n%s\n%s\n%s\nn\n"
                                      (str/join "," (compression 'Main))
@@ -88,7 +89,7 @@
                                      (str/join "," (compression 'C))))))))
 
 (defn -main []
-  (i/run-interactive (assoc (i/load "input/2019/17") 0 2)))
+  (i/run-interactive (assoc (parse (slurp "input/2019/17")) 0 2)))
 
 (def small
   (str/join "\n" ["..#.........." "..#.........." "#######...###"
@@ -102,11 +103,11 @@
                   "....#...#......" "....#...#......" "....#####......"]))
 
 (deftest test-example
-  (is (= 76 (part-1* (parse small))))
+  (is (= 76 (part-1* (parse-ascii small))))
   (is (= "R,8,R,8,R,4,R,4,R,8,L,6,L,2,R,4,R,4,R,8,R,8,R,8,L,6,L,2"
-         (str/join "," (walk (parse large)))))
+         (str/join "," (walk (parse-ascii large)))))
   (is (= '[A B C B A C]
-         (compress (walk (parse large))
+         (compress (walk (parse-ascii large))
                    '{A [R 8 R 8] B [R 4 R 4 R 8] C [L 6 L 2]})))
   (is (some #{'{Main [A B C B A C] A [R 8 R 8] B [R 4 R 4 R 8] C [L 6 L 2]}}
-            (compressions (walk (parse large))))))
+            (compressions (walk (parse-ascii large))))))

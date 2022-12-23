@@ -26,7 +26,7 @@
              {}
              maze)]))
 
-(defn part-1* [[maze portals]]
+(defn part-1 [[maze portals]]
   (:steps (search/bfs {:pos (portals "AA") :steps 0}
                       #(map (fn [pos] {:pos pos :steps (inc (:steps %))})
                             (if-let [pos (portals (:pos %))]
@@ -35,7 +35,7 @@
                       :pos
                       #(= (portals "ZZ") (:pos %)))))
 
-(defn part-2* [[maze portals]]
+(defn part-2 [[maze portals]]
   (let [min-x (apply min (map first maze)) min-y (apply min (map second maze))
         max-x (apply max (map first maze)) max-y (apply max (map second maze))
         in? (fn [[x y]] (and (< min-x x max-x) (< min-y y max-y)))]
@@ -56,12 +56,6 @@
                                       (g/adjacent (:pos state) maze)))))
                  (juxt :pos :level)
                  #(and (zero? (:level %)) (= (portals "ZZ") (:pos %)))))))
-
-(defn part-1 []
-  (->> "input/2019/20" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2019/20" slurp parse part-2*))
 
 (def examples
   (mapv
@@ -131,7 +125,7 @@
      "               A A D   M                     "]]))
 
 (deftest test-examples
-  (is (= 23 (part-1* (parse (examples 0)))))
-  (is (= 58 (part-1* (parse (examples 1)))))
-  (is (= 26 (part-2* (parse (examples 0)))))
-  (is (= 396 (part-2* (parse (examples 2))))))
+  (is (= 23 (part-1 (parse (examples 0)))))
+  (is (= 58 (part-1 (parse (examples 1)))))
+  (is (= 26 (part-2 (parse (examples 0)))))
+  (is (= 396 (part-2 (parse (examples 2))))))

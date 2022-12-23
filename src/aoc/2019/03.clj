@@ -24,26 +24,20 @@
 (defn intersections [[a b]]
   (dissoc (map-intersection + (zipmap a (range)) (zipmap b (range))) [0 0]))
 
-(defn part-1* [pair]
+(defn part-1 [pair]
   (->> pair (map wire) intersections keys (map manhattan-distance) (apply min)))
 
-(defn part-2* [pair]
+(defn part-2 [pair]
   (->> pair (map wire) intersections vals (apply min)))
 
-(defn part-1 []
-  (->> "input/2019/03" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2019/03" slurp parse part-2*))
-
 (deftest test-examples
-  (is (= 6 (part-1* (parse "R8,U5,L5,D3\nU7,R6,D4,L4"))))
-  (is (= 159 (part-1* (parse "R75,D30,R83,U83,L12,D49,R71,U7,L72
-                              U62,R66,U55,R34,D71,R55,D58,R83"))))
-  (is (= 135 (part-1* (parse "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
-                              U98,R91,D20,R16,D67,R40,U7,R15,U6,R7"))))
-  (is (= 30 (part-2* (parse "R8,U5,L5,D3\nU7,R6,D4,L4"))))
-  (is (= 610 (part-2* (parse "R75,D30,R83,U83,L12,D49,R71,U7,L72
-                              U62,R66,U55,R34,D71,R55,D58,R83"))))
-  (is (= 410 (part-2* (parse "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
-                              U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")))))
+  (is (= 6 (part-1 (parse "R8,U5,L5,D3\nU7,R6,D4,L4"))))
+  (is (= 159 (part-1 (parse "R75,D30,R83,U83,L12,D49,R71,U7,L72
+                             U62,R66,U55,R34,D71,R55,D58,R83"))))
+  (is (= 135 (part-1 (parse "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
+                             U98,R91,D20,R16,D67,R40,U7,R15,U6,R7"))))
+  (is (= 30 (part-2 (parse "R8,U5,L5,D3\nU7,R6,D4,L4"))))
+  (is (= 610 (part-2 (parse "R75,D30,R83,U83,L12,D49,R71,U7,L72
+                             U62,R66,U55,R34,D71,R55,D58,R83"))))
+  (is (= 410 (part-2 (parse "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51
+                             U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")))))

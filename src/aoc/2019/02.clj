@@ -3,15 +3,17 @@
    [aoc.2019.intcode :as i]
    [clojure.test :refer [deftest are]]))
 
-(defn gravity-assist [noun verb]
-  (first (:mem (i/run (assoc (i/load "input/2019/02") 1 noun 2 verb)))))
+(def parse i/parse)
 
-(defn part-1 []
-  (gravity-assist 12 2))
+(defn gravity-assist [mem noun verb]
+  (first (:mem (i/run (assoc mem 1 noun 2 verb)))))
 
-(defn part-2 []
+(defn part-1 [mem]
+  (gravity-assist mem 12 2))
+
+(defn part-2 [mem]
   (some (fn [[noun verb]]
-          (when (= 19690720 (gravity-assist noun verb))
+          (when (= 19690720 (gravity-assist mem noun verb))
             (+ (* 100 noun) verb)))
         (for [noun (range 100) verb (range 100)] [noun verb])))
 

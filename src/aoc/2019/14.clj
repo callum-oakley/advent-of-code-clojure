@@ -26,11 +26,14 @@
                 (update-vals (:reactants (reactions m)) #(* k %)))))
       (materials 'ORE))))
 
-(defn part-2* [reactions]
-  ;; We know from part 1 that 1 FUEL costs ~0.5M ORE, so with 1T ORE we will be
-  ;; able to make ~2M FUEL. Our cost function tells us that in fact 2M FUEL
-  ;; only costs ~0.6T ORE, and 4M FUEL costs ~1.2T ORE. So we can take these as
-  ;; bounds for a binary search.
+(defn part-1 [reactions]
+  (cost reactions 1))
+
+;; We know from part 1 that 1 FUEL costs ~0.5M ORE, so with 1T ORE we will be
+;; able to make ~2M FUEL. Our cost function tells us that in fact 2M FUEL only
+;; costs ~0.6T ORE, and 4M FUEL costs ~1.2T ORE. So we can take these as bounds
+;; for a binary search.
+(defn part-2 [reactions]
   (loop [low 2000000 high 4000000]
     (if (= 1 (- high low))
       low
@@ -39,14 +42,8 @@
           (recur mid high)
           (recur low mid))))))
 
-(defn part-1 []
-  (cost (parse (slurp "input/2019/14")) 1))
-
-(defn part-2 []
-  (->> "input/2019/14" slurp parse part-2*))
-
 (deftest test-examples
-  (are [ore reactions] (= ore (cost (parse reactions) 1))
+  (are [ore reactions] (= ore (part-1 (parse reactions)))
     31
     "10 ORE => 10 A
      1 ORE => 1 B

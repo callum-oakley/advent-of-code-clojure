@@ -66,11 +66,11 @@
       #(= keys (:keys %))
       :steps))))
 
-(defn part-1 []
-  (->> "input/2019/18" slurp parse (part-* [\@])))
+(defn part-1 [g]
+  (part-* [\@] g))
 
-(defn part-2 []
-  (->> "input/2019/18" slurp parse correct-grid (part-* [\0 \1 \2 \3])))
+(defn part-2 [g]
+  (part-* [\0 \1 \2 \3] (correct-grid g)))
 
 (def examples-1
   (map

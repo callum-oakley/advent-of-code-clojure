@@ -3,8 +3,10 @@
    [aoc.2019.intcode :as i])
   (:import clojure.lang.PersistentQueue))
 
-(defn network []
-  (let [vm (i/run (i/load "input/2019/23"))]
+(def parse i/parse)
+
+(defn network [mem]
+  (let [vm (i/run mem)]
     {:computers (mapv (fn [addr]
                         {:vm (i/>> vm addr) :inbox PersistentQueue/EMPTY})
                       (range 50))}))
@@ -31,14 +33,14 @@
                    (assoc-in [:computers i] {:vm vm :inbox inbox})
                    (route addr [x y])))))))
 
-(defn part-1 []
-  (loop [net (network) i 0]
+(defn part-1 [mem]
+  (loop [net (network mem) i 0]
     (if-let [[_ y] (:nat net)]
       y
       (recur (tick net i) (mod (inc i) 50)))))
 
-(defn part-2 []
-  (loop [net (network) i 0 seen #{}]
+(defn part-2 [mem]
+  (loop [net (network mem) i 0 seen #{}]
     (if (and (:nat net) (every? :idle? (:computers net)))
       (let [[x y] (:nat net)]
         (if (seen y)

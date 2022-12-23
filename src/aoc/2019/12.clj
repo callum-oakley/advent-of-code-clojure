@@ -26,17 +26,14 @@
        (map #(->> % (iterate step) (drop steps) first))
        transpose (map transpose) (map energy) (apply +)))
 
-(defn part-2* [moons]
+(defn part-2 [moons]
   (->> moons (map transpose) transpose
        (map #(period (iterate step %))) (reduce lcm)))
 
-(defn part-1 []
-  (->> "input/2019/12" slurp parse (part-1* 1000)))
-
-(defn part-2 []
-  (->> "input/2019/12" slurp parse part-2*))
+(defn part-1 [moons]
+  (part-1* 1000 moons))
 
 (deftest test-example
   (is (= 179 (part-1* 10 (parse "-1 0 2 2 -10 -7 4 -8 8 3 5 -1"))))
   (is (= 1940 (part-1* 100 (parse "-8 -10 0 5 5 10 2 -7 3 9 -8 -3"))))
-  (is (= 2772 (part-2* (parse "-1 0 2 2 -10 -7 4 -8 8 3 5 -1")))))
+  (is (= 2772 (part-2 (parse "-1 0 2 2 -10 -7 4 -8 8 3 5 -1")))))

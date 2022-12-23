@@ -2,20 +2,22 @@
   (:require
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (->> s (re-seq #"\d+") (map read-string)))
+
 (defn valid? [f pass]
   (let [digits (map int (str pass))]
     (and (apply <= digits)
          (some #(f 2 (count %)) (partition-by identity digits)))))
 
-(defn part-* [f]
-  (->> "input/2019/04" slurp (re-seq #"\d+") (map parse-long) (apply range)
-       (filter #(valid? f %)) count))
+(defn part-* [input f]
+  (->> input (apply range) (filter #(valid? f %)) count))
 
-(defn part-1 []
-  (part-* <=))
+(defn part-1 [input]
+  (part-* input <=))
 
-(defn part-2 []
-  (part-* =))
+(defn part-2 [input]
+  (part-* input =))
 
 (deftest test-example
   (is (valid? <= 111111))

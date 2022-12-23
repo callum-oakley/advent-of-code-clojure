@@ -3,11 +3,13 @@
    [aoc.2019.intcode :as i]
    [clojure.test :refer [deftest are]]))
 
-(defn part-1 []
-  (first (i/run-io (i/load "input/2019/09") [1])))
+(def parse i/parse)
 
-(defn part-2 []
-  (first (i/run-io (i/load "input/2019/09") [2])))
+(defn part-1 [mem]
+  (first (i/run-io mem [1])))
+
+(defn part-2 [mem]
+  (first (i/run-io mem [2])))
 
 (deftest test-examples
   (are [mem out] (= out (i/run-io mem []))

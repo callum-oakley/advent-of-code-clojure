@@ -34,7 +34,7 @@
        (map (fn [[y x]] (bit-shift-left 1 (+ (* 5 y) x))))
        (apply +)))
 
-(defn part-1* [bugs]
+(defn part-1 [bugs]
   (loop [bugs bugs seen #{}]
     (if (seen bugs)
       (biodiversity bugs)
@@ -44,12 +44,9 @@
   (->> bugs (map (fn [[y x]] [0 y x])) set (iterate #(tick adjacent-2 %))
        (drop ticks) first count))
 
-(defn part-1 []
-  (->> "input/2019/24" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2019/24" slurp parse (part-2* 200)))
+(defn part-2 [bugs]
+  (part-2* 200 bugs))
 
 (deftest test-examples
-  (is (= 2129920 (part-1* (parse "....#\n#..#.\n#..##\n..#..\n#...."))))
+  (is (= 2129920 (part-1 (parse "....#\n#..#.\n#..##\n..#..\n#...."))))
   (is (= 99 (part-2* 10 (parse "....#\n#..#.\n#..##\n..#..\n#....")))))

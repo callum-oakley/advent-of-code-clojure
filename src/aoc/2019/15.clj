@@ -5,6 +5,8 @@
    [aoc.search :as search]
    [aoc.vector :refer [+v]]))
 
+(def parse i/parse)
+
 (defn adjacent [{:keys [vm pos steps]}]
   (keep (fn [in]
           (let [[out vm] (i/io vm [in])
@@ -15,13 +17,12 @@
               [2] {:vm vm :pos pos :steps (inc steps) :done? true})))
         [1 2 3 4]))
 
-(defn part-1* []
-  (search/bfs {:vm (i/run (i/load "input/2019/15")) :pos [0 0] :steps 0}
-              adjacent :pos :done?))
+(defn part-1* [mem]
+  (search/bfs {:vm (i/run mem) :pos [0 0] :steps 0} adjacent :pos :done?))
 
-(defn part-1 []
-  (:steps (part-1*)))
+(defn part-1 [mem]
+  (:steps (part-1* mem)))
 
-(defn part-2 []
-  (->> (search/bft (assoc (part-1*) :steps 0) adjacent :pos)
+(defn part-2 [mem]
+  (->> (search/bft (assoc (part-1* mem) :steps 0) adjacent :pos)
        (map :steps) (apply max)))

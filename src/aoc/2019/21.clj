@@ -3,15 +3,17 @@
    [aoc.2019.intcode :as i]
    [clojure.string :as str]))
 
-(defmacro springscript [& body]
+(def parse i/parse)
+
+(defmacro springscript [mem & body]
   `(->> '~body
         (partition-all 3)
         (mapcat #(map int (str (str/join " " %) "\n")))
-        (i/run-io (i/load "input/2019/21"))
+        (i/run-io ~mem)
         last))
 
-(defn part-1 []
-  (springscript
+(defn part-1 [mem]
+  (springscript mem
     OR A T
     AND B T
     AND C T
@@ -20,8 +22,8 @@
     OR T J
     WALK))
 
-(defn part-2 []
-  (springscript
+(defn part-2 [mem]
+  (springscript mem
     OR A T
     AND B T
     AND C T
@@ -33,4 +35,4 @@
     RUN))
 
 (defn -main []
-  (i/run-interactive (i/load "input/2019/21")))
+  (i/run-interactive (parse (slurp "input/2019/21"))))

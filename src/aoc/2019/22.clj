@@ -38,11 +38,11 @@
 (defn eval-shuffle [m card [a b]]
   (mod (+ (* a card) b) m))
 
-(defn part-1 []
-  (->> "input/2019/22" slurp parse (compose 10007) (eval-shuffle 10007 2019)))
+(defn part-1 [shuffles]
+  (eval-shuffle 10007 2019 (compose 10007 shuffles)))
 
-(defn part-2 []
-  (->> "input/2019/22" slurp parse (compose 119315717514047)
+(defn part-2 [shuffles]
+  (->> (compose 119315717514047 shuffles)
        (pow 119315717514047 -101741582076661)
        (eval-shuffle 119315717514047 2020)))
 

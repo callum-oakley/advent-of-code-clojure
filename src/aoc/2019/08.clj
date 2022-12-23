@@ -7,11 +7,10 @@
 (defn parse [s]
   (->> s (re-seq #"\d") (map parse-long) (partition 150)))
 
-(defn part-1 []
-  (->> "input/2019/08" slurp parse (map frequencies) (apply min-key #(% 0))
-       (#(* (% 1) (% 2)))))
+(defn part-1 [layers]
+  (->> layers (map frequencies) (apply min-key #(% 0)) (#(* (% 1) (% 2)))))
 
-(defn part-2 []
-  (->> "input/2019/08" slurp parse transpose
+(defn part-2 [layers]
+  (->> layers transpose
        (map #(reduce (fn [x y] (if (= 2 x) y x)) %)) (map {0 \. 1 \#})
        (partition 25) (map #(apply str %)) (str/join "\n") ocr/parse))

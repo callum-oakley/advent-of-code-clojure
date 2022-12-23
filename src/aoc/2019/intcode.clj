@@ -1,10 +1,9 @@
-(ns aoc.2019.intcode
-  (:refer-clojure :exclude [load]))
+(ns aoc.2019.intcode)
 
-(defn load
-  "Read a file as an Intcode program"
-  [f]
-  (->> f slurp (re-seq #"-?\d+") (mapv parse-long)))
+(defn parse
+  "Parse a string as an Intcode program"
+  [s]
+  (->> s (re-seq #"-?\d+") (mapv parse-long)))
 
 (defn- run* [mem head base]
   (let [mode (vec (rest (reverse (str (mem head)))))

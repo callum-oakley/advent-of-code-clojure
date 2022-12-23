@@ -2,8 +2,10 @@
   (:require
    [aoc.2019.intcode :as i]))
 
-(defn play [& {:keys [interactive?]}]
-  (loop [[out vm] (i/io (i/run (assoc (i/load "input/2019/13") 0 2)) [] 3)
+(def parse i/parse)
+
+(defn play [mem & {:keys [interactive?]}]
+  (loop [[out vm] (i/io (i/run (assoc mem 0 2)) [] 3)
          pad nil ball nil score nil]
     (if-let [[x y t] (seq out)]
       (do
@@ -23,14 +25,14 @@
                    pad ball score)
         :halt score))))
 
-(defn part-1 []
+(defn part-1 [mem]
   (count (filter (fn [[_ _ t]] (= 2 t))
-                 (partition 3 (i/run-io (i/load "input/2019/13") [])))))
+                 (partition 3 (i/run-io mem [])))))
 
-(defn part-2 []
-  (play :interactive? false))
+(defn part-2 [mem]
+  (play mem :interactive? false))
 
 (defn -main []
   (println "\u009B?25l\u009B2J")
-  (play :interactive? true)
+  (play (parse (slurp "input/2019/13")) :interactive? true)
   (println (format "\u009B?25h\u009B%d;%dH" 28 0)))

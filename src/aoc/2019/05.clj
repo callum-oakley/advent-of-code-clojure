@@ -3,14 +3,13 @@
    [aoc.2019.intcode :as i]
    [clojure.test :refer [deftest is]]))
 
-(defn diagnostics [in]
-  (i/run-io (i/load "input/2019/05" ) [in]))
+(def parse i/parse)
 
-(defn part-1 []
-  (last (diagnostics 1)))
+(defn part-1 [mem]
+  (last (i/run-io mem [1])))
 
-(defn part-2 []
-  (last (diagnostics 5)))
+(defn part-2 [mem]
+  (last (i/run-io mem [5])))
 
 (deftest test-diagnostics
-  (is (every? zero? (butlast (diagnostics 1)))))
+  (is (every? zero? (butlast (i/run-io (parse (slurp "input/2019/05")) [1])))))
