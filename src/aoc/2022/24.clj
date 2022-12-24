@@ -1,7 +1,7 @@
 (ns aoc.2022.24
   (:require
-   [aoc.grid :as grid]
-   [aoc.vector :refer [+v manhattan-distance]]
+   [aoc.grid :as grid :refer [north east south west]]
+   [aoc.vector :refer [+v]]
    [aoc.search :as search]
    [clojure.math.numeric-tower :refer [lcm]]
    [clojure.test :refer [deftest is]]))
@@ -11,13 +11,10 @@
         [[_ h] [_ w]] (grid/box (keys g))]
     [(dec h) (dec w)
      (reduce (fn [wind [[y x] c]]
-               (case c
-                 \# wind
-                 \. wind
+               (if (#{\# \.} c)
+                 wind
                  (update wind [(dec y) (dec x)]
-                         conj (case c
-                                \^ grid/north \> grid/east
-                                \v grid/south \< grid/west))))
+                         conj (case c \^ north \> east \v south \< west))))
              {}
              g)]))
 
@@ -32,25 +29,23 @@
           wind))
 
 ;; Each blizzard has a period of h or w, so the state has a period of (lcm h w)
-(defn winds [h w wind]
-  (vec (take (lcm h w) (iterate #(tick h w %) wind))))
+(def winds
+  (memoize (fn [h w wind] (vec (take (lcm h w) (iterate #(tick h w %) wind))))))
 
 (defn part-* [h w winds mins start goal]
-  (:mins (search/a*
+  (:mins (search/bfs
           {:pos start :mins mins :leg 0}
           (fn [{:keys [pos mins]}]
             (keep (fn [[y x]]
                     (when (and (or (and (<= 0 y (dec h)) (<= 0 x (dec w)))
                                    (#{start goal} [y x]))
                                (not ((winds (mod (inc mins)
-                                                      (count winds)))
+                                                 (count winds)))
                                      [y x])))
                       {:pos [y x] :mins (inc mins)}))
                   (grid/adjacent-5 pos)))
           identity
-          #(= goal (:pos %))
-          :mins
-          #(manhattan-distance (:pos %) goal))))
+          #(= goal (:pos %)))))
 
 (defn part-1 [[h w wind]]
   (part-* h w (winds h w wind) 0 [-1 0] [h (dec w)]))
