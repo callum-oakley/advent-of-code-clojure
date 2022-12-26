@@ -61,17 +61,11 @@
          {:flowing flowing :settled settled}
          (fn [v] (count (filter #(<= min-y (first %) max-y) v))))))))
 
-(defn part-1* [clay]
+(defn part-1 [clay]
   (let [res (part-* clay)] (+ (:flowing res) (:settled res))))
 
-(defn part-2* [clay]
+(defn part-2 [clay]
   (:settled (part-* clay)))
-
-(defn part-1 []
-  (-> "input/2018/17" slurp parse part-1*))
-
-(defn part-2 []
-  (-> "input/2018/17" slurp parse part-2*))
 
 (def example
   "x=495, y=2..7
@@ -84,5 +78,5 @@
    y=13, x=498..504")
 
 (deftest test-example []
-  (is (= 57 (part-1* (parse example))))
-  (is (= 29 (part-2* (parse example)))))
+  (is (= 57 (part-1 (parse example))))
+  (is (= 29 (part-2 (parse example)))))

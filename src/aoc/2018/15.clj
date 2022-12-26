@@ -22,7 +22,7 @@
 ;; - If multiple steps would put the unit equally closer to its destination, the
 ;;   unit chooses the step which is first in reading order.
 ;; Missing either of the last two steps produces correct results for all the
-;; examples, but fails on the problem proper...
+;; examples, but fails on the puzzle proper...
 (defn first-step [cave pos target-type]
   (:first-step
    (search/dijkstra {:dist 0 :pos pos}
@@ -75,36 +75,30 @@
    cave
    (sort (keys cave))))
 
-(defn part-1* [cave]
+(defn part-1 [cave]
   (loop [cave cave r 0]
     (if (reduced? cave)
       @cave
       (recur (round r (update-vals cave #(dissoc % :gone?))) (inc r)))))
 
-(defn part-2* [cave]
+(defn part-2 [cave]
   (->> (iterate inc 4)
        (map (fn [ap]
-              (part-1* (update-vals
-                        cave
-                        #(if (= :elf (:type %)) (assoc % :ap ap) %)))))
+              (part-1 (update-vals
+                       cave
+                       #(if (= :elf (:type %)) (assoc % :ap ap) %)))))
        (remove #{:unacceptable})
        first))
 
-(defn part-1 []
-  (->> "input/2018/15" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2018/15" slurp parse part-2*))
-
 (deftest test-examples
-  (is (= 27730 (part-1* (parse ".G...\n...EG\n.#.#G\n..G#E\n....."))))
-  (is (= 36334 (part-1* (parse "G..#E\nE#E.E\nG.##.\n...#E\n...E."))))
-  (is (= 39514 (part-1* (parse "E..EG\n.#G.E\nE.##E\nG..#.\n..E#."))))
-  (is (= 27755 (part-1* (parse "E.G#.\n.#G..\nG.#.G\nG..#.\n...E."))))
-  (is (= 28944 (part-1* (parse ".E...\n.#..G\n.###.\nE#G#G\n...#G"))))
-  (is (= 18740 (part-1* (parse "G......\n.E.#...\n..##..G\n...##..\n...#...\n.G...G.\n.....G."))))
-  (is (= 4988 (part-2* (parse ".G...\n...EG\n.#.#G\n..G#E\n....."))))
-  (is (= 31284 (part-2* (parse "E..EG\n.#G.E\nE.##E\nG..#.\n..E#."))))
-  (is (= 3478 (part-2* (parse "E.G#.\n.#G..\nG.#.G\nG..#.\n...E."))))
-  (is (= 6474 (part-2* (parse ".E...\n.#..G\n.###.\nE#G#G\n...#G"))))
-  (is (= 1140 (part-2* (parse "G......\n.E.#...\n..##..G\n...##..\n...#...\n.G...G.\n.....G.")))))
+  (is (= 27730 (part-1 (parse ".G...\n...EG\n.#.#G\n..G#E\n....."))))
+  (is (= 36334 (part-1 (parse "G..#E\nE#E.E\nG.##.\n...#E\n...E."))))
+  (is (= 39514 (part-1 (parse "E..EG\n.#G.E\nE.##E\nG..#.\n..E#."))))
+  (is (= 27755 (part-1 (parse "E.G#.\n.#G..\nG.#.G\nG..#.\n...E."))))
+  (is (= 28944 (part-1 (parse ".E...\n.#..G\n.###.\nE#G#G\n...#G"))))
+  (is (= 18740 (part-1 (parse "G......\n.E.#...\n..##..G\n...##..\n...#...\n.G...G.\n.....G."))))
+  (is (= 4988 (part-2 (parse ".G...\n...EG\n.#.#G\n..G#E\n....."))))
+  (is (= 31284 (part-2 (parse "E..EG\n.#G.E\nE.##E\nG..#.\n..E#."))))
+  (is (= 3478 (part-2 (parse "E.G#.\n.#G..\nG.#.G\nG..#.\n...E."))))
+  (is (= 6474 (part-2 (parse ".E...\n.#..G\n.###.\nE#G#G\n...#G"))))
+  (is (= 1140 (part-2 (parse "G......\n.E.#...\n..##..G\n...##..\n...#...\n.G...G.\n.....G.")))))

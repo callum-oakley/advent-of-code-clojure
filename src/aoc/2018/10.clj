@@ -12,12 +12,12 @@
   (->> points (iterate #(map (fn [[p v]] [(+v p v) v]) %)) (drop seconds) first
        (map first) set ocr/draw ocr/parse))
 
-(defn part-2 []
+(defn part-2 [_]
   ;; by inspection
   10009)
 
-(defn part-1 []
-  (->> "input/2018/10" slurp parse (part-* (part-2))))
+(defn part-1 [points]
+  (part-* (part-2 nil) points))
 
 (deftest test-example
   (let [example

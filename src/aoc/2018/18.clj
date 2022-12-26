@@ -36,12 +36,11 @@
       [(seen state) mins]
       (recur (inc mins) (tick state) (assoc seen state mins)))))
 
-(defn part-1 []
-  (->> "input/2018/18" slurp parse (part-* 10)))
+(defn part-1 [state]
+  (part-* 10 state))
 
-(defn part-2 []
-  (let [state (parse (slurp "input/2018/18"))
-        [start end] (find-cycle state)]
+(defn part-2 [state]
+  (let [[start end] (find-cycle state)]
     (part-* (+ start (mod (- 1000000000 start) (- end start))) state)))
 
 (def example
@@ -50,4 +49,4 @@
                   "|.||||..|." "...#.|..|."]))
 
 (deftest test-example
-  (is (= 1147 (part-* 10 (parse example)))))
+  (is (= 1147 (part-1 (parse example)))))

@@ -2,7 +2,10 @@
   (:require
    [clojure.test :refer [deftest is]]))
 
-(defn play [players max-marble]
+(defn parse [s]
+  (map read-string (re-seq #"\d+" s)))
+
+(defn part-1 [[players max-marble]]
   (loop [left (transient (vec (repeat (inc max-marble) 0)))
          right (transient (vec (repeat (inc max-marble) 0)))
          current 0
@@ -28,18 +31,13 @@
                (inc next)
                scores)))))
 
-(defn part-1 []
-  (->> "input/2018/09" slurp (re-seq #"\d+") (map read-string) (apply play)))
-
-(defn part-2 []
-  (let [[players max-marble]
-        (->> "input/2018/09" slurp (re-seq #"\d+") (map read-string))]
-    (play players (* 100 max-marble))))
+(defn part-2 [[players max-marble]]
+  (part-1 [players (* 100 max-marble)]))
 
 (deftest test-examples
-  (is (= 32 (play 9 25)))
-  (is (= 8317 (play 10 1618)))
-  (is (= 146373 (play 13 7999)))
-  (is (= 2764 (play 17 1104)))
-  (is (= 54718 (play 21 6111)))
-  (is (= 37305 (play 30 5807))))
+  (is (= 32 (part-1 [9 25])))
+  (is (= 8317 (part-1 [10 1618])))
+  (is (= 146373 (part-1 [13 7999])))
+  (is (= 2764 (part-1 [17 1104])))
+  (is (= 54718 (part-1 [21 6111])))
+  (is (= 37305 (part-1 [30 5807]))))

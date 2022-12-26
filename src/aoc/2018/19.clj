@@ -13,11 +13,11 @@
       (recur (update (tick reg (instructions (reg ip))) ip inc))
       reg)))
 
-(defn part-1 []
-  (->> "input/2018/19" slurp parse (run [0 0 0 0 0 0]) first))
+(defn part-1 [[ip instructions]]
+  (first (run [0 0 0 0 0 0] [ip instructions])))
 
 ;; see notes at the bottom of this file
-(defn part-2 []
+(defn part-2 [_]
   (let [r2 10551298]
     (apply + (filter #(zero? (mod r2 %)) (range 1 (inc r2))))))
 

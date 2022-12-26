@@ -33,20 +33,17 @@
               #(map (fn [pos] {:pos pos :dist (inc (:dist %))}) (g (:pos %)))
               :pos))
 
-(defn part-1* [g]
+(defn part-1 [g]
   (:dist (last (bft g))))
 
-(defn part-1 []
-  (->> "input/2018/20" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2018/20" slurp parse bft (filter #(<= 1000 (:dist %))) count))
+(defn part-2 [g]
+  (->> g bft (filter #(<= 1000 (:dist %))) count))
 
 (deftest test-examples
-  (->> "^WNE$" parse part-1* (= 3) is)
-  (->> "^ENWWW(NEEE|SSE(EE|N))$" parse part-1* (= 10) is)
-  (->> "^ENNWSWW(NEWS|)SSSEEN(WNSE|)EE(SWEN|)NNN$" parse part-1* (= 18) is)
+  (->> "^WNE$" parse part-1 (= 3) is)
+  (->> "^ENWWW(NEEE|SSE(EE|N))$" parse part-1 (= 10) is)
+  (->> "^ENNWSWW(NEWS|)SSSEEN(WNSE|)EE(SWEN|)NNN$" parse part-1 (= 18) is)
   (->> "^ESSWWN(E|NNENN(EESS(WNSE|)SSS|WWWSSSSE(SW|NNNE)))$"
-       parse part-1* (= 23) is)
+       parse part-1 (= 23) is)
   (->> "^WSSEESWWWNW(S|NENNEEEENN(ESSSSW(NWSW|SSEN)|WSWWN(E|WWS(E|SS))))$"
-       parse part-1* (= 31) is))
+       parse part-1 (= 31) is))

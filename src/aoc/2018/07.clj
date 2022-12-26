@@ -8,10 +8,10 @@
           [#{} {}]
           (partition 2 (map first (re-seq #"\b\w\b" instructions)))))
 
-(defn part-1* [[steps deps]]
+(defn part-1 [[steps deps]]
   (when-let [step (first (sort (filter #(empty? (deps %)) steps)))]
-    (str step (part-1* [(disj steps step)
-                        (update-vals deps #(disj % step))]))))
+    (str step (part-1 [(disj steps step)
+                       (update-vals deps #(disj % step))]))))
 
 (defn part-2* [workers base [steps deps]]
   (loop [steps steps deps deps t 0 tasks nil]
@@ -31,11 +31,8 @@
         :else
         t))))
 
-(defn part-1 []
-  (->> "input/2018/07" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2018/07" slurp parse (part-2* 5 60)))
+(defn part-2 [input]
+  (part-2* 5 60 input))
 
 (deftest test-example
   (let [instructions "Step C must be finished before step A can begin.
@@ -45,5 +42,5 @@
                       Step B must be finished before step E can begin.
                       Step D must be finished before step E can begin.
                       Step F must be finished before step E can begin."]
-    (is (= "CABDFE" (part-1* (parse instructions))))
+    (is (= "CABDFE" (part-1 (parse instructions))))
     (is (= 15 (part-2* 2 0 (parse instructions))))))

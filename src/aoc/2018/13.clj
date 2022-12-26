@@ -40,23 +40,17 @@
           [carts []]
           (sort (keys carts))))
 
-(defn part-1* [[tracks carts]]
+(defn part-1 [[tracks carts]]
   (loop [[carts crashes] (tick tracks carts)]
     (if (first crashes)
       (str/join "," (reverse (first crashes)))
       (recur (tick tracks carts)))))
 
-(defn part-2* [[tracks carts]]
+(defn part-2 [[tracks carts]]
   (loop [[carts] (tick tracks carts)]
     (if (= 1 (count carts))
       (str/join "," (reverse (first (keys carts))))
       (recur (tick tracks carts)))))
-
-(defn part-1 []
-  (->> "input/2018/13" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2018/13" slurp parse part-2*))
 
 (def example-1
   (str/join "\n" ["/->-\\        " "|   |  /----\\" "| /-+--+-\\  |"
@@ -67,6 +61,6 @@
                   "  |   ^" "  \\<->/"]))
 
 (deftest test-examples
-  (is (= "3,0" (part-1* (parse "->---<-"))))
-  (is (= "7,3" (part-1* (parse example-1))))
-  (is (= "6,4" (part-2* (parse example-2)))))
+  (is (= "3,0" (part-1 (parse "->---<-"))))
+  (is (= "7,3" (part-1 (parse example-1))))
+  (is (= "6,4" (part-2 (parse example-2)))))

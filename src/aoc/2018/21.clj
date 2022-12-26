@@ -1,22 +1,23 @@
 (ns aoc.2018.21
   (:require
-   [aoc.2018.16 :refer [tick]]
-   [aoc.2018.19 :refer [parse]]
+   [aoc.2018.16 :as d16]
+   [aoc.2018.19 :as d19]
    [clojure.test :refer [deftest is]]))
+
+(def parse d19/parse)
 
 ;; The program halts after the test on line 28 if r0 is equal to r5. r0 doesn't
 ;; otherwise feature in the calculation, so by running the program and noting r5
 ;; each time we reach line 28, we produce a sequence of valid settings for r0 to
 ;; cause the program to halt.
-(defn valid []
-  (let [[ip instructions] (parse (slurp "input/2018/21"))]
-    ((fn go [reg]
-       (lazy-seq
-        (let [reg* (update (tick reg (instructions (reg ip))) ip inc)]
-          (if (= 28 (reg ip))
-            (cons (reg 5) (go reg*))
-            (go reg*)))))
-     [0 0 0 0 0 0])))
+(defn valid [[ip instructions]]
+  ((fn go [reg]
+     (lazy-seq
+      (let [reg* (update (d16/tick reg (instructions (reg ip))) ip inc)]
+        (if (= 28 (reg ip))
+          (cons (reg 5) (go reg*))
+          (go reg*)))))
+   [0 0 0 0 0 0]))
 
 ;; Part 2 requires us to find the last element of the above sequence before a
 ;; repeat, and this turns out to be fairly slow. Reimplementing the process in
@@ -40,10 +41,10 @@
                 (recur (inc r4)))))))))            ; 24-25
    65536 7571367))
 
-(defn part-1 []
-  (first (valid*)))
+(defn part-1 [[ip instructions]]
+  (first (valid [ip instructions])))
 
-(defn part-2 []
+(defn part-2 [_]
   (reduce (fn [[seen values] value]
             (if (seen value)
               (reduced (peek values))
@@ -52,7 +53,7 @@
           (valid*)))
 
 (deftest test-valid*
-  (is (= (take 10 (valid)) (take 10 (valid*)))))
+  (is (= (take 10 (valid (parse (slurp "input/2018/21")))) (take 10 (valid*)))))
 
 ; #ip 1
 ; 00: seti 123 0 5

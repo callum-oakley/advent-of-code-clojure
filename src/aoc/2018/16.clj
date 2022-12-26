@@ -51,14 +51,12 @@
           (zipmap (range 16) (repeat ops))
           samples))
 
-(defn part-1 []
-  (->> "input/2018/16" slurp parse first
-       (filter #(<= 3 (count (valid-ops %)))) count))
+(defn part-1 [[samples _]]
+  (count (filter #(<= 3 (count (valid-ops %))) samples)))
 
-(defn part-2 []
+(defn part-2 [[samples instructions]]
   (first
-   (let [[samples instructions] (parse (slurp "input/2018/16"))
-         code->op (eliminate (code->ops samples))]
+   (let [code->op (eliminate (code->ops samples))]
      (reduce (fn [reg [code a b c]] (tick reg [(code->op code) a b c]))
              [0 0 0 0]
              instructions))))

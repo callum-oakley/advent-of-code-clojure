@@ -3,6 +3,9 @@
    [aoc.vector :refer [manhattan-distance]]
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (->> s (re-seq #"\d+") (map read-string) (partition 2)))
+
 ;; Like min-key, but returns nil if the minimum isn't unique.
 (defn unique-min-key [f vs]
   (loop [min-k (f (first vs)) min-v (first vs) unique? true vs (rest vs)]
@@ -14,7 +17,7 @@
           :else (recur min-k min-v unique? (rest vs))))
       (when unique? min-v))))
 
-(defn part-1* [points]
+(defn part-1 [points]
   (let [min-x (apply min (map first points))
         max-x (apply max (map first points))
         min-y (apply min (map second points))
@@ -52,15 +55,10 @@
       ;; The area could be bigger than this, but it isn't in this case.
       (for [x (range (inc min-x) max-x) y (range (inc min-y) max-y)] [x y])))))
 
-(defn part-1 []
-  (->> "input/2018/06" slurp (re-seq #"\d+") (map read-string) (partition 2)
-       part-1*))
-
-(defn part-2 []
-  (->> "input/2018/06" slurp (re-seq #"\d+") (map read-string) (partition 2)
-       (part-2* 10000)))
+(defn part-2 [points]
+  (part-2* 10000 points))
 
 (deftest test-example
   (let [points [[1 1] [1 6] [8 3] [3 4] [5 5] [8 9]]]
-    (is (= 17 (part-1* points)))
+    (is (= 17 (part-1 points)))
     (is (= 16 (part-2* 32 points)))))
