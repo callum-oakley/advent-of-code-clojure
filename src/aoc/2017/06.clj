@@ -2,6 +2,9 @@
   (:require
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (mapv read-string (re-seq #"\d+" s)))
+
 (defn target-bank [banks]
   (let [max-bank (apply max banks)]
     (first (keep-indexed (fn [i blocks] (when (= max-bank blocks) i)) banks))))
@@ -20,13 +23,11 @@
     [step (- step seen-at-step)]
     (recur (inc step) (assoc seen banks step) (redistribute banks))))
 
-(defn part-1 []
-  (->> "input/2017/06" slurp (re-seq #"\d+") (mapv read-string)
-       (part-* 0 {}) first))
+(defn part-1 [banks]
+  (first (part-* 0 {} banks)))
 
-(defn part-2 []
-  (->> "input/2017/06" slurp (re-seq #"\d+") (mapv read-string)
-       (part-* 0 {}) second))
+(defn part-2 [banks]
+  (second (part-* 0 {} banks)))
 
 (deftest test-examples
   (is (= [[0 2 7 0] [2 4 1 2] [3 1 2 3] [0 2 3 4] [1 3 4 1] [2 4 1 2]]

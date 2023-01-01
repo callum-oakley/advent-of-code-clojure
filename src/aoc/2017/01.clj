@@ -3,18 +3,20 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (mapv #(- (int %) (int \0)) (str/trim s)))
+
 (defn part-* [offset ds]
   (->> (range (count ds))
        (keep #(when (= (ds %) (ds (mod (+ offset %) (count ds))))
                 (ds %)))
        (apply +)))
 
-(defn part-1 []
-  (->> "input/2017/01" slurp str/trim (mapv #(- (int %) (int \0))) (part-* 1)))
+(defn part-1 [ds]
+  (part-* 1 ds))
 
-(defn part-2 []
-  (let [ds (->> "input/2017/01" slurp str/trim (mapv #(- (int %) (int \0))))]
-    (part-* (/ (count ds) 2) ds)))
+(defn part-2 [ds]
+  (part-* (/ (count ds) 2) ds))
 
 (deftest test-part-*
   (is (= 3 (part-* 1 [1 1 2 2])))

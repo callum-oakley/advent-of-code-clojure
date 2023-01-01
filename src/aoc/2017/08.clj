@@ -14,11 +14,11 @@
               {}
               instructions))
 
-(defn part-1 []
-  (->> "input/2017/08" slurp parse run last vals (apply max)))
+(defn part-1 [instructions]
+  (->> instructions run last vals (apply max)))
 
-(defn part-2 []
-  (->> "input/2017/08" slurp parse run (mapcat vals) (apply max)))
+(defn part-2 [instructions]
+  (->> instructions run (mapcat vals) (apply max)))
 
 (deftest test-example
   (let [instructions (parse "b inc 5 if a > 1

@@ -19,11 +19,11 @@
 (defn prime? [n]
   (every? (fn [d] (pos? (mod n d))) (range 2 (inc (math/sqrt n)))))
 
-(defn part-1 []
-  (run (->> "input/2017/23" slurp parse) 0 {} 0))
+(defn part-1 [mem]
+  (run mem 0 {} 0))
 
 ;; By following the code and checking with some print statements: the program
 ;; is counting up in 17s from 105700 to 122700 (inclusive), and incrementing h
 ;; each time it finds a composite number.
-(defn part-2 []
+(defn part-2 [_]
   (->> (range 105700 122701 17) (remove prime?) count))

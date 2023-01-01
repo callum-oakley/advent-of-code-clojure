@@ -11,26 +11,20 @@
           [{} {}]
           (str/split-lines s)))
 
-(defn root [children]
+(defn part-1 [[_ children]]
   (->> children keys (remove (set (apply concat (vals children)))) first))
 
-(defn part-2* [weight children]
+(defn part-2 [[weight children]]
   (let [weight* (fn weight* [disc]
                   (apply + (weight disc) (map weight* (children disc))))
         balanced? (fn [disc] (apply = (map weight* (children disc))))]
-    (loop [disc (root children)]
+    (loop [disc (part-1 [weight children])]
       (if-let [unbalanced (first (remove balanced? (children disc)))]
         (recur unbalanced)
         (let [bad (->> disc children (group-by weight*) vals
                        (filter #(= 1 (count %))) first first)
               good (->> disc children (remove #{bad}) first)]
           (+ (weight bad) (- (weight* good) (weight* bad))))))))
-
-(defn part-1 []
-  (->> "input/2017/07" slurp parse second root))
-
-(defn part-2 []
-  (->> "input/2017/07" slurp parse (apply part-2*)))
 
 (deftest test-examples
   (let [[weight children] (parse "pbga (66)
@@ -46,5 +40,5 @@
                                   ugml (68) -> gyxo, ebii, jptl
                                   gyxo (61)
                                   cntj (57)")]
-    (is (= "tknk" (root children)))
-    (is (= 60 (part-2* weight children)))))
+    (is (= "tknk" (part-1 [weight children])))
+    (is (= 60 (part-2 [weight children])))))

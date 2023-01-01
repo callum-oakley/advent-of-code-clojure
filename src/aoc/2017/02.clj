@@ -7,10 +7,10 @@
 (defn parse [s]
   (->> s str/split-lines (map #(map read-string (re-seq #"\d+" %)))))
 
-(defn part-1* [sheet]
+(defn part-1 [sheet]
   (apply + (map #(- (apply max %) (apply min %)) sheet)))
 
-(defn part-2* [sheet]
+(defn part-2 [sheet]
   (->> sheet
        (map #(some (fn [[a b]]
                      (cond
@@ -19,12 +19,6 @@
                    (comb/combinations % 2)))
        (apply +)))
 
-(defn part-1 []
-  (->> "input/2017/02" slurp parse part-1*))
-
-(defn part-2 []
-  (->> "input/2017/02" slurp parse part-2*))
-
 (deftest test-examples
-  (is (= 18 (part-1* [[5 1 9 5] [7 5 3] [2 4 6 8]])))
-  (is (= 9 (part-2* [[5 9 2 8] [9 4 7 3] [3 8 6 5]]))))
+  (is (= 18 (part-1 [[5 1 9 5] [7 5 3] [2 4 6 8]])))
+  (is (= 9 (part-2 [[5 9 2 8] [9 4 7 3] [3 8 6 5]]))))

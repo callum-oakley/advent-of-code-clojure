@@ -20,12 +20,12 @@
   (->> (concat (.getBytes s) [17 31 73 47 23]) (repeat 64) (apply concat)
        (sparse-hash 256) (partition 16) (map #(apply bit-xor %))))
 
-(defn part-1 []
-  (->> "input/2017/10" slurp (re-seq #"\d+") (map read-string) (sparse-hash 256)
+(defn part-1 [s]
+  (->> s (re-seq #"\d+") (map read-string) (sparse-hash 256)
        (take 2) (apply *)))
 
-(defn part-2 []
-  (->> "input/2017/10" slurp str/trim knot-hash hash/hex))
+(defn part-2 [s]
+  (->> s str/trim knot-hash hash/hex))
 
 (deftest test-examples
   (is (= [3 4 2 1 0] (sparse-hash 5 [3 4 1 5])))

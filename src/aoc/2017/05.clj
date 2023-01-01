@@ -3,6 +3,9 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (mapv read-string (str/split-lines s)))
+
 (defn part-* [p jumps]
   (loop [steps 0 head 0 jumps jumps]
     (if (contains? jumps head)
@@ -13,11 +16,11 @@
                                   2 #(if (< % 3) (inc %) (dec %)))))
       steps)))
 
-(defn part-1 []
-  (->> "input/2017/05" slurp str/split-lines (mapv read-string) (part-* 1)))
+(defn part-1 [jumps]
+  (part-* 1 jumps))
 
-(defn part-2 []
-  (->> "input/2017/05" slurp str/split-lines (mapv read-string) (part-* 2)))
+(defn part-2 [jumps]
+  (part-* 2 jumps))
 
 (deftest test-examples
   (is (= 5 (part-* 1 [0 3 0 1 -3])))

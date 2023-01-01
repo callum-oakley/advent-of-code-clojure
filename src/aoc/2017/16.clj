@@ -20,8 +20,8 @@
           s
           moves))
 
-(defn part-1 []
-  (part-1* "abcdefghijklmnop" (parse (slurp "input/2017/16"))))
+(defn part-1 [moves]
+  (part-1* "abcdefghijklmnop" moves))
 
 (defn repeating-cycle [f initial]
   (loop [x initial
@@ -31,9 +31,8 @@
         cycle
         (recur x (conj cycle x))))))
 
-(defn part-2 []
-  (let [moves (parse (slurp "input/2017/16"))
-        cycle (repeating-cycle #(part-1* % moves) "abcdefghijklmnop")]
+(defn part-2 [moves]
+  (let [cycle (repeating-cycle #(part-1* % moves) "abcdefghijklmnop")]
     (cycle (mod 1000000000 (count cycle)))))
 
 (deftest test-example

@@ -13,11 +13,11 @@
 (defn dist [[q r]]
   (/ (+ (abs q) (abs r) (abs (+ q r))) 2))
 
-(defn part-1 []
-  (->> "input/2017/11" slurp parse (reduce +v) dist))
+(defn part-1 [dirs]
+  (->> dirs (reduce +v) dist))
 
-(defn part-2 []
-  (->> "input/2017/11" slurp parse (reductions +v) (map dist) (apply max)))
+(defn part-2 [dirs]
+  (->> dirs (reductions +v) (map dist) (apply max)))
 
 (deftest test-examples
   (is (= 3 (->> "ne,ne,ne" parse (reduce +v) dist)))

@@ -2,7 +2,7 @@
   (:require
    [clojure.test :refer [deftest is]]))
 
-(defn part-* [s]
+(defn parse [s]
   (reduce (fn [state c]
             (case (:mode state)
               :normal (case c
@@ -20,25 +20,25 @@
           {:mode :normal :score 0 :garbage 0 :depth 0}
           s))
 
-(defn part-1 []
-  (->> "input/2017/09" slurp part-* :score))
+(defn part-1 [data]
+  (:score data))
 
-(defn part-2 []
-  (->> "input/2017/09" slurp part-* :garbage))
+(defn part-2 [data]
+  (:garbage data))
 
 (deftest test-examples
-  (is (= 1 (:score (part-* "{}"))))
-  (is (= 6 (:score (part-* "{{{}}}"))))
-  (is (= 5 (:score (part-* "{{},{}}"))))
-  (is (= 16 (:score (part-* "{{{},{},{{}}}}"))))
-  (is (= 1 (:score (part-* "{<a>,<a>,<a>,<a>}"))))
-  (is (= 9 (:score (part-* "{{<ab>},{<ab>},{<ab>},{<ab>}}"))))
-  (is (= 9 (:score (part-* "{{<!!>},{<!!>},{<!!>},{<!!>}}"))))
-  (is (= 3 (:score (part-* "{{<a!>},{<a!>},{<a!>},{<ab>}}"))))
-  (is (= 0 (:garbage (part-* "<>"))))
-  (is (= 17 (:garbage (part-* "<random characters>"))))
-  (is (= 3 (:garbage (part-* "<<<<>"))))
-  (is (= 2 (:garbage (part-* "<{!>}>"))))
-  (is (= 0 (:garbage (part-* "<!!>"))))
-  (is (= 0 (:garbage (part-* "<!!!>>"))))
-  (is (= 10 (:garbage (part-* "<{o\"i!a,<{i<a>")))))
+  (is (= 1 (:score (parse "{}"))))
+  (is (= 6 (:score (parse "{{{}}}"))))
+  (is (= 5 (:score (parse "{{},{}}"))))
+  (is (= 16 (:score (parse "{{{},{},{{}}}}"))))
+  (is (= 1 (:score (parse "{<a>,<a>,<a>,<a>}"))))
+  (is (= 9 (:score (parse "{{<ab>},{<ab>},{<ab>},{<ab>}}"))))
+  (is (= 9 (:score (parse "{{<!!>},{<!!>},{<!!>},{<!!>}}"))))
+  (is (= 3 (:score (parse "{{<a!>},{<a!>},{<a!>},{<ab>}}"))))
+  (is (= 0 (:garbage (parse "<>"))))
+  (is (= 17 (:garbage (parse "<random characters>"))))
+  (is (= 3 (:garbage (parse "<<<<>"))))
+  (is (= 2 (:garbage (parse "<{!>}>"))))
+  (is (= 0 (:garbage (parse "<!!>"))))
+  (is (= 0 (:garbage (parse "<!!!>>"))))
+  (is (= 10 (:garbage (parse "<{o\"i!a,<{i<a>")))))

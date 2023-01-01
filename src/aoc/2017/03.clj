@@ -3,6 +3,8 @@
    [aoc.vector :refer [+v *v manhattan-distance]]
    [clojure.test :refer [deftest is]]))
 
+(def parse read-string)
+
 (def rotate-clockwise
   {[0 1] [-1 0] [-1 0] [0 -1] [0 -1] [1 0] [1 0] [0 1]})
 
@@ -22,7 +24,7 @@
               (rotate-clockwise dir))))))
     1 [1 -1] [0 1])))
 
-(defn part-1* [n]
+(defn part-1 [n]
   (manhattan-distance (nth (spiral) (dec n))))
 
 (defn part-2* []
@@ -37,17 +39,14 @@
                    [1 {[0 0] 1}]
                    (rest (spiral)))))
 
-(defn part-1 []
-  (part-1* (read-string (slurp "input/2017/03"))))
-
-(defn part-2 []
-  (first (filter #(> % (read-string (slurp "input/2017/03"))) (part-2*))))
+(defn part-2 [n]
+  (first (filter #(> % n) (part-2*))))
 
 (deftest test-examples
-  (is (= 0 (part-1* 1)))
-  (is (= 3 (part-1* 12)))
-  (is (= 2 (part-1* 23)))
-  (is (= 31 (part-1* 1024)))
+  (is (= 0 (part-1 1)))
+  (is (= 3 (part-1 12)))
+  (is (= 2 (part-1 23)))
+  (is (= 31 (part-1 1024)))
   (is (= [1 1 2 4 5 10 11 23 25 26 54 57 59 122 133
           142 147 304 330 351 362 747 806]
          (take 23 (part-2*)))))

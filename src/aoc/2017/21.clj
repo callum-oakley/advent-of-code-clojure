@@ -53,13 +53,11 @@
                   reassemble))
            (parse-pattern ".#./..#/###")))
 
-(defn part-1 []
-  (->> "input/2017/21" slurp parse part-* (drop 5) first
-       flatten (filter #{\#}) count))
+(defn part-1 [rules]
+  (->> rules part-* (drop 5) first flatten (filter #{\#}) count))
 
-(defn part-2 []
-  (->> "input/2017/21" slurp parse part-* (drop 18) first
-       flatten (filter #{\#}) count))
+(defn part-2 [rules]
+  (->> rules part-* (drop 18) first flatten (filter #{\#}) count))
 
 (deftest test-example
   (is (= (map parse-pattern [".#./..#/###"

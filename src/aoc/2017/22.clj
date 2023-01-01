@@ -35,11 +35,11 @@
 (def transitions-2
   {:clean :weakened :weakened :infected :infected :flagged :flagged :clean})
 
-(defn part-1 []
-  (->> "input/2017/22" slurp parse (part-* 10000 transitions-1)))
+(defn part-1 [nodes]
+  (part-* 10000 transitions-1 nodes))
 
-(defn part-2 []
-  (->> "input/2017/22" slurp parse (part-* 10000000 transitions-2)))
+(defn part-2 [nodes]
+  (part-* 10000000 transitions-2 nodes))
 
 (deftest test-examples
   (is (= 5 (part-* 7 transitions-1 (parse "..#\n#..\n..."))))

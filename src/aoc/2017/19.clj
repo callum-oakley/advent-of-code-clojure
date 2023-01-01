@@ -5,6 +5,9 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (vec (str/split-lines s)))
+
 (defn follow-route [diagram]
   (loop [pos [0 (str/index-of (first diagram) \|)]
          dir grid/south
@@ -17,12 +20,11 @@
       (recur pos dir (conj route (get-in diagram pos)))
       route)))
 
-(defn part-1 []
-  (->> "input/2017/19" slurp str/split-lines vec follow-route
-       (remove #{\| \- \+}) (apply str)))
+(defn part-1 [diagram]
+  (->> diagram follow-route (remove #{\| \- \+}) (apply str)))
 
-(defn part-2 []
-  (->> "input/2017/19" slurp str/split-lines vec follow-route count))
+(defn part-2 [diagram]
+  (->> diagram follow-route count))
 
 (deftest test-example
   (let [example ["     |          "

@@ -11,11 +11,11 @@
   (let [words (map sort (str/split passphrase #" "))]
     (= (count words) (count (set words)))))
 
-(defn part-1 []
-  (->> "input/2017/04" slurp str/split-lines (filter valid-1?) count))
+(defn part-1 [s]
+  (->> s str/split-lines (filter valid-1?) count))
 
-(defn part-2 []
-  (->> "input/2017/04" slurp str/split-lines (filter valid-2?) count))
+(defn part-2 [s]
+  (->> s str/split-lines (filter valid-2?) count))
 
 (deftest test-examples?
   (is (valid-1? "aa bb cc dd ee"))

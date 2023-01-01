@@ -7,6 +7,8 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
+(def parse str/trim)
+
 (defn disk [seed]
   (->> (range 128)
        (mapcat (fn [y]
@@ -14,7 +16,10 @@
                       (keep-indexed (fn [x b] (when b [x y]))))))
        set))
 
-(defn part-2* [seed]
+(defn part-1 [seed]
+  (count (disk seed)))
+
+(defn part-2 [seed]
   (let [disk (disk seed)
         adjacent (fn [a]
                    (->> [[0 1] [0 -1] [1 0] [-1 0]]
@@ -26,12 +31,6 @@
                (apply disj unexplored (search/dft a adjacent identity)))
         regions))))
 
-(defn part-1 []
-  (->> "input/2017/14" slurp str/trim disk count))
-
-(defn part-2 []
-  (->> "input/2017/14" slurp str/trim part-2*))
-
 (deftest test-example
-  (is (= 8108 (count (disk "flqrgnkx"))))
-  (is (= 1242 (part-2* "flqrgnkx"))))
+  (is (= 8108 (part-1 "flqrgnkx")))
+  (is (= 1242 (part-2 "flqrgnkx"))))
