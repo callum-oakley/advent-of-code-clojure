@@ -1,7 +1,6 @@
 (ns aoc.2017.10
   (:require
    [aoc.hash :as hash]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn rev [n knot i length]
@@ -25,7 +24,7 @@
        (take 2) (apply *)))
 
 (defn part-2 [s]
-  (->> s str/trim knot-hash hash/hex))
+  (->> s knot-hash hash/hex))
 
 (deftest test-examples
   (is (= [3 4 2 1 0] (sparse-hash 5 [3 4 1 5])))

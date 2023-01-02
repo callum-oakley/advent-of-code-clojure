@@ -4,7 +4,8 @@
    [clojure.java.io :as io]
    [clojure.test :as test]
    [clojure.tools.namespace.find :as find]
-   [clojure.tools.namespace.repl :as repl]))
+   [clojure.tools.namespace.repl :as repl]
+   [clojure.string :as str]))
 
 (def default-year 2022)
 
@@ -19,7 +20,7 @@
              (client/get
               (format "https://adventofcode.com/%d/day/%d/input" year day)
               {:headers {:cookie (str "session=" (slurp ".session"))}}))))
-    (slurp path)))
+    (str/trim-newline (slurp path))))
 
 (defn get-answer* [year day part]
   (nth (map

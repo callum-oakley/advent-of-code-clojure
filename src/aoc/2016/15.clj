@@ -9,7 +9,7 @@
           [disc positions start])
        (str/split-lines s)))
 
-(defn part-* [discs]
+(defn part-1 [discs]
   (number-theory/chinese-remainder-theorem
    (map (fn [[disc positions start]]
           ;; Want time so that start + disc + time = 0 (mod positions)
@@ -17,11 +17,8 @@
           [(mod (- 0 disc start) positions) positions])
         discs)))
 
-(defn part-1 []
-  (part-* (parse (slurp "input/2016/15"))))
-
-(defn part-2 []
-  (part-* (conj (parse (slurp "input/2016/15")) [7 11 0])))
+(defn part-2 [discs]
+  (part-1 (conj discs [7 11 0])))
 
 (deftest test-part-*
-  (is (= 5 (part-* [[1 5 4] [2 2 1]]))))
+  (is (= 5 (part-1 [[1 5 4] [2 2 1]]))))

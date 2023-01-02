@@ -1,10 +1,9 @@
 (ns aoc.2018.05
   (:require
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (map int (str/trim s)))
+  (map int s))
 
 (defn react [polymer]
   (reduce (fn [acc x]

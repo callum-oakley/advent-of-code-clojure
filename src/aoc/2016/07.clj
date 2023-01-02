@@ -4,8 +4,11 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(defn parse [s]
+(defn parse-ip [s]
   (->> s (re-seq #"([a-z]+)\[?([a-z]*)\]?") (map rest) transpose))
+
+(defn parse [s]
+  (map parse-ip (str/split-lines s)))
 
 (defn abba? [s]
   (some (fn [[a b c d]] (and (= a d) (= b c) (not= a b))) (partition 4 1 s)))
@@ -20,20 +23,20 @@
   (some (fn [[a b]] (some #(re-find (re-pattern (str b a b)) %) hyper))
         (mapcat abas super)))
 
-(defn part-1 []
-  (->> "input/2016/07" slurp str/split-lines (map parse) (filter tls?) count))
+(defn part-1 [ips]
+  (->> ips (filter tls?) count))
 
-(defn part-2 []
-  (->> "input/2016/07" slurp str/split-lines (map parse) (filter ssl?) count))
+(defn part-2 [ips]
+  (->> ips (filter ssl?) count))
 
 (deftest test-tls?
-  (is (tls? (parse "abba[mnop]qrst")))
-  (is (not (tls? (parse "abcd[bddb]xyyx"))))
-  (is (not (tls? (parse "aaaa[qwer]tyui"))))
-  (is (tls? (parse "ioxxoj[asdfgh]zxcvbn"))))
+  (is (tls? (parse-ip "abba[mnop]qrst")))
+  (is (not (tls? (parse-ip "abcd[bddb]xyyx"))))
+  (is (not (tls? (parse-ip "aaaa[qwer]tyui"))))
+  (is (tls? (parse-ip "ioxxoj[asdfgh]zxcvbn"))))
 
 (deftest test-ssl?
-  (is (ssl? (parse "aba[bab]xyz")))
-  (is (not (ssl? (parse "xyx[xyx]xyx"))))
-  (is (ssl? (parse "aaa[kek]eke")))
-  (is (ssl? (parse "zazbz[bzb]cdb"))))
+  (is (ssl? (parse-ip "aba[bab]xyz")))
+  (is (not (ssl? (parse-ip "xyx[xyx]xyx"))))
+  (is (ssl? (parse-ip "aaa[kek]eke")))
+  (is (ssl? (parse-ip "zazbz[bzb]cdb"))))

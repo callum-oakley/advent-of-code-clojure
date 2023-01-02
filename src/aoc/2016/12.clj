@@ -15,8 +15,8 @@
         jnz (recur m (if (zero? (read x)) (inc head) (+ y head)) reg)))
     (reg 'a)))
 
-(defn part-1 []
-  (run (parse (slurp "input/2016/12")) 0 '{a 0 b 0 c 0 d 0}))
+(defn part-1 [m]
+  (run m 0 '{a 0 b 0 c 0 d 0}))
 
-(defn part-2 []
-  (run (parse (slurp "input/2016/12")) 0 '{a 0 b 0 c 1 d 0}))
+(defn part-2 [m]
+  (run m 0 '{a 0 b 0 c 1 d 0}))

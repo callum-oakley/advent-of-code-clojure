@@ -1,6 +1,5 @@
 (ns aoc.2016.16
   (:require
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn grow [data]
@@ -19,11 +18,11 @@
                   0
                   disk))))
 
-(defn part-1 []
-  (part-* 272 (str/trim (slurp "input/2016/16"))))
+(defn part-1 [s]
+  (part-* 272 s))
 
-(defn part-2 []
-  (part-* 35651584 (str/trim (slurp "input/2016/16"))))
+(defn part-2 [s]
+  (part-* 35651584 s))
 
 (deftest test-grow
   (is (= (vec "100") (grow (vec "1"))))

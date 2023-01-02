@@ -5,15 +5,17 @@
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (let [[_ _ a _ b c d] (str/split s #" ")]
-    (condp #(str/starts-with? %2 %1) s
-      "swap position" ['swap-position (read-string a) (read-string c)]
-      "swap letter" ['swap-letter (first a) (first c)]
-      "rotate left" ['rotate-left (read-string a)]
-      "rotate right" ['rotate-right (read-string a)]
-      "rotate based" ['rotate-based (first d)]
-      "reverse positions" ['reverse-positions (read-string a) (read-string b)]
-      "move position" ['move-position (read-string a) (read-string c)])))
+  (map (fn [line]
+         (let [[_ _ a _ b c d] (str/split line #" ")]
+           (condp #(str/starts-with? %2 %1) line
+             "swap position" ['swap-position (read-string a) (read-string c)]
+             "swap letter" ['swap-letter (first a) (first c)]
+             "rotate left" ['rotate-left (read-string a)]
+             "rotate right" ['rotate-right (read-string a)]
+             "rotate based" ['rotate-based (first d)]
+             "reverse" ['reverse-positions (read-string a) (read-string b)]
+             "move" ['move-position (read-string a) (read-string c)])))
+       (map str/trim (str/split-lines s))))
 
 (defn rotate-based [p c]
   (let [i (str/index-of p c)]
@@ -42,11 +44,11 @@
    password
    instructions))
 
-(defn part-1 []
-  (part-* "abcdefgh" (map parse (str/split-lines (slurp "input/2016/21")))))
+(defn part-1 [instructions]
+  (part-* "abcdefgh" instructions))
 
-(defn part-2 []
-  (->> "input/2016/21" slurp str/split-lines (map parse)
+(defn part-2 [instructions]
+  (->> instructions
        (map (fn [[op x y :as instruction]]
               (case op
                 rotate-left ['rotate-right x]
@@ -59,12 +61,11 @@
 
 (deftest test-part-*
   (is (= "decab" (part-* "abcde"
-                         (map parse
-                              ["swap position 4 with position 0"
-                               "swap letter d with letter b"
-                               "reverse positions 0 through 4"
-                               "rotate left 1 step"
-                               "move position 1 to position 4"
-                               "move position 3 to position 0"
-                               "rotate based on position of letter b"
-                               "rotate based on position of letter d"])))))
+                         (parse "swap position 4 with position 0
+                                 swap letter d with letter b
+                                 reverse positions 0 through 4
+                                 rotate left 1 step
+                                 move position 1 to position 4
+                                 move position 3 to position 0
+                                 rotate based on position of letter b
+                                 rotate based on position of letter d")))))

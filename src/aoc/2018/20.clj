@@ -3,7 +3,6 @@
    [aoc.grid :as grid]
    [aoc.search :as search]
    [aoc.vector :refer [+v]]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
@@ -26,7 +25,7 @@
           forks
           alts])))
    [{} #{[0 0]} [] []]
-   (str/trim s)))
+   s))
 
 (defn bft [g]
   (search/bft {:pos [0 0] :dist 0}

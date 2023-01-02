@@ -4,6 +4,8 @@
    [aoc.vector :refer [+v]]
    [clojure.test :refer [deftest is]]))
 
+(def parse read-string)
+
 (defn wall? [n [x y]]
   (or (neg? x) (neg? y)
       (odd? (Integer/bitCount (+ n (* x x) (* 3 x) (* 2 x y) y (* y y))))))
@@ -20,12 +22,11 @@
                       :pos
                       #(= target (:pos %)))))
 
-(defn part-1 []
-  (part-1* (read-string (slurp "input/2016/13")) [31 39]))
+(defn part-1 [n]
+  (part-1* n [31 39]))
 
-(defn part-2 []
-  (let [n (read-string (slurp "input/2016/13"))]
-    (count (search/bft {:pos [1 1] :steps 0} #(adjacent n 50 %) :pos))))
+(defn part-2 [n]
+  (count (search/bft {:pos [1 1] :steps 0} #(adjacent n 50 %) :pos)))
 
 (deftest test-sample
   (is (= 11 (part-1* 10 [7 4]))))

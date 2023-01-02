@@ -1,10 +1,9 @@
 (ns aoc.2016.05
   (:require
    [aoc.hash :as hash]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
-(defn part-1* [seed]
+(defn part-1 [seed]
   (->> (range)
        (keep #(let [[a b c d e f]
                     (hash/nibbles (hash/md5 (.getBytes (str seed %))))]
@@ -13,7 +12,7 @@
        (take 8)
        (apply str)))
 
-(defn part-2* [seed]
+(defn part-2 [seed]
   (->> (range)
        (keep #(let [[a b c d e f g]
                     (hash/nibbles (hash/md5 (.getBytes (str seed %))))]
@@ -29,14 +28,6 @@
                (vec (repeat 8 nil)))
        (apply str)))
 
-(defn part-1 []
-  (part-1* (str/trim (slurp "input/2016/05"))))
-
-(defn part-2 []
-  (part-2* (str/trim (slurp "input/2016/05"))))
-
-(deftest test-part-1*
-  (is (= "18f47a30" (part-1* "abc"))))
-
-(deftest test-part-2*
-  (is (= "05ace8e3" (part-2* "abc"))))
+(deftest test-examples
+  (is (= "18f47a30" (part-1 "abc")))
+  (is (= "05ace8e3" (part-2 "abc"))))

@@ -4,10 +4,7 @@
    [aoc.hash :as hash]
    [aoc.search :as search]
    [aoc.vector :refer [+v]]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
-
-(def parse str/trim)
 
 (defn disk [seed]
   (->> (range 128)

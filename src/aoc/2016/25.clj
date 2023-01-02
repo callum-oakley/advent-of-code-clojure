@@ -15,9 +15,8 @@
         jnz (recur m (if (zero? (read x)) (inc head) (+ (read y) head)) reg)
         out (cons (read x) (lazy-seq (run m (inc head) reg)))))))
 
-(defn part-1 []
-  (let [m (parse (slurp "input/2016/25"))
-        signal (apply concat (repeat 50 [0 1]))]
+(defn part-1 [m]
+  (let [signal (apply concat (repeat 50 [0 1]))]
     (some #(when (= signal
                     (take (count signal) (run m 0 {'a % 'b 0 'c 0 'd 0})))
              %)

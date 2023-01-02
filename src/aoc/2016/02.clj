@@ -5,6 +5,8 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
+(def parse str/split-lines)
+
 (def dir->vec
   {\U [0 -1] \D [0 1] \L [-1 0] \R [1 0]})
 
@@ -33,11 +35,11 @@
        (map keypad)
        (apply str)))
 
-(defn part-1 []
-  (->> "input/2016/02" slurp str/split-lines (part-* keypad-1)))
+(defn part-1 [instructions]
+  (part-* keypad-1 instructions))
 
-(defn part-2 []
-  (->> "input/2016/02" slurp str/split-lines (part-* keypad-2)))
+(defn part-2 [instructions]
+  (part-* keypad-2 instructions))
 
 (deftest test-part-*
   (is (= "1985" (part-* keypad-1 ["ULL" "RRDDD" "LURDL" "UUUUD"])))

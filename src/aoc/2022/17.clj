@@ -2,7 +2,6 @@
   (:require
    [aoc.grid :as grid]
    [aoc.vector :refer [+v]]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (def rocks
@@ -13,7 +12,7 @@
    [[0 0] [0 1] [1 0] [1 1]]])
 
 (defn parse [s]
-  (mapv #(case % \< grid/west \> grid/east) (str/trim s)))
+  (mapv #(case % \< grid/west \> grid/east) s))
 
 (defn push [rock dir]
   (let [rock* (map #(+v % dir) rock)]

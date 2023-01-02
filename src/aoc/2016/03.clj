@@ -2,17 +2,11 @@
   (:require
    [aoc.vector :refer [transpose]]))
 
-(defn part-* [f]
-  (->> (slurp "input/2016/03")
-       (re-seq #"\d+")
-       (map read-string)
-       (partition 3)
-       f
-       (filter #(let [[a b c] (sort %)] (> (+ a b) c)))
-       count))
+(defn parse [s]
+  (partition 3 (map read-string (re-seq #"\d+" s))))
 
-(defn part-1 []
-  (part-* identity))
+(defn part-1 [triangles]
+  (count (filter #(let [[a b c] (sort %)] (> (+ a b) c)) triangles)))
 
-(defn part-2 []
-  (part-* #(->> % (partition 3) (mapcat transpose))))
+(defn part-2 [triangles]
+  (part-1 (mapcat transpose (partition 3 triangles))))

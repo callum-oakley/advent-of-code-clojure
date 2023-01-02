@@ -13,7 +13,7 @@
 (defn viable? [a b]
   (and (pos? (:used a)) (<= (+ (:used a) (:used b)) (:size b))))
 
-(defn part-1* [state]
+(defn part-1 [state]
   (count (for [[pos-a a] state
                [pos-b b] state
                :when (and (not= pos-a pos-b) (viable? a b))] 1)))
@@ -31,16 +31,12 @@
      :goal (if (= node goal) hole goal)
      :steps (inc steps)}))
 
-(defn part-1 []
-  (part-1* (parse (slurp "input/2016/22"))))
-
-(defn part-2 []
-  (let [state (parse (slurp "input/2016/22"))]
-    (:steps (search/bfs
-             {:state state
-              :hole (some (fn [[k v]] (when (zero? (:used v)) k)) state)
-              :goal [29 0]
-              :steps 0}
-             adjacent
-             (juxt :hole :goal)
-             #(= [0 0] (:goal %))))))
+(defn part-2 [state]
+  (:steps
+   (search/bfs {:state state
+                :hole (some (fn [[k v]] (when (zero? (:used v)) k)) state)
+                :goal [29 0]
+                :steps 0}
+               adjacent
+               (juxt :hole :goal)
+               #(= [0 0] (:goal %)))))

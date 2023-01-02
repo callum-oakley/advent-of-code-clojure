@@ -41,7 +41,7 @@
   (->> floors drop-last (map count) (reductions +)
        (map #(case % 0 0 1 1 (- (* 2 %) 3))) (apply +)))
 
-(defn part-* [floors]
+(defn part-1 [floors]
   (:steps (search/a* {:floors floors :elevator 0 :steps 0}
                      adjacent
                      #(-> % (dissoc :steps) (update :floors normalise))
@@ -49,14 +49,11 @@
                      :steps
                      #(heuristic (:floors %)))))
 
-(defn part-1 []
-  (-> "input/2016/11" slurp parse part-*))
-
-(defn part-2 []
-  (-> "input/2016/11" slurp parse
+(defn part-2 [floors]
+  (-> floors
       (update 0 into '[[elerium generator] [elerium microchip]
                        [dilithium generator] [dilithium microchip]])
-      part-*))
+      part-1))
 
 (def sample
   "... a hydrogen-compatible microchip and a lithium-compatible microchip.
@@ -68,4 +65,4 @@
 ;; both part-1 and part-2 ... though not for the sample input.
 
 (deftest test-sample
-  (is (= 11 (part-* (parse sample)))))
+  (is (= 11 (part-1 (parse sample)))))

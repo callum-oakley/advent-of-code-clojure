@@ -23,8 +23,8 @@
           tgl (recur (tgl m (+ (read x) head)) (inc head) reg)))
       (reg 'a))))
 
-(defn part-1 []
-  (run (parse (slurp "input/2016/23")) 0 '{a 7 b 0 c 0 d 0}))
+(defn part-1 [m]
+  (run m 0 '{a 7 b 0 c 0 d 0}))
 
-(defn part-2 []
-  (run (parse (slurp "input/2016/23")) 0 '{a 12 b 0 c 0 d 0}))
+(defn part-2 [m]
+  (run m 0 '{a 12 b 0 c 0 d 0}))

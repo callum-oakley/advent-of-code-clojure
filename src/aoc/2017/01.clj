@@ -1,10 +1,9 @@
 (ns aoc.2017.01
   (:require
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (mapv #(- (int %) (int \0)) (str/trim s)))
+  (mapv #(- (int %) (int \0)) s))
 
 (defn part-* [offset ds]
   (->> (range (count ds))

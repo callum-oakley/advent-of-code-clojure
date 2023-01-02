@@ -4,7 +4,7 @@
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
-  (->> s str/trim (map #(- (int %) (int \0)))))
+  (map #(- (int %) (int \0)) s))
 
 (defn initial-state [cups]
   {:next-cup (->> (partition 2 1 cups)

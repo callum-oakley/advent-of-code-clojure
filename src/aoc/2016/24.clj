@@ -45,11 +45,11 @@
                     (apply +)))
          (apply min))))
 
-(defn part-1 []
-  (part-* nil (parse (slurp "input/2016/24"))))
+(defn part-1 [state]
+  (part-* nil state))
 
-(defn part-2 []
-  (part-* [0] (parse (slurp "input/2016/24"))))
+(defn part-2 [state]
+  (part-* [0] state))
 
 (deftest test-part-*
   (is (= 14 (part-* nil (parse "###########
