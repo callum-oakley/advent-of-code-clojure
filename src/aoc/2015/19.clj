@@ -20,10 +20,10 @@
            (indices-of molecule from 0)))
         replacements)))
 
-(defn part-1* [replacements molecule]
+(defn part-1 [[replacements molecule]]
   (count (step replacements molecule)))
 
-(defn part-2* [replacements molecule]
+(defn part-2 [[replacements molecule]]
   (let [replacements (map reverse replacements)]
     (:steps
      (search/a* {:molecule molecule
@@ -39,18 +39,10 @@
                 ;; relaxation returns the correct result in a reasonable time.
                 #(-> % :molecule count)))))
 
-(defn part-1 []
-  (apply part-1* (parse (slurp "input/2015/19"))))
-
-(defn part-2 []
-  (apply part-2* (parse (slurp "input/2015/19"))))
-
-(deftest test-part-1*
+(deftest test-examples
   (let [replacements [["H" "HO"] ["H" "OH"] ["O" "HH"]]]
-    (is (= 4 (part-1* replacements "HOH")))
-    (is (= 7 (part-1* replacements "HOHOHO")))))
-
-(deftest test-part-2*
+    (is (= 4 (part-1 [replacements "HOH"])))
+    (is (= 7 (part-1 [replacements "HOHOHO"]))))
   (let [replacements [["e" "H"] ["e" "O"] ["H" "HO"] ["H" "OH"] ["O" "HH"]]]
-    (is (= 3 (part-2* replacements "HOH")))
-    (is (= 6 (part-2* replacements "HOHOHO")))))
+    (is (= 3 (part-2 [replacements "HOH"])))
+    (is (= 6 (part-2 [replacements "HOHOHO"])))))

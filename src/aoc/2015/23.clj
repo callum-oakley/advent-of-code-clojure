@@ -16,8 +16,8 @@
       jio (recur m (if (= 1 (registers x)) (+ y head) (inc head)) registers))
     (registers 'b)))
 
-(defn part-1 []
-  (run (parse (slurp "input/2015/23")) 0 '{a 0 b 0}))
+(defn part-1 [m]
+  (run m 0 '{a 0 b 0}))
 
-(defn part-2 []
-  (run (parse (slurp "input/2015/23")) 0 '{a 1 b 0}))
+(defn part-2 [m]
+  (run m 0 '{a 1 b 0}))

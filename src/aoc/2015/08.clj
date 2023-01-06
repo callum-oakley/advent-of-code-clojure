@@ -18,17 +18,11 @@
 (defn part-2* [s]
   (apply + 2 (map #(case % \" 1 \\ 1 0) s)))
 
-(defn part-1 []
-  (->> (slurp "input/2015/08")
-       str/split-lines
-       (map part-1*)
-       (apply +)))
+(defn part-1 [s]
+  (->> s str/split-lines (map part-1*) (apply +)))
 
-(defn part-2 []
-  (->> (slurp "input/2015/08")
-       str/split-lines
-       (map part-2*)
-       (apply +)))
+(defn part-2 [s]
+  (->> s str/split-lines (map part-2*) (apply +)))
 
 (deftest test-part-1*
   (is (= 2 (part-1* "\"\"")))

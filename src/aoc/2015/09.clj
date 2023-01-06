@@ -20,15 +20,15 @@
                   (apply +)))
        (apply optimal)))
 
-(defn part-1 []
-  (part-* min (parse (slurp "input/2015/09"))))
+(defn part-1 [distances]
+  (part-* min distances))
 
-(defn part-2 []
-  (part-* max (parse (slurp "input/2015/09"))))
+(defn part-2 [distances]
+  (part-* max distances))
 
-(deftest test-part-*
+(deftest test-examples
   (let [distances (parse "London to Dublin = 464
                           London to Belfast = 518
                           Dublin to Belfast = 141")]
-    (is (= 605 (part-* min distances)))
-    (is (= 982 (part-* max distances)))))
+    (is (= 605 (part-1 distances)))
+    (is (= 982 (part-2 distances)))))

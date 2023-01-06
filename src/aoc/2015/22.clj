@@ -1,7 +1,9 @@
 (ns aoc.2015.22
   (:require
-   [aoc.search :as search]
-   [clojure.string :as str]))
+   [aoc.search :as search]))
+
+(defn parse [s]
+  (map read-string (re-seq #"\d+" s)))
 
 (defn apply-effects [state]
   (cond-> state
@@ -58,21 +60,19 @@
        (filter alive?)
        (map next-phase)))
 
-(defn part-* [difficulty]
-  (let [[hp d] (map #(read-string (re-find #"\d+" %))
-                    (str/split-lines (slurp "input/2015/22")))]
-    (:spent-mana (search/dijkstra {:player {:hit-points 50 :mana 500 :armor 0}
-                                   :boss {:hit-points hp :damage d}
-                                   :effects {}
-                                   :phase :player-effect
-                                   :spent-mana 0}
-                                  #(adjacent difficulty %)
-                                  identity
-                                  #(-> % :boss :hit-points pos? not)
-                                  :spent-mana))))
+(defn part-* [difficulty [hp d]]
+  (:spent-mana (search/dijkstra {:player {:hit-points 50 :mana 500 :armor 0}
+                                 :boss {:hit-points hp :damage d}
+                                 :effects {}
+                                 :phase :player-effect
+                                 :spent-mana 0}
+                                #(adjacent difficulty %)
+                                identity
+                                #(-> % :boss :hit-points pos? not)
+                                :spent-mana)))
 
-(defn part-1 []
-  (part-* :normal))
+(defn part-1 [boss]
+  (part-* :normal boss))
 
-(defn part-2 []
-  (part-* :hard))
+(defn part-2 [boss]
+  (part-* :hard boss))

@@ -11,7 +11,7 @@
           {}
           (str/split-lines s)))
 
-(defn part-* [happiness]
+(defn part-1 [happiness]
   (let [guests (-> happiness keys flatten set)]
     (->> (comb/permutations (rest guests))
          (map #(->> (concat [(first guests)] % [(first guests)])
@@ -20,16 +20,12 @@
                     (apply +)))
          (apply max))))
 
-(defn part-1 []
-  (-> "input/2015/13" slurp parse part-*))
+(defn part-2 [happiness]
+  (part-1 (reduce #(assoc %1 [:me %2] 0 [%2 :me] 0)
+                  happiness
+                  (-> happiness keys flatten set))))
 
-(defn part-2 []
-  (let [happiness (-> "input/2015/13" slurp parse)]
-    (part-* (reduce #(assoc %1 [:me %2] 0 [%2 :me] 0)
-                    happiness
-                    (-> happiness keys flatten set)))))
-
-(deftest test-part-*
+(deftest test-example
   (let [s "Alice would gain 54 happiness units by sitting next to Bob.
            Alice would lose 79 happiness units by sitting next to Carol.
            Alice would lose 2 happiness units by sitting next to David.
@@ -42,4 +38,4 @@
            David would gain 46 happiness units by sitting next to Alice.
            David would lose 7 happiness units by sitting next to Bob.
            David would gain 41 happiness units by sitting next to Carol."]
-    (is (= 330 (part-* (parse s))))))
+    (is (= 330 (part-1 (parse s))))))

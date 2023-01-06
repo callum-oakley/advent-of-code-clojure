@@ -29,12 +29,11 @@
                   RSHIFT (bit-shift-right (signal x) (signal y))
                   NOT    (bit-not         (signal x))))))))
 
-(defn part-1 []
-  (emulate (parse (slurp "input/2015/07")) 'a))
+(defn part-1 [circuit]
+  (emulate circuit 'a))
 
-(defn part-2 []
-  (let [circuit (parse (slurp "input/2015/07"))]
-    (emulate (assoc circuit 'b ['ID (emulate circuit 'a)]) 'a)))
+(defn part-2 [circuit]
+  (emulate (assoc circuit 'b ['ID (emulate circuit 'a)]) 'a))
 
 (deftest test-emulate
   (let [circuit (parse "123 -> x

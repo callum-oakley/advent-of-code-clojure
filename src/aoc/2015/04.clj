@@ -1,7 +1,6 @@
 (ns aoc.2015.04
   (:require
    [aoc.hash :as hash]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
 (defn part-* [n key]
@@ -10,12 +9,12 @@
                      (every? zero?)))
        first))
 
-(defn part-1 []
-  (part-* 5 (str/trim (slurp "input/2015/04"))))
+(defn part-1 [s]
+  (part-* 5 s))
 
-(defn part-2 []
-  (part-* 6 (str/trim (slurp "input/2015/04"))))
+(defn part-2 [s]
+  (part-* 6 s))
 
-(deftest test-part-*
-  (is (= 609043 (part-* 5 "abcdef")))
-  (is (= 1048970 (part-* 5 "pqrstuv"))))
+(deftest test-part-1
+  (is (= 609043 (part-1 "abcdef")))
+  (is (= 1048970 (part-1 "pqrstuv"))))

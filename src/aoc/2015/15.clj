@@ -32,20 +32,18 @@
        (map #(apply * (vals (dissoc % :calories))))
        (apply max)))
 
-(defn part-1 []
-  (->> "input/2015/15" slurp parse (part-* 1)))
+(defn part-1 [ingredients]
+  (part-* 1 ingredients))
 
-(defn part-2 []
-  (->> "input/2015/15" slurp parse (part-* 2)))
+(defn part-2 [ingredients]
+  (part-* 2 ingredients))
 
 (def sample
   "Butterscotch: capacity -1, durability -2, flavor 6, texture 3, calories 8
    Cinnamon: capacity 2, durability 3, flavor -2, texture -1, calories 3")
 
-(deftest test-mix
+(deftest test-examples
   (is (= {:capacity 68 :durability 80 :flavor 152 :texture 76}
-         (dissoc (mix (parse sample) [44 56]) :calories))))
-
-(deftest test-part-*
-  (is (= 62842880 (part-* 1 (parse sample))))
-  (is (= 57600000 (part-* 2 (parse sample)))))
+         (dissoc (mix (parse sample) [44 56]) :calories)))
+  (is (= 62842880 (part-1 (parse sample))))
+  (is (= 57600000 (part-2 (parse sample)))))

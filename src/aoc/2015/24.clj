@@ -4,6 +4,9 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
 
+(defn parse [s]
+  (map read-string (str/split-lines s)))
+
 (defn part-* [parts min-group-size packages]
   (let [target (/ (apply + packages) parts)]
     ;; Strictly speaking we should ensure the remaining packages can also be
@@ -13,12 +16,12 @@
       (apply min (map #(apply * %) groups))
       (recur parts (inc min-group-size) packages))))
 
-(defn part-1 []
-  (->> "input/2015/24" slurp str/split-lines (map read-string) (part-* 3 1)))
+(defn part-1 [packages]
+  (part-* 3 1 packages))
 
-(defn part-2 []
-  (->> "input/2015/24" slurp str/split-lines (map read-string) (part-* 4 1)))
+(defn part-2 [packages]
+  (part-* 4 1 packages))
 
-(deftest test-part-*
-  (is (= 99 (part-* 3 1 [1 2 3 4 5 7 8 9 10 11])))
-  (is (= 44 (part-* 4 1 [1 2 3 4 5 7 8 9 10 11]))))
+(deftest test-examples
+  (is (= 99 (part-1 [1 2 3 4 5 7 8 9 10 11])))
+  (is (= 44 (part-2 [1 2 3 4 5 7 8 9 10 11]))))

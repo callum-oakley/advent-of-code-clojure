@@ -17,11 +17,11 @@
   (and (non-overlapping-pair? s)
        (->> s (partition 3 1) (some (fn [[a _ b]] (= a b))))))
 
-(defn part-1 []
-  (->> (slurp "input/2015/05") str/split-lines (filter nice-1?) count))
+(defn part-1 [s]
+  (->> s str/split-lines (filter nice-1?) count))
 
-(defn part-2 []
-  (->> (slurp "input/2015/05") str/split-lines (filter nice-2?) count))
+(defn part-2 [s]
+  (->> s str/split-lines (filter nice-2?) count))
 
 (deftest test-nice-1?
   (is (nice-1? "ugknbfddgicrmopn"))

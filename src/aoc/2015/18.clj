@@ -35,11 +35,11 @@
                        (set/union always-lit lit))
               steps)))
 
-(defn part-1 []
-  (part-* #{} 100 (parse (slurp "input/2015/18"))))
+(defn part-1 [input]
+  (part-* #{} 100 input))
 
-(defn part-2 []
-  (part-* #{[0 0] [0 99] [99 0] [99 99]} 100 (parse (slurp "input/2015/18"))))
+(defn part-2 [input]
+  (part-* #{[0 0] [0 99] [99 0] [99 99]} 100 input))
 
 (deftest test-part-*
   (let [data (parse ".#.#.#\n...##.\n#....#\n..#...\n#.#..#\n####..")]

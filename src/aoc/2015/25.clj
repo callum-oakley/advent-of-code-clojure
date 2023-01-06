@@ -1,5 +1,8 @@
 (ns aoc.2015.25)
 
+(defn parse [s]
+  (map read-string (re-seq #"\d+" s)))
+
 (defn mod-pow [b e m]
   (.modPow (biginteger b) (biginteger e) (biginteger m)))
 
@@ -9,6 +12,5 @@
 (defn triangle [n]
   (quot (* n (inc n)) 2))
 
-(defn part-1 []
-  (let [[row col] (->> "input/2015/25" slurp (re-seq #"\d+") (map read-string))]
-    (code (+ col (triangle (- (+ row col) 2))))))
+(defn part-1 [[row col]]
+  (code (+ col (triangle (- (+ row col) 2)))))

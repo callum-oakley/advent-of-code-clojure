@@ -11,22 +11,19 @@
                    [0 0]
                    instructions)))
 
-(defn part-2* [instructions]
-  (set/union (part-1* (flatten (partition 1 2 instructions)))
-             (part-1* (flatten (partition 1 2 (rest instructions))))))
+(defn part-1 [s]
+  (count (part-1* s)))
 
-(defn part-1 []
-  (count (part-1* (slurp "input/2015/03"))))
+(defn part-2 [instructions]
+  (count (set/union (part-1* (flatten (partition 1 2 instructions)))
+                    (part-1* (flatten (partition 1 2 (rest instructions)))))))
 
-(defn part-2 []
-  (count (part-2* (slurp "input/2015/03"))))
+(deftest test-part-1
+  (is (= 2 (part-1 ">")))
+  (is (= 4 (part-1 "^>v<")))
+  (is (= 2 (part-1 "^v^v^v^v^v"))))
 
-(deftest test-part-1*
-  (is (= 2 (count (part-1* ">"))))
-  (is (= 4 (count (part-1* "^>v<"))))
-  (is (= 2 (count (part-1* "^v^v^v^v^v")))))
-
-(deftest test-part-2*
-  (is (= 3 (count (part-2* "^v"))))
-  (is (= 3 (count (part-2* "^>v<"))))
-  (is (= 11 (count (part-2* "^v^v^v^v^v")))))
+(deftest test-part-2
+  (is (= 3 (part-2 "^v")))
+  (is (= 3 (part-2 "^>v<")))
+  (is (= 11 (part-2 "^v^v^v^v^v"))))

@@ -43,11 +43,11 @@
 (defn part-* [target duration rs]
   (apply max (map target (nth (iterate tick rs) duration))))
 
-(defn part-1 []
-  (->> "input/2015/14" slurp parse (part-* :distance 2503)))
+(defn part-1 [rs]
+  (part-* :distance 2503 rs))
 
-(defn part-2 []
-  (->> "input/2015/14" slurp parse (part-* :points 2503)))
+(defn part-2 [rs]
+  (part-* :points 2503 rs))
 
 (deftest test-part-*
   (is (= 1120 (part-* :distance 1000 (parse "14 10 127\n16 11 162"))))

@@ -11,11 +11,11 @@
   (let [[a b c] (sort (map read-string (str/split box #"x")))]
     (+ a a b b (* a b c))))
 
-(defn part-1 []
-  (->> (slurp "input/2015/02") str/split-lines (map paper) (apply +)))
+(defn part-1 [s]
+  (->> s str/split-lines (map paper) (apply +)))
 
-(defn part-2 []
-  (->> (slurp "input/2015/02") str/split-lines (map ribbon) (apply +)))
+(defn part-2 [s]
+  (->> s str/split-lines (map ribbon) (apply +)))
 
 (deftest test-paper
   (is (= 58 (paper "2x3x4")))

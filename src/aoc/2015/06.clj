@@ -2,17 +2,17 @@
   (:require
    [clojure.string :as str]))
 
-(defn parse [instruction]
-  (let [[_ op x0 y0 x1 y1]
-        (re-matches
-         #"(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)"
-         instruction)]
-    [op (read-string x0) (read-string y0) (read-string x1) (read-string y1)]))
+(defn parse [s]
+  (map #(let [[_ op & coords]
+              (re-matches
+               #"(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)"
+               %)
+              [x0 y0 x1 y1] (map read-string coords)]
+          [op x0 y0 x1 y1])
+       (str/split-lines s)))
 
-(defn part-* [op->f]
-  (->> (slurp "input/2015/06")
-       str/split-lines
-       (map parse)
+(defn part-* [op->f instructions]
+  (->> instructions
        (reduce (fn [lights [op x0 y0 x1 y1]]
                  (let [f (op->f op)]
                    (reduce (fn [lights i]
@@ -25,16 +25,18 @@
        persistent!
        (apply +)))
 
-(defn part-1 []
+(defn part-1 [instructions]
   (part-* (fn [op]
             (case op
               "turn on" (constantly 1)
               "turn off" (constantly 0)
-              "toggle" {0 1 1 0}))))
+              "toggle" {0 1 1 0}))
+          instructions))
 
-(defn part-2 []
+(defn part-2 [instructions]
   (part-* (fn [op]
             (case op
               "turn on" inc
               "turn off" #(max 0 (dec %))
-              "toggle" #(+ 2 %)))))
+              "toggle" #(+ 2 %)))
+          instructions))

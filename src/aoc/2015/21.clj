@@ -1,8 +1,10 @@
 (ns aoc.2015.21
   (:require
    [clojure.math.combinatorics :as comb]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]))
+
+(defn parse [s]
+  (map read-string (re-seq #"\d+" s)))
 
 (defn items [& ns]
   (map (fn [[c d a]] {:cost c :damage d :armor a}) (partition 3 ns)))
@@ -24,21 +26,19 @@
            attacker)
     defender))
 
-(defn part-* [winner opt]
-  (let [[hp d a] (map #(read-string (re-find #"\d+" %))
-                      (str/split-lines (slurp "input/2015/21")))
-        boss {:id :boss :hit-points hp :damage d :armor a}]
+(defn part-* [winner opt [hp d a]]
+  (let [boss {:id :boss :hit-points hp :damage d :armor a}]
     (->> (stats)
          (filter #(= winner
                      (:id (fight (assoc % :id :player :hit-points 100) boss))))
          (map :cost)
          (apply opt))))
 
-(defn part-1 []
-  (part-* :player min))
+(defn part-1 [player]
+  (part-* :player min player))
 
-(defn part-2 []
-  (part-* :boss max))
+(defn part-2 [player]
+  (part-* :boss max player))
 
 (deftest test-fight
   (is (= {:id :player :hit-points 2 :damage 5 :armor 5}
