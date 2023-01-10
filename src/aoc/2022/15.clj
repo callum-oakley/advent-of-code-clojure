@@ -1,44 +1,44 @@
 (ns aoc.2022.15
   (:require
-   [aoc.vector :refer [manhattan-distance +v]]
-   [aoc.search :as search]
-   [clojure.math.numeric-tower :as math]
+   [aoc.vector :refer [manhattan-distance]]
+   [clojure.math.combinatorics :as comb]
    [clojure.test :refer [deftest is]]))
 
 (defn parse [s]
   (let [readings (->> s (re-seq #"-?\d+") (map read-string) (partition 2)
                       (map #(vec (reverse %))) (partition 2))]
-    {:sensors (map (fn [[s b]] {:pos s :r (manhattan-distance s b)}) readings)
+    {:sensors (map (fn [[s b]] [s (manhattan-distance s b)]) readings)
      :beacons (set (map second readings))}))
 
 ;; Cheating a little by assuming there are no gaps. This turns out to be true.
 (defn part-1* [y {:keys [sensors beacons]}]
-  (let [min-x (apply min (map (fn [{[sy sx] :pos r :r}]
-                                (- sx (- r (abs (- sy y)))))
+  (let [min-x (apply min (map (fn [[[sy sx] r]] (- sx (- r (abs (- sy y)))))
                               sensors))
-        max-x (apply max (map (fn [{[sy sx] :pos r :r}]
-                                (+ sx (- r (abs (- sy y)))))
+        max-x (apply max (map (fn [[[sy sx] r]] (+ sx (- r (abs (- sy y)))))
                               sensors))]
     (- (inc max-x) min-x (count (filter #(= y (first %)) beacons)))))
 
-;; Does the given sensor cover the given box entirely?
-(defn covers? [{sensor :pos r :r} {box :pos w :w}]
-  (every? #(<= (manhattan-distance sensor %) r)
-          (for [y [0 (dec w)] x [0 (dec w)]] (+v box [y x]))))
+;; Find the intersections of the 8 lines that make up the two circles, and then
+;; filter those that fall within the boundary.
+(defn intersections [s0 s1]
+  (for [[[[y0 x0] r0] [[y1 x1] r1]] [[s0 s1] [s1 s0]]
+        sign0 [+ -] sign1 [+ -]
+        :let [a (- y0 x0 (sign0 r0)) b (+ y1 x1 (sign1 r1))
+              pos [(/ (+ b a) 2) (/ (- b a) 2)]]
+        :when (and (every? int? pos)
+                   (= (manhattan-distance pos [y0 x0]) r0)
+                   (= (manhattan-distance pos [y1 x1]) r1))]
+    pos))
 
-;; Inspired by 2018 day 23. DFS on the space of progressively smaller bounding
-;; boxes, discarding any boxes which are covered by a sensor (in which case they
-;; couldn't possibly contain a beacon).
 (defn part-2* [bound {:keys [sensors]}]
-  ((fn [{[y x] :pos}] (+ y (* x 4000000)))
-   (search/dfs {:pos [0 0] :w (inc bound)}
-               (fn [{:keys [pos w]}]
-                 (remove (fn [box] (some #(covers? % box) sensors))
-                         (for [y [0 (math/floor (/ w 2))]
-                               x [0 (math/floor (/ w 2))]]
-                           {:pos (+v pos [y x]) :w (math/ceil (/ w 2))})))
-               identity
-               #(= (:w %) 1))))
+  (->> (comb/combinations sensors 2)
+       (mapcat (fn [[[c0 r0] [c1 r1]]]
+                 (intersections [c0 (inc r0)] [c1 (inc r1)])))
+       (remove (fn [pos]
+                 (or (not (every? #(<= 0 % bound) pos))
+                     (some (fn [[c r]] (<= (manhattan-distance c pos) r))
+                           sensors))))
+       first ((fn [[y x]] (+ y (* 4000000 x))))))
 
 (defn part-1 [readings]
   (part-1* 2000000 readings))
