@@ -108,4 +108,9 @@
       (apply run args))))
 
 (defn log []
-  (spit "results.log" (with-out-str (run))))
+  (repl/refresh)
+  (let [{:keys [fail error]} (run-tests)]
+    (when (and (zero? fail) (zero? error))
+      (with-open [w (io/writer "results.log")]
+        (binding [*out* w]
+          (run))))))
